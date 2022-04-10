@@ -28,6 +28,7 @@
     "@adiwajshing/keyed-db":"0.2.4",
     "string-crypto": "2.0.2",
     "mongodb": "^4.3.1",
+    "raganork-bot": "1.9.5",
     "sequelize": "6.13.0",
     "sqlite3": "5.0.0",
     "supervisor": "0.12.0"
