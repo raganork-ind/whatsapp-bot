@@ -8,7 +8,7 @@ const Heroku = require('heroku-client');
 const { PassThrough } = require('stream');
 const heroku = new Heroku({ token: Config.HEROKU.API_KEY })
 
-Module({pattern: 'update check$', fromMe: true, dontAddCommandList: true, desc: "Updates bot"}, (async (message, match) => {
+Module({pattern: 'update check$', fromMe: true, dontAddCommandList: true, desc: "Checks bot updates"}, (async (message, match) => {
     await git.fetch();
     var commits = await git.log(['main' + '..origin/' + 'main']);
     if (commits.total === 0) {
@@ -27,7 +27,7 @@ Module({pattern: 'update check$', fromMe: true, dontAddCommandList: true, desc: 
     }
 }));
 
-Module({pattern: 'update start$', fromMe: true,dontAddCommandList: true, desc: Lang.UPDATE_NOW_DESC}, (async (message, match) => {
+Module({pattern: 'update start$', fromMe: true,dontAddCommandList: true, desc: "Updates bot"}, (async (message, match) => {
     await git.fetch();
     var commits = await git.log(['main' + '..origin/' + 'main']);
     if (commits.total === 0) {
