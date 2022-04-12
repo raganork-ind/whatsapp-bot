@@ -15,7 +15,7 @@ Module({pattern: 'update check$', fromMe: true, dontAddCommandList: true, desc: 
         await message.client.sendMessage(message.jid, { text:"Bot up to date"})
 
     } else {
-        var degisiklikler = "Updates are available";
+        var degisiklikler = "Updates are available\n";
         commits['all'].map(
             (commit) => {
                 degisiklikler += '(' + commit.date.substring(0, 10) + ') : *' + commit.message.replace('Update','Fixed').replace('.js','') + '*\n';
@@ -31,10 +31,10 @@ Module({pattern: 'update start$', fromMe: true,dontAddCommandList: true, desc: "
     await git.fetch();
     var commits = await git.log(['main' + '..origin/' + 'main']);
     if (commits.total === 0) {
-        return await message.client.sendMessage(message.jid, { text:"Bot up to date"})
+        return await message.client.sendMessage(message.jid, { text:"_Bot up to date_"})
 
     } else {
-        await message.client.sendMessage(message.jid, { text:"Build started"})
+        await message.client.sendMessage(message.jid, { text:"_Build started_"})
 
             try {
                 var app = await heroku.get('/apps/' + Config.HEROKU.APP_NAME)
@@ -55,8 +55,8 @@ Module({pattern: 'update start$', fromMe: true,dontAddCommandList: true, desc: "
             } catch { console.log('heroku remote ekli'); }
             await git.push('heroku', 'main');
 
-            await message.client.sendMessage(message.jid, { text:"Successfully updated"})
-           await message.client.sendMessage(message.jid, { text:"Restarting"})
+            await message.client.sendMessage(message.jid, { text:"_Successfully updated_"})
+           await message.client.sendMessage(message.jid, { text:"_Restarting_"})
             
         
     }
