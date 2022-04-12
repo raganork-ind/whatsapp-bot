@@ -8,14 +8,15 @@ DEBUG = process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBU
 module.exports = {
     VERSION: 'beta',
     USERNAME: process.env.USERNAME === undefined ? '' : process.env.USERNAME,
-    HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,
     PASSWORD: process.env.PASSWORD === undefined ? '' : process.env.PASSWORD,
+    HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,
+    MODE: process.env.HANDLERS === MODE ? 'private' : process.env.MODE,
     HEROKU: {
         HEROKU: process.env.HEROKU === undefined ? false : convertToBool(process.env.HEROKU),
         API_KEY: process.env.HEROKU_API_KEY === undefined ? '' : process.env.HEROKU_API_KEY,
         APP_NAME: process.env.HEROKU_APP_NAME === undefined ? '' : process.env.HEROKU_APP_NAME
     },
     DATABASE_URL: DATABASE_URL,
-    SUDO: process.env.SUDO === undefined ? '917907162582,0' : process.env.SUDO,
+    SUDO: process.env.SUDO === undefined ? '916282344739,0' : process.env.SUDO,
     DEBUG: DEBUG
     };
