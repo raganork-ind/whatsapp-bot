@@ -4,7 +4,6 @@ const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 const {execFile} = require('child_process');
 const Config = require('../config');
-let w = require('../config');
 const {MODE} = require('../config');
 let w = MODE=='public'?false:true
 Module({pattern: 'sticker$', fromMe: w}, (async (message, match) => {    
