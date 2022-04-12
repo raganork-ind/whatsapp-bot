@@ -3,13 +3,11 @@ const {downloadContentFromMessage } = require('@adiwajshing/baileys');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 const {execFile} = require('child_process');
-const cwebp = require('cwebp-bin');
 const Config = require('../config');
 let w = require('../config');
-
-let sk = Config.WORKTYPE == 'public' ? false : true
-
-Module({pattern: 'sticker$', fromMe: sk}, (async (message, match) => {    
+const {MODE} = require('../config');
+let w = MODE=='public'?false:true
+Module({pattern: 'sticker$', fromMe: w}, (async (message, match) => {    
 
         if (message.reply_message === false) return await message.client.sendMessage(message.jid, { text: '_Reply to a photo_' })
         
