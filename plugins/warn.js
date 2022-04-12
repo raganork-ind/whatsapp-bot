@@ -4,7 +4,7 @@ You may not use this file except compliance with license!*/
 let {Module} = require('../main');
 let {WARN,USERNAME} = require('../config');
 let {setwarn,getwarn,deletewarn} = require('raganork-bot');
-e.addCommand({pattern: 'warn ?(.*)', fromMe: true, desc:'Warns user. Removes user after maximum number of warns'}, (async (m, mat) => { 
+Module({pattern: 'warn ?(.*)', fromMe: true, desc:'Warns user. Removes user after maximum number of warns'}, (async (m, mat) => { 
 if (!m.reply_message) return await m.client.sendMessage(m.jid, { text: '_Reply to any message_' },{ quoted: m.data })
 var par = m.reply_message.jid
 var me = USERNAME
@@ -30,7 +30,7 @@ if (warn !== 0) {
     await m.client.groupParticipantsUpdate(m.jid, [par], "remove")
  }
 }));
-e.addCommand({pattern: 'reset warn', fromMe: true, desc:'Resets the warn count of the user'}, (async (m, mat) => { 
+Module({pattern: 'reset warn', fromMe: true, desc:'Resets the warn count of the user'}, (async (m, mat) => { 
     if (!m.reply_message) return await m.sendMessage('_Reply to any message!_')
         var par = m.reply_message.jid
     var me = USERNAME
