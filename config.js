@@ -10,7 +10,7 @@ module.exports = {
     USERNAME: process.env.USERNAME === undefined ? '' : process.env.USERNAME,
     PASSWORD: process.env.PASSWORD === undefined ? '' : process.env.PASSWORD,
     HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,
-    MODE: process.env.HANDLERS === MODE ? 'private' : process.env.MODE,
+    MODE: process.env.MODE === undefined ? 'private' : process.env.MODE,
     HEROKU: {
         HEROKU: process.env.HEROKU === undefined ? false : convertToBool(process.env.HEROKU),
         API_KEY: process.env.HEROKU_API_KEY === undefined ? '' : process.env.HEROKU_API_KEY,
