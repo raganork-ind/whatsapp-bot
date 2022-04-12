@@ -8,6 +8,7 @@ DEBUG = process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBU
 module.exports = {
     VERSION: 'beta',
     USERNAME: process.env.USERNAME === undefined ? '' : process.env.USERNAME,
+    HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,
     PASSWORD: process.env.PASSWORD === undefined ? '' : process.env.PASSWORD,
     HEROKU: {
         HEROKU: process.env.HEROKU === undefined ? false : convertToBool(process.env.HEROKU),
