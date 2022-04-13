@@ -59,7 +59,7 @@ Module({pattern: 'dyno$', fromMe: true, dontAddCommandList: true}, (async (messa
                     "Dyno used" + ": ```{}```\n".format(secondsToHms(quota_used)) +  
                     "Percentage" + ": ```{}```\n\n".format(percentage) +
                     "Dyno left" + ": ```{}```\n".format(secondsToHms(remaining))},{ quoted: message.data })
-               );
+               
             }).catch(async (err) => {
                 await message.client.sendMessage(message.jid, { text: error.message },{ quoted: message.data })
   });        
