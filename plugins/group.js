@@ -7,7 +7,7 @@ await message.client.groupParticipantsUpdate(message.jid, [user], "remove" /*rep
 Module({pattern: 'add ?(.*)', fromMe: true, desc: 'Adds participants to groups'}, (async (message, match) => {
 var init = match[1]
 var initt = init.split(" ").join("")
-var user = initt.replace(/\+/g,'').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(/(/g,'').replace(/)/g,'').replace(/-/g,'')
+var user = initt.replace(/\+/g,'').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(/\(/g,'').replace(/\)/g,'').replace(/\-/g,'')
 var jids = [];
 var msg = '';
 numbers = user.split(',');
