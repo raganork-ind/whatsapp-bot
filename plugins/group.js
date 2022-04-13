@@ -33,5 +33,5 @@ Module({pattern: 'logm', fromMe: true}, (async (message, match) => {
 console.log(message)
 }))
 Module({pattern: 'logt', fromMe: true}, (async (message, match) => {
-console.log(message)
+console.log(match)
 }))
