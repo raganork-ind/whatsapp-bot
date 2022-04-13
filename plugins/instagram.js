@@ -19,9 +19,9 @@ var need_acc_s = "_Need an instagram username or link!_";
 let sourav = setting.MODE == 'public' ? false : true
 Module({ pattern: 'insta ?(.*)', fromMe: sourav, desc:'Downloads post/reel/igtv from instagram',usage:'insta link or reply to a link'}, (async (msg, query) => {
 var q = !msg.reply_message.message ? query[1] : msg.reply_message.message
-if (!q)  return await msg.client.sendMessage(message.jid, { text: "_*Couldn't read link. Use .insta link*_" },{ quoted: msg.data })
-if (q && !q.includes('instagram.com')) return await msg.client.sendMessage(message.jid, { text: need },{ quoted: msg.data })
-await message.client.sendMessage(msg.jid, { text: downloading },{ quoted: msg.data })
+if (!q)  return await msg.client.sendMessage(msg.jid, { text: "_*Couldn't read link. Use .insta link*_" },{ quoted: msg.data })
+if (q && !q.includes('instagram.com')) return await msg.client.sendMessage(msg.jid, { text: need },{ quoted: msg.data })
+await msg.client.sendMessage(msg.jid, { text: downloading },{ quoted: msg.data })
 var getid = /(?:https?:\/\/)?(?:www\.)?(?:instagram\.com(?:\/.+?)?\/(p|reel|tv)\/)([\w-]+)(?:\/)?(\?.*)?$/
 var url = getid.exec(q)
 if (url != null) {
@@ -33,7 +33,7 @@ var type = url[i].includes('mp4') ? 'video' : 'image'
 var mime = url[i].includes('mp4') ? Mimetype.mp4 : Mimetype.jpg
 var stream = get.buffer();
 stream.then(async (video) => {
-await message.client.sendMessage(msg.jid, { type: video },{ quoted: msg.data })
+await msg.client.sendMessage(msg.jid, { type: video },{ quoted: msg.data })
 })};}
 }));
 /* To-Do
