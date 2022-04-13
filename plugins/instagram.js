@@ -2,7 +2,7 @@
 Please give credit to the creator :)
 (c) souravkl11 2022 All rights reserved
 */
-const {Module} = require('../events');
+const {Module} = require('../main');
 const { Mimetype } = require('@adiwajshing/baileys');
 const fs = require('fs');
 const got = require("got");
@@ -17,7 +17,7 @@ var need_acc = "*_Need an instagram username!_*";
 var fail = "*_Download failed! Check your link and try again_*";
 var need_acc_s = "_Need an instagram username or link!_";
 let sourav = setting.MODE == 'public' ? false : true
-skl.addCommand({ pattern: 'insta ?(.*)', fromMe: sourav, desc:'Downloads post/reel/igtv from instagram',usage:'insta link or reply to a link'}, (async (msg, query) => {
+Module({ pattern: 'insta ?(.*)', fromMe: sourav, desc:'Downloads post/reel/igtv from instagram',usage:'insta link or reply to a link'}, (async (msg, query) => {
 var q = !msg.reply_message.message ? query[1] : msg.reply_message.message
 if (!q)  return await msg.client.sendMessage(message.jid, { text: "_*Couldn't read link. Use .insta link*_" },{ quoted: msg.data })
 if (q && !q.includes('instagram.com')) return await msg.client.sendMessage(message.jid, { text: need },{ quoted: msg.data })
