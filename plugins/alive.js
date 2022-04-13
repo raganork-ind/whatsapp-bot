@@ -26,3 +26,9 @@ Module({on: 'button', fromMe: w, desc: 'Is bot alive?'}, (async (message, match)
 Module({pattern: 'alive', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
 await message.client.sendMessage(message.jid, { text: 'I am alive' },{ quoted: message.data })
  }))
+Module({pattern: 'ping', fromMe: w, desc: 'Measures ping'}, (async (message, match) => {
+const start = new Date().getTime()
+		await message.client.sendMessage(message.jid, { text: '_Ping!_' })
+                const end = new Date().getTime()
+		await message.client.sendMessage(message.jid, { text: '*_Pong!_*\n ```' + (end - start) + '``` *_ms_*'},{ quoted: message.data })
+}));
