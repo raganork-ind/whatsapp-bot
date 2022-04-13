@@ -1,6 +1,6 @@
 /* (c) coded by souravkl11 for
  Warn: souravkl11/raganork md 
-You may not use this file except compliance with license!*/
+You may not use this file except compliance with license!
 let {Module} = require('../main');
 let {WARN} = require('../config');
 let {user} = require('../lib/DecryptSession');
@@ -40,3 +40,4 @@ if (!chat.endsWith('@g.us')) return await m.client.sendMessage(m.jid, { text: '_
  await deletewarn(me,chat,par)
     return await m.client.sendMessage(m.jid, { text: 'Successfully reset warn limits of @'+par ,mentions:[par]},{ quoted: m.data })
 }));
+*/
