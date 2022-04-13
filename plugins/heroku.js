@@ -65,7 +65,7 @@ Module({pattern: 'dyno$', fromMe: true, dontAddCommandList: true}, (async (messa
   });        
         });
     }));
-}
+
 Module({pattern: 'setvar ?(.*)', fromMe: true, dontAddCommandList: true}, (async(message, match) => {
 
     if (match[1] === '') return await message.client.sendMessage(message.jid, { text: 'Need key and value' },{ quoted: message.data })
