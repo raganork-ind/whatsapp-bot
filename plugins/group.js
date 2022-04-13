@@ -29,6 +29,9 @@ Module({pattern: 'unmute', fromMe: true, desc: 'Allows all participants to msg i
 await message.client.groupSettingUpdate(message.jid, 'not_announcement')
 await message.client.sendMessage(message.jid, { text: '_Group unmuted_' })
 }))
-Module({pattern: 'log', fromMe: true, desc: 'Is bot alive?'}, (async (message, match) => {
+Module({pattern: 'logm', fromMe: true}, (async (message, match) => {
+console.log(message)
+}))
+Module({pattern: 'logt', fromMe: true}, (async (message, match) => {
 console.log(message)
 }))
