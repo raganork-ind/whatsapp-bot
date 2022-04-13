@@ -33,3 +33,7 @@ Module({pattern: 'unmute', fromMe: true, desc: 'Allows all participants to msg i
 await message.client.groupSettingUpdate(message.jid, 'not_announcement')
 await message.client.sendMessage(message.jid, { text: '_Group unmuted_' })
 }))
+Module({pattern: 'jid', fromMe: true, desc: 'Gives chat jid'}, (async (message, match) => {
+var jid = message.reply_message.jid || message.jid
+await message.client.sendMessage(message.jid, { text:jid},{quoted: message.data})
+}))
