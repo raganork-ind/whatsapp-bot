@@ -4,8 +4,14 @@ await message.client.sendMessage(message.jid, { text: '@'+message.reply_message.
 await message.client.groupParticipantsUpdate(message.jid, [message.reply_message.jid], "remove" /*replace this parameter with "remove", "demote" or "promote" */)
 }))
 Module({pattern: 'add', fromMe: true, desc: 'Adds participants to groups'}, (async (message, match) => {
-await message.client.sendMessage(message.jid, { text: '@'+message.reply_message.jid.split('@')[0] +' kicked!', mentions: [message.reply_message.jid] })
-await message.client.groupParticipantsUpdate(message.jid, match[1].split(','), "add")
+var jids = [];
+var msg = '';
+numbers = match[1].split(',');
+numbers.map((number) => {
+msg += '@'+number+'\n'
+jids.push(number+'@s.whatsapp.net');});
+await message.client.groupParticipantsUpdate(message.jid, jids, "add")
+await message.client.sendMessage(message.jid, { text: msg+' _Added to the group!_', mentions: jids })
 }))
 Module({pattern: 'promote', fromMe: true, desc: 'Makes participant an admin'}, (async (message, match) => {
 await message.client.sendMessage(message.jid, { text: '@'+message.reply_message.jid.split('@')[0] +' is now an admin', mentions: [message.reply_message.jid] })
