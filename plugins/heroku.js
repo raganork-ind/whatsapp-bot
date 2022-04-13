@@ -4,16 +4,30 @@ Licensed under the  GPL-3.0 License;
 you may not use this file except in compliance with the License.
 */
 
-const {Module} = require('../events');
+const {Module} = require('../main');
 const Config = require('../config');
 const Heroku = require('heroku-client');
-const {secondsToHms} = require('./afk');
 const got = require('got');
 const heroku = new Heroku({
     token: Config.HEROKU.API_KEY
 });
 
+function secondsToHms(d) {
+  d = Number(d)
+  var h = Math.floor(d / 3600)
+  var m = Math.floor((d % 3600) / 60)
+  var s = Math.floor((d % 3600) % 60)
 
+  var hDisplay =
+    h > 0 ? h + (h == 1 ? " " + Lang.HOUR + ", " : " " + Lang.HOUR + ", ") : ""
+  var mDisplay =
+    m > 0
+      ? m + (m == 1 ? " " + Lang.MINUTE + ", " : " " + Lang.MINUTE + ", ")
+      : ""
+  var sDisplay =
+    s > 0 ? s + (s == 1 ? " " + Lang.SECOND : " " + Lang.SECOND) : ""
+  return hDisplay + mDisplay + sDisplay
+}
 let baseURI = '/apps/' + Config.HEROKU.APP_NAME;
 
 Module({pattern: 'restart$', fromMe: true, dontAddCommandList: true}, (async (message, match) => {
