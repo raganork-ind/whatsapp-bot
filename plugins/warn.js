@@ -7,7 +7,7 @@ let {setwarn,getwarn,deletewarn} = require('raganork-bot');
 Module({pattern: 'warn ?(.*)', fromMe: true, desc:'Warns user. Removes user after maximum number of warns'}, (async (m, mat) => { 
 if (!m.reply_message) return await m.client.sendMessage(m.jid, { text: '_Reply to any message_' },{ quoted: m.data })
 var par = m.reply_message.jid
-var me = m.client.user.id
+var me = m.client.user.id.split('@')[0]
 var chat = m.jid
 if (!chat.endsWith('@g.us')) return await m.client.sendMessage(m.jid, { text: '_Only works in groups_' },{ quoted: m.data })
 var warn = await setwarn(me,chat,par,WARN)
@@ -33,7 +33,7 @@ if (warn !== 0) {
 Module({pattern: 'reset warn', fromMe: true, desc:'Resets the warn count of the user'}, (async (m, mat) => { 
     if (!m.reply_message) return await m.sendMessage('_Reply to any message!_')
         var par = m.reply_message.jid
-    var me = m.client.user.id
+    var me =  m.client.user.id.split('@')[0]
     var chat = m.jid
 if (!chat.endsWith('@g.us')) return await m.client.sendMessage(m.jid, { text: '_Only works in groups_' },{ quoted: m.data })
  await deletewarn(me,chat,par)
