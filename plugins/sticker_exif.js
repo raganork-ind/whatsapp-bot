@@ -33,7 +33,7 @@ let im = spl[2].startsWith('http') ? spl[2] : ''
 let tit = spl[0] ? spl[0] : AUDIO_DATA.split(';')[0]
 let auth = spl[1] ? spl[1] : AUDIO_DATA.split(';')[1]
 var res = await addInfo('info.mp3',tit,auth,'Raganork Engine', await skbuffer(im))
-await m.client.sendMessage(m.jid, { audio: res},{quoted:m.data,mimetype: Mimetype.mp4Audio, ptt: false});});}
+await m.client.sendMessage(m.jid, { audio: res},{quoted:m.data,ptt: false});});}
 if (!audiomsg && !stickermsg) return await m.client.sendMessage(m.jid, {text:'_Reply to an audio or a sticker_'},{quoted: m.data})}));
 /*addCommand({pattern: 'wm ?(.*)', fromMe: a, desc:'Sets sticker pack & author name with given ones.'}, (async (m, t) => { 
 var q = await m.client.downloadAndSaveMediaMessage({key: {remoteJid: m.reply_message.jid,id: m.reply_message.id},message: m.reply_message.data.quotedMessage});
