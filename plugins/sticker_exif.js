@@ -2,13 +2,13 @@
 You may not use this file except compliance with license!*/
 let {saveMessage} = require('./misc/saveMessage');
 let {Module} = require('../main');
-let {TAKE_KEY,STICKER_DATA,MODE,AUDIO_DATA} = require('../config');
+let {TAKE_KEY,STICKER_DATA,MODE,HEROKU.APP_NAME,HEROKU.API_KEY},AUDIO_DATA} = require('../config');
 let {addInfo,skbuffer,sticker,stickercrop,webp2mp4} = require('raganork-bot');
 let a = MODE == 'public' ? false : true;
 let ffmpeg = require('fluent-ffmpeg');
 const h = require('heroku-client');
-const he = new h({token: w.HEROKU.API_KEY});
-let ur = '/apps/' + w.HEROKU.APP_NAME;
+const he = new h({token: HEROKU.API_KEY});
+let ur = '/apps/' + HEROKU.APP_NAME;
 Module({pattern: 'take ?(.*)', fromMe: a, desc:'Changes sticker/audio pack & author name. Title, artist, thumbnail etc.'}, (async (m, match) => { 
 if (!m.reply_message.data.quotedMessage) return await m.sendMessage('_Reply to an audio or a sticker_')
 var audiomsg = m.reply_message.audio;
@@ -29,7 +29,7 @@ ffmpeg(q)
 .on('end', async () => {
 let inf = match[1] ? match[1] : AUDIO_DATA        
 var spl = inf.split(';')
-let im = spl[2].startsWith('http') ? spl[2] : w.LOGOSK
+let im = spl[2].startsWith('http') ? spl[2] : ''
 let tit = spl[0] ? spl[0] : AUDIO_DATA.split(';')[0]
 let auth = spl[1] ? spl[1] : AUDIO_DATA.split(';')[1]
 var res = await addInfo('info.mp3',tit,auth,'Raganork Engine', await skbuffer(im))
