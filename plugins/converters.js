@@ -1,4 +1,4 @@
-const {Module} = require('../main');
+/*const {Module} = require('../main');
 const {downloadContentFromMessage } = require('@adiwajshing/baileys');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
@@ -30,3 +30,4 @@ Module({pattern: 'sticker$', fromMe: w}, (async (message, match) => {
             });
         return;
     }));
+*/
