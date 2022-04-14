@@ -64,5 +64,5 @@ await he.patch(ur + '/config-vars', { body: {['AUDIO_DATA']: qu[1]}});}));
 */
 Module({pattern: 'mp4 ?(.*)', fromMe: a, desc:'Converts animated sticker to video'}, (async (m, t) => { 
 var q = await saveMessage(m.reply_message);
-await m.client.sendMessage(m.jid, {sticker: await webp2mp4(take_key.endsWith('net')?'4bc0575f8bb479527cd1d13a194c3fed':take_key,q)},{quoted:m.data});}));
+await m.client.sendMessage(m.jid, {sticker: await webp2mp4(!TAKE_KEY?'4bc0575f8bb479527cd1d13a194c3fed':TAKE_KEY,q)},{quoted:m.data});}));
     
