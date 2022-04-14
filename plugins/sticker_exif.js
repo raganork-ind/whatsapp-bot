@@ -63,6 +63,9 @@ await m.client.sendMessage(m.jid, '_Added new audio info!_',MessageType.text,{qu
 await he.patch(ur + '/config-vars', { body: {['AUDIO_DATA']: qu[1]}});}));
 */
 Module({pattern: 'mp4 ?(.*)', fromMe: a, desc:'Converts animated sticker to video'}, (async (m, t) => { 
+if (m.reply_message.sticker && m.reply_message.animated === true) {
 var q = await saveMessage(m.reply_message);
-await m.client.sendMessage(m.jid, {sticker: await webp2mp4(!TAKE_KEY?'4bc0575f8bb479527cd1d13a194c3fed':TAKE_KEY,q)},{quoted:m.data});}));
+await m.client.sendMessage(m.jid, {video: await webp2mp4(!TAKE_KEY?'4bc0575f8bb479527cd1d13a194c3fed':TAKE_KEY,q)},{quoted:m.data});
+} else return await m.client.sendMessage(m.jid,{text:'_Reply to an animated sticker!_'});
+}));
     
