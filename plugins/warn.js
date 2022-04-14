@@ -10,7 +10,7 @@ var par = m.reply_message.jid
 var me = m.client.user.id.split('@')[0]
 var chat = m.jid
 if (!chat.endsWith('@g.us')) return await m.client.sendMessage(m.jid, { text: '_Only works in groups_' },{ quoted: m.data })
-var warn = await setwarn(me,chat,par,WARN)
+var warn = await setwarn(me,chat,par, parseInt(WARN))
 var ms = 'Replied message';
 if (m.reply_message.audio) ms = 'Audio Message'
 if (m.reply_message.sticker) ms = 'Sticker Message'
@@ -26,7 +26,7 @@ var msg = "```Warning ⚠️```"+ '\n' +
 if (warn !== 0) {
     return await m.client.sendMessage(m.jid, { text: msg ,mentions:[par]},{ quoted: m.data })
 } else {
-    await m.client.sendMessage(m.jid, { text: 'Warn limit ('+cnt+') of '+par+' exceeded. Removing participant ❌' ,mentions:[par]},{ quoted: m.data })
+    await m.client.sendMessage(m.jid, { text: 'Warn limit ('+WARN+') of '+par+' exceeded. Removing participant ❌' ,mentions:[par]},{ quoted: m.data })
     await m.client.groupParticipantsUpdate(m.jid, [par], "remove")
  }
 }));
@@ -37,5 +37,5 @@ Module({pattern: 'reset warn', fromMe: true, desc:'Resets the warn count of the 
     var chat = m.jid
 if (!chat.endsWith('@g.us')) return await m.client.sendMessage(m.jid, { text: '_Only works in groups_' },{ quoted: m.data })
  await deletewarn(me,chat,par)
-    return await m.client.sendMessage(m.jid, { text: 'Successfully reset warn limits of @'+par ,mentions:[par]},{ quoted: m.data })
+    return await m.client.sendMessage(m.jid, { text: 'Successfully reset warn limits of @'+par.split('@')[0] ,mentions:[par]},{ quoted: m.data })
 }));
