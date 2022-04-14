@@ -1,4 +1,4 @@
-const {Module} = require('../events');
+const {Module} = require('../main');
 const FilterDb = require('./sql/filters');
 Module({pattern: 'filter ?(.*)', fromMe: true, desc: "Adds filter in chat", dontAddCommandList: true}, (async (message, match) => {
     match = match[1].match(/[\'\"\“](.*?)[\'\"\“]/gsm);
