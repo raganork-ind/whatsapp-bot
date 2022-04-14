@@ -6,15 +6,15 @@ async function isAdmin(message, user = message.client.user.jid) {
     return m.includes(true);
 }
 Module({pattern: 'kick ?(.*)', fromMe: true, desc: 'Removes participant'}, (async (message, match) => {
-var admin = await isAdmin(message);
-if (!isAdmin) return await message.client.sendMessage(message.jid, { text: '_Bot is not an admin_' },{quoted: message.data})
+/*var admin = await isAdmin(message);
+if (!isAdmin) return await message.client.sendMessage(message.jid, { text: '_Bot is not an admin_' },{quoted: message.data})*/
 const user = message.mention[0] || message.reply_message.jid
 await message.client.sendMessage(message.jid, { text: '@'+user.split('@')[0] +' kicked!', mentions: [user] })
 await message.client.groupParticipantsUpdate(message.jid, [user], "remove" /*replace this parameter with "remove", "demote" or "promote" */)
 }))
 Module({pattern: 'add ?(.*)', fromMe: true, desc: 'Adds participants to groups'}, (async (message, match) => {
-var admin = await isAdmin(message);
-if (!isAdmin) return await message.client.sendMessage(message.jid, { text: '_Bot is not an admin_' },{quoted: message.data})
+/*var admin = await isAdmin(message);
+if (!isAdmin) return await message.client.sendMessage(message.jid, { text: '_Bot is not an admin_' },{quoted: message.data})*/
 var init = match[1]
 var initt = init.split(" ").join("")
 var user = initt.replace(/\+/g,'').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(/\(/g,'').replace(/\)/g,'').replace(/-/g,'')
