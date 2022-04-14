@@ -2,7 +2,7 @@
 You may not use this file except compliance with license!*/
 let {saveMessage} = require('./misc/saveMessage');
 let {Module} = require('../main');
-let {TAKE_KEY,STICKER_DATA,MODE} = require('../config');
+let {TAKE_KEY,STICKER_DATA,MODE,AUDIO_DATA} = require('../config');
 let {addInfo,skbuffer,sticker,stickercrop,webp2mp4} = require('raganork-bot');
 let a = MODE == 'public' ? false : true;
 let ffmpeg = require('fluent-ffmpeg');
