@@ -71,6 +71,16 @@ if (!isAdmin) return await message.client.sendMessage(message.jid, { text: '_Bot
 await message.client.groupRevokeInvite(message.jid)
 await message.client.sendMessage(message.jid, { text: '_Group link reset!_' })
 }))
+Module({pattern: 'tagall', fromMe: true, desc: 'Tags all participants in a group'}, (async (message, match) => {
+var group = await message.client.groupMetadata(message.jid)
+var jids = [];
+var mn = '';
+group.participants.map(async(user) => {
+mn '@' + user.id.split('@')[0] + '\n';
+jids.push(user.id.replace('c.us', 's.whatsapp.net'));});
+var msg = message.reply_message.message || mn
+await message.client.sendMessage(message.jid, { text: msg, mentions: jids})
+}))
 module.exports = {
     isAdmin: isAdmin
 };
