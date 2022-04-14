@@ -1,5 +1,5 @@
 # raganork-md
-Simple multi device whatsapp bot
+Simple multi device whatsapp bot. This bot is currently under testing. You can be a beta tester by deploying!
 
 <div align="center">
   
