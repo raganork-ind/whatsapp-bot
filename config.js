@@ -14,6 +14,7 @@ module.exports = {
     AUDIO_DATA: process.env.AUDIO_DATA === undefined ? 'ꪶ͢٭𝑺𝜣𝑼𝑹𝛢𝑽𝑲𝑳¹¹ꫂ;Raganork MD bot;https://www.linkpicture.com/q/rgnk.jpg' : process.env.AUDIO_DATA,
     TAKE_KEY: process.env.TAKE_KEY === undefined ? '' : process.env.TAKE_KEY,
     MODE: process.env.MODE === undefined ? 'private' : process.env.MODE,
+    WARN: process.env.WARN === undefined ? '4' : process.env.WARN,
     HEROKU: {
         HEROKU: process.env.HEROKU === undefined ? false : convertToBool(process.env.HEROKU),
         API_KEY: process.env.HEROKU_API_KEY === undefined ? '' : process.env.HEROKU_API_KEY,
