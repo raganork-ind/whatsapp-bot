@@ -11,6 +11,8 @@ module.exports = {
     PASSWORD: process.env.PASSWORD === undefined ? '' : process.env.PASSWORD,
     HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,
     STICKER_DATA: process.env.STICKER_DATA === undefined ? 'ꪶ͢٭𝑺𝜣𝑼𝑹𝛢𝑽𝑲𝑳¹¹ꫂ' : process.env.STICKER_DATA,
+    AUDIO_DATA: process.env.AUDIO_DATA === undefined ? 'ꪶ͢٭𝑺𝜣𝑼𝑹𝛢𝑽𝑲𝑳¹¹ꫂ;Raganork MD bot;https://www.linkpicture.com/q/rgnk.jpg' : process.env.AUDIO_DATA,
+    TAKE_KEY: process.env.TAKE_KEY === undefined ? '' : process.env.TAKE_KEY,
     MODE: process.env.MODE === undefined ? 'private' : process.env.MODE,
     HEROKU: {
         HEROKU: process.env.HEROKU === undefined ? false : convertToBool(process.env.HEROKU),
