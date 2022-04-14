@@ -76,7 +76,7 @@ var group = await message.client.groupMetadata(message.jid)
 var jids = [];
 var mn = '';
 group.participants.map(async(user) => {
-mn '@' + user.id.split('@')[0] + '\n';
+mn += '@' + user.id.split('@')[0] + '\n';
 jids.push(user.id.replace('c.us', 's.whatsapp.net'));});
 var msg = message.reply_message.message || mn
 await message.client.sendMessage(message.jid, { text: msg, mentions: jids})
