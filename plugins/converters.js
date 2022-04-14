@@ -2,7 +2,7 @@ const {Module} = require('../main');
 const {downloadContentFromMessage } = require('@adiwajshing/baileys');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
-const {saveMessage} = require('../lib/saveMessage');
+const {saveMessage} = require('./misc/saveMessage');
 const Config = require('../config');
 const {MODE} = require('../config');
 let w = MODE=='public'?false:true
