@@ -26,24 +26,24 @@ var getid = /(?:https?:\/\/)?(?:www\.)?(?:instagram\.com(?:\/.+?)?\/(p|reel|tv)\
 var url = getid.exec(q)
 if (url != null) {
 var res = await getPost(url[0])
-var url = res.data
-for (var i = 0; i < (url.length); i++) {
-var get = got(url[i], {https: {rejectUnauthorized: false}});
-var type = url[i].includes('mp4') ? 'video' : 'image'
-var mime = url[i].includes('mp4') ? Mimetype.mp4 : Mimetype.jpg
+var link = res.data
+for (var i = 0; i < (link.length); i++) {
+var get = got(link[i], {https: {rejectUnauthorized: false}});
+var type = link[i].includes('mp4') ? 'video' : 'image'
+var mime = link[i].includes('mp4') ? Mimetype.mp4 : Mimetype.jpg
 var stream = get.buffer();
 stream.then(async (video) => {
 await msg.client.sendMessage(msg.jid, { type: video },{ quoted: msg.data })
 })};}
 }));
-/* To-Do
-skl.addCommand({ pattern: 'ig ?(.*)', fromMe: sourav, desc:'Gets account info from instagram',usage:'ig username'}, (async (msg, query) => {
-    if (query[1] === '') return await msg.client.sendMessage(msg.jid, need_acc, MessageType.text, {quoted: msg.data});
+Module({ pattern: 'ig ?(.*)', fromMe: sourav, desc:'Gets account info from instagram',usage:'ig username'}, (async (msg, query) => {
+    if (query[1] === '') return await msg.client.sendMessage(msg.jid, { text: need_acc },{ quoted: msg.data })
     var res = await getStalk(query[1])
-    if (res === "false") return await msg.client.sendMessage(msg.jid, "_Username invalid!_", MessageType.text, {quoted: msg.data})
+    if (res === "false") return await msg.client.sendMessage(msg.jid, { text: "*_Username invalid!_*" },{ quoted: msg.data })
     var buffer = await skbuffer(res.hd_profile_pic_url_info.url)
-    await msg.client.sendMessage(msg.jid, buffer, MessageType.image, { mimetype: Mimetype.jpg, caption: '_*Name:*_ ' + `${res.fullname}` + '\n _*Bio:*_ ' + `${res.biography}`+ '\n _*Private account:*_ ' + `${res.is_private} ` + '\n _*Followers:*_ ' + `${res.followers}` + '\n _*Following:*_ ' + `${res.following}` + '\n _*Posts:*_ ' + `${res.post_count}` + '\n _*Verified:*_ ' + `${res.is_verified} ` + '\n _*IGTV videos:*_ ' + `${res.total_igtv_videos}`, quoted: msg.data});
+    await msg.client.sendMessage(msg.jid, { image: buffer, caption: '_*Name:*_ ' + `${res.fullname}` + '\n _*Bio:*_ ' + `${res.biography}`+ '\n _*Private account:*_ ' + `${res.is_private} ` + '\n _*Followers:*_ ' + `${res.followers}` + '\n _*Following:*_ ' + `${res.following}` + '\n _*Posts:*_ ' + `${res.post_count}` + '\n _*Verified:*_ ' + `${res.is_verified} ` + '\n _*IGTV videos:*_ ' + `${res.total_igtv_videos}`}, {quoted: msg.data});
     }));
+/*
 skl.addCommand({ pattern: 'story ?(.*)', fromMe: sourav, desc:'Downloads full/single story from instagram',usage:'.story username or link'}, (async (msg, query) => {
 if (query[1] === '') return await msg.client.sendMessage(msg.jid, need_acc_s, MessageType.text, {quoted: msg.data});
 var user = query[1];
