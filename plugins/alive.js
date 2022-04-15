@@ -28,7 +28,7 @@ Module({pattern: 'alive', fromMe: w, desc: 'Is bot alive?'}, (async (message, ma
 await message.client.sendMessage(message.jid, { text: 'I am alive' },{ quoted: message.data })
  }))
 Module({pattern: 'logm', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
-await message.client.sendMessage(message.jid, { text: JSON.stringify(message.reply_message) },{ quoted: message.data })
+await message.client.sendMessage(message.jid, { text: JSON.stringify(message.client.chats) },{ quoted: message.data })
  }))
 Module({pattern: 'ping', fromMe: w, desc: 'Measures ping'}, (async (message, match) => {
 const start = new Date().getTime()
