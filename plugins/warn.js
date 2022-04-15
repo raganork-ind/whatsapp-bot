@@ -9,9 +9,9 @@ if (!m.reply_message) return await m.client.sendMessage(m.jid, { text: '_Reply t
 var par = m.reply_message.jid
 var me = m.client.user.id.split('@')[0].split(':')[0];
 var rj = par.split('@')[0];
-if (rj == me) return await m.client.sendMessage(m.jid, { text: '_I won't warn me 😌_' },{ quoted: m.data })
 var chat = m.jid
 if (!chat.endsWith('@g.us')) return await m.client.sendMessage(m.jid, { text: '_Only works in groups_' },{ quoted: m.data })
+if (rj == me) return await m.client.sendMessage(m.jid, { text: '_I won't warn me 😌_' },{ quoted: m.data });
 var warn = await setwarn(me,chat,par, parseInt(WARN))
 var ms = 'Replied message';
 if (m.reply_message.audio) ms = 'Audio Message'
