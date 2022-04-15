@@ -1,5 +1,5 @@
 const {Module} = require('../main');
-const {downloadContentFromMessage } = require('@adiwajshing/baileys');
+const {Mimetype } = require('@adiwajshing/baileys');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 const {saveMessage} = require('./misc/saveMessage');
@@ -36,7 +36,7 @@ if (message.reply_message === false) return await message.client.sendMessage(mes
      ffmpeg(savedFile)
             .save('./temp/tomp3.mp3')
             .on('end', async () => {
-                await message.client.sendMessage(message.jid, { audio: fs.readFileSync('./temp/tomp3.mp3') }, { quoted: message.data })
+                await message.client.sendMessage(message.jid, { audio: fs.readFileSync('./temp/tomp3.mp3'),mimetype: Mimetype.mp4audio,ptt: false }, { quoted: message.data })
             });   
 }));
 Module({pattern: 'photo$', fromMe: w}, (async (message, match) => {    
