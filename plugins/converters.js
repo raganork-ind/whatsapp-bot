@@ -30,3 +30,24 @@ Module({pattern: 'sticker$', fromMe: w}, (async (message, match) => {
             });
         return;
     }));
+Module({pattern: 'mp3$', fromMe: w}, (async (message, match) => {    
+if (message.reply_message === false) return await message.client.sendMessage(message.jid, { text: '_Reply to a video or voice_' })
+        var savedFile = await saveMessage(message.reply_message);
+     ffmpeg(savedFile)
+            .save('./temp/tomp3.mp3')
+            .on('end', async () => {
+                await message.client.sendMessage(message.jid, { audio: fs.readFileSync('./temp/tomp3.mp3') }, { quoted: message.data })
+            });   
+}));
+Module({pattern: 'photo$', fromMe: w}, (async (message, match) => {    
+if (message.reply_message === false) return await message.client.sendMessage(message.jid, { text: '_Reply to a non animated sticker_' })
+     if (message.reply_message.sticker && message.reply_message.animated === false ) {
+     var savedFile = await saveMessage(message.reply_message);
+     ffmpeg(savedFile)
+            .fromFormat('webp_pipe')
+            .save('output.png')
+            .on('end', async () => {
+                await message.client.sendMessage(message.jid, {image: fs.readFileSync('output.png')});
+            });
+}
+}));
