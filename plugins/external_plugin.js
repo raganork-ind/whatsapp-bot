@@ -5,8 +5,8 @@ const got = require('got');
 const fs = require('fs');
 const Db = require('./sql/plugin');
 
-Module({pattern: 'install ?(.*)', fromMe: true, desc: Lang.INSTALL_DESC, warn: Lang.WARN}, (async (message, match) => {
-    if (match[1] === '') return await message.sendMessage(Lang.NEED_URL + '.install https://gist.github.com/souravkl11/example.js')
+Module({pattern: 'install ?(.*)', fromMe: true, desc: "Installs plugins. Extra commands"}, (async (message, match) => {
+    if (match[1] === '') return await message.sendMessage("Need url" + '.install https://gist.github.com/souravkl11/example.js')
     try {
         var url = new URL(match[1]);
     } catch {
@@ -39,7 +39,7 @@ Module({pattern: 'install ?(.*)', fromMe: true, desc: Lang.INSTALL_DESC, warn: L
     }
 }));
 
-Module({pattern: 'plugin', fromMe: true, desc: Lang.PLUGIN_DESC }, (async (message, match) => {
+Module({pattern: 'plugin', fromMe: true, desc: "Shows installed plugins" }, (async (message, match) => {
     var mesaj = "Plugins you've installed externally";
     var plugins = await Db.PluginDB.findAll();
     if (plugins.length < 1) {
@@ -54,7 +54,7 @@ Module({pattern: 'plugin', fromMe: true, desc: Lang.PLUGIN_DESC }, (async (messa
    }
 }));
 
-Module({pattern: 'remove(?: |$)(.*)', fromMe: true, desc: Lang.REMOVE_DESC}, (async (message, match) => {
+Module({pattern: 'remove(?: |$)(.*)', fromMe: true, desc: "Removes installed Plugins"}, (async (message, match) => {
     if (match[1] === '') return await message.client.sendMessage(message.jid,{text: "Need a plugin name ❌"});
    var plugin = await Db.PluginDB.findAll({ where: {name: match[1]} });
     if (plugin.length < 1) {
