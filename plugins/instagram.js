@@ -28,14 +28,12 @@ if (url != null) {
 var res = await getPost(url[0])
 var link = res.data
 for (var i = 0; i < (link.length); i++) {
-await msg.client.sendMessage(msg.jid, { text: JSON.stringify(link) },{ quoted: msg.data })
-await msg.client.sendMessage(msg.jid, { text: JSON.stringify(link[i]) },{ quoted: msg.data })
 var get = got(link[i], {https: {rejectUnauthorized: false}});
 var type = link[i].includes('mp4') ? 'video' : 'image'
-var mime = link[i].includes('mp4') ? Mimetype.mp4 : Mimetype.jpg
+var mime = link[i].includes('mp4') ? 'video/mp4' : 'image/jpeg'
 var stream = get.buffer();
 stream.then(async (video) => {
-await msg.client.sendMessage(msg.jid, { type: video },{ quoted: msg.data })
+await msg.client.sendMessage(msg.jid, { `${type}`: video },{ quoted: msg.data })
 })};}
 }));
 Module({ pattern: 'ig ?(.*)', fromMe: sourav, desc:'Gets account info from instagram',usage:'ig username'}, (async (msg, query) => {
