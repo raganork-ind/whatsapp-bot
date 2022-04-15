@@ -9,7 +9,7 @@ WhatsAsena - Yusuf Usta
 const config = require('../../config');
 const { DataTypes } = require('sequelize');
 
-const FiltersDB = config.DATABASE.define('filter', {
+const FiltersDB = config.DATABASE.define('filters', {
     chat: {
       type: DataTypes.STRING,
       allowNull: false
