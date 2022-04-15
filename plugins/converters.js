@@ -42,11 +42,12 @@ Module({pattern: 'photo$', fromMe: w}, (async (message, match) => {
 if (message.reply_message === false) return await message.client.sendMessage(message.jid, { text: '_Reply to a non animated sticker_' })
      if (message.reply_message.sticker && message.reply_message.animated === false ) {
      var savedFile = await saveMessage(message.reply_message);
-     ffmpeg(savedFile)
+     let msg = {key: {remoteJid: message.reply_message.jid,fromMe: false,id: message.reply_message.id}}
+      ffmpeg(savedFile)
             .fromFormat('webp_pipe')
             .save('output.png')
             .on('end', async () => {
-                await message.client.sendMessage(message.jid, {image: fs.readFileSync('output.png')});
+                await message.client.sendMessage(message.jid, {image: fs.readFileSync('output.png')},{quoted: msg});
             });
 }
 }));
