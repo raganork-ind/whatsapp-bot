@@ -10,7 +10,7 @@ Module({pattern: 'video ?(.*)', fromMe: w, desc: "YouTube video downloader"}, (a
      const getID =
         /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
         var qq = getID.exec(s1)
-        await message.client.sendMessage(message.jid,{text: "_Downloading_", {quoted : { key: {fromMe: true,participant: "0@s.whatsapp.net",remoteJid: "status@broadcast"},message: {"extendedTextMessage": {"text": s1 }}}});
+        await message.client.sendMessage(message.jid,{text: "_Downloading_"}, {quoted : { key: {fromMe: true,participant: "0@s.whatsapp.net",remoteJid: "status@broadcast"},message: {"extendedTextMessage": {"text": s1 }}}});
      try { var dl = await getVideo(qq[1]) } catch {return await message.client.sendMessage(message.jid,{text:"*Download failed. Restart bot*"})}
 var cap = dl.details.title || ""
 var th = dl.details.thumbnail.url || null
