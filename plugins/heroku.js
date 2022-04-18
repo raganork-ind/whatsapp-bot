@@ -8,6 +8,8 @@ const {Module} = require('../main');
 const Config = require('../config');
 const Heroku = require('heroku-client');
 const got = require('got');
+const {getString} = require('./misc/lang');
+const Lang = getString('heroku');
 const heroku = new Heroku({
     token: Config.HEROKU.API_KEY
 });
@@ -32,24 +34,24 @@ let baseURI = '/apps/' + Config.HEROKU.APP_NAME;
 
 Module({pattern: 'restart$', fromMe: true, dontAddCommandList: true}, (async (message, match) => {
 
-    await message.client.sendMessage(message.jid, { text: '_Restarting_' },{ quoted: message.data })
+    await message.sendReply(Lang.RESTART_MSG)
     console.log(baseURI);
     await heroku.delete(baseURI + '/dynos').catch(async (error) => {
-        await message.client.sendMessage(message.jid, { text: error.message},{ quoted: message.data })});
+        await message.sendMessage(error.message)});
 }));
 
 Module({pattern: 'shutdown$', fromMe: true, dontAddCommandList: true}, (async(message, match) => {
 
     await heroku.get(baseURI + '/formation').then(async (formation) => {
         forID = formation[0].id;
-        await message.client.sendMessage(message.jid, { text: '_Shutting down ❌_' },{ quoted: message.data })
+        await message.sendReply(Lang.SHUTDOWN_MSG)
         await heroku.patch(baseURI + '/formation/' + forID, {
             body: {
                 quantity: 0
             }
         });
     }).catch(async (err) => {
-       await message.client.sendMessage(message.jid, { text: error.message},{ quoted: message.data }) 
+       await message.sendMessage(error.message) 
  });
 }));
 
@@ -68,21 +70,21 @@ Module({pattern: 'dyno$', fromMe: true, dontAddCommandList: true}, (async (messa
                quota_used = Math.floor(resp.quota_used);         
                percentage = Math.round((quota_used / total_quota) * 100);
                remaining = total_quota - quota_used;
-               await message.client.sendMessage(message.jid, { text:
-                    "Total dyno" + ": ```{}```\n\n".format(secondsToHms(total_quota))  + 
-                    "Dyno used" + ": ```{}```\n".format(secondsToHms(quota_used)) +  
-                    "Percentage" + ": ```{}```\n\n".format(percentage) +
-                    "Dyno left" + ": ```{}```\n".format(secondsToHms(remaining))},{ quoted: message.data })
+               await message.sendReply(
+                    Lang.DYNO_TOTAL + ": ```{}```\n\n".format(secondsToHms(total_quota))  + 
+                    Lang.DYNO_USED + ": ```{}```\n".format(secondsToHms(quota_used)) +  
+                    Lang.PERCENTAGE + ": ```{}```\n\n".format(percentage) +
+                    Lang.DYNO_LEFT + ": ```{}```\n".format(secondsToHms(remaining)))
                
             }).catch(async (err) => {
-                await message.client.sendMessage(message.jid, { text: error.message },{ quoted: message.data })
+                await message.sendMessage(error.message)
   });        
         });
     }));
 
-Module({pattern: 'setvar ?(.*)', fromMe: true, dontAddCommandList: true}, (async(message, match) => {
+Module({pattern: 'setvar ?(.*)', fromMe: true, desc: Lang.SETVAR_DESC}, (async(message, match) => {
 
-    if (match[1] === '') return await message.client.sendMessage(message.jid, { text: 'Need key and value' },{ quoted: message.data })
+    if (match[1] === '') return await message.sendReply(Lang.KEY_VAL_MISSING)
 
     if ((varKey = match[1].split(':')[0]) && (varValue = match[1].split(':')[1])) {
         await heroku.patch(baseURI + '/config-vars', {
@@ -90,16 +92,16 @@ Module({pattern: 'setvar ?(.*)', fromMe: true, dontAddCommandList: true}, (async
                 [varKey]: varValue
             }
         }).then(async (app) => {
-          await message.client.sendMessage(message.jid, { text: '_Successfully set_ '+varKey+':'+varValue },{ quoted: message.data })  
+          await message.sendReply(Lang.SET_SUCCESS.format(varKey,varValue))  
  });
     } else {
-        await message.client.sendMessage(message.jid, { text: '_Invalid Key:Value format ❌_' },{ quoted: message.data })   }
+        await message.sendReply(Lang.INVALID)   }
 }));
 
 
-Module({pattern: 'delvar ?(.*)', fromMe: true, dontAddCommandList: true}, (async (message, match) => {
+Module({pattern: 'delvar ?(.*)', fromMe: true, desc: Lang.DELVAR_DESC}, (async (message, match) => {
 
-    if (match[1] === '') return await message.client.sendMessage(message.jid, { text: '_Give me a var key_' },{ quoted: message.data })
+    if (match[1] === '') return await message.sendReply(Lang.NOT_FOUND)
  await heroku.get(baseURI + '/config-vars').then(async (vars) => {
         key = match[1].trim();
         for (vr in vars) {
@@ -109,40 +111,40 @@ Module({pattern: 'delvar ?(.*)', fromMe: true, dontAddCommandList: true}, (async
                         [key]: null
                     }
                 });
-                return await message.client.sendMessage(message.jid, { text: '_Successfully deleted_ '+key },{ quoted: message.data })   }
+                return await message.sendReply(Lang.DEL_SUCCESS.format(key))   }
         }
-        await await message.client.sendMessage(message.jid, { text: '_Var not found ❌_' },{ quoted: message.data })
+        await await message.sendReply(Lang.NOT_FOUND)
     }).catch(async (error) => {
-       await message.client.sendMessage(message.jid, { text: error.message },{ quoted: message.data }) 
+       await message.sendReply(error.message) 
     });
 
 }));
-Module({pattern: 'getvar ?(.*)', fromMe: true, dontAddCommandList: true}, (async (message, match) => {
+Module({pattern: 'getvar ?(.*)', fromMe: true, desc: Lang.GETVAR_DESC}, (async (message, match) => {
 
-    if (match[1] === '') return await message.client.sendMessage(message.jid, { text: '_Need a var key!_' },{ quoted: message.data })
+    if (match[1] === '') return await message.sendReply(Lang.NOT_FOUND)
     await heroku.get(baseURI + '/config-vars').then(async (vars) => {
         for (vr in vars) {
-            if (match[1].trim() == vr) return await message.client.sendMessage(message.jid, { text: vars[vr]},{ quoted: message.data })
+            if (match[1].trim() == vr) return await message.sendReply(vars[vr])
         }
-        await await message.client.sendMessage(message.jid, { text: '_Var not found ❌_' },{ quoted: message.data })
+        await await message.sendReply(Lang.NOT_FOUND)
     }).catch(async (error) => {
-        await await message.client.sendMessage(message.jid, { text:error.message},{ quoted: message.data })
+        await await message.sendMessage(error.message)
     });
 }));
 Module( 
-  { pattern: "allvar", fromMe: true, desc: 'Get all vars' },
+  { pattern: "allvar", fromMe: true, desc: Lang.ALLVAR_DESC },
   async (message, match) => {
-    let msg = "```Here your all Heroku vars\n\n\n"
+    let msg = Lang.ALL_VARS+"\n\n\n```"
     await heroku
       .get(baseURI + "/config-vars")
       .then(async (keys) => {
         for (let key in keys) {
           msg += `${key} : ${keys[key]}\n\n`
         }
-        return await await message.client.sendMessage(message.jid, { text: msg + '```' },{ quoted: message.data })
+        return await await message.sendReply(msg='```')
       })
       .catch(async (error) => {
-        await message.client.sendMessage(message.jid, { text: error.message},{ quoted: message.data })
+        await message.sendMessage(error.message)
       })
   }
 );

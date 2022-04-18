@@ -1,0 +1,204 @@
+{
+    "STRINGS": {
+        "converters": {
+        "STICKER_DESC":"Creates stickers. Reply to media.",
+        "STICKER_NEED_REPLY":"Reply to a photo or a short video",
+        "MP3_DESC":"Converts replied media to mp3 format",
+        "MP3_NEED_REPLY:":"Reply to an audio or video",
+        "PHOTO_DESC":"Converts non animated stickers to photo",
+        "PHOTO_NEED_REPLY":"Reply to a non animated sticker"
+        },
+        "external_plugin": {
+            "INSTALL_DESC": "Installs external plugins.",
+            "NEED_URL": "Need a URL! Example:",
+            "INVALID_URL": "Please enter a valid url!",
+            "INVALID_PLUGIN": "Plugin has errors!*_\n*_Error:",
+            "INSTALLED": "Successfully installed {} ✅",
+            "PLUGIN_DESC": "Shows the plugins that you have installed.",
+            "INSTALLED_PLUGINS": "Installed plugins:\n",
+            "NO_PLUGIN": "No installed plugins found!",
+            "REMOVE_DESC": "Removes plugin.",
+            "NEED_PLUGIN": "Please give a plugin name! Example: .remove news*",
+            "PLUGIN_NOT_FOUND": "Maybe you have installed such a plugin, or maybe not. But it sure isn't right now.",
+            "DELETED": "✅ Module successfully deleted!"
+        },
+        "group": {
+            "KICK_DESC": "Kicks participants from group.",
+            "NOT_ADMIN": "I'm not an admin",
+            "KICKED": "Kicked!",
+            "NEED_USER": "Need a participant",
+            "ADD_DESC": "Adds members to the group.",
+            "ADDED": "added to the group!",
+            "ALREADY_PROMOTED": "Person is already an admin",
+            "PROMOTED": "promoted as admin",
+            "PROMOTE_DESC": "Makes any person an admin.",
+            "LEAVING": "Leaving from group",
+            "LEAVE_DESC": "Leaves from group.",
+            "DEMOTE_DESC": "Removes the person from admin position.",
+            "ALREADY_NOT_ADMIN": "Person is not an admin to demote",
+            "DEMOTED": ", is no longer an admin!",
+            "MUTE_DESC": "Mutes group chat. Only the admins can send messages.",
+            "MUTED": "Group muted. Only admins can send messages",
+            "UNMUTE_DESC": "Unmutes the group chat allowing all participants to send messages",
+            "UNMUTED": "Group opened.",
+            "REVOKE_DESC": "Resets the group's invitation link.",
+            "REVOKED": "Group link reset!",
+            "TAGALL_DESC": "Tags all members of the group.",
+            "INVITE_DESC": "Provides the group's invitation link.",
+            "INVITE": "Invite link:",
+            "GROUP_COMMAND": "This command only works in group chats"
+        },
+        "afk": {
+            "AFK_DESC": "It makes you AFK - Away From Keyboard.",
+            "IM_AFK": "I'm AFK now!",
+            "IM_AFK_NOMD": "I'm AFK now!",
+            "REASON": "Reason",
+            "LAST_SEEN": "Last Seen",
+            "IM_NOT_AFK": "I am not AFK anymore!",
+            "AFK_TEXT": "My owner is not here at the moment.",
+            "AFK_TEXT_NOMD": "I'm a bot!",
+            "HOUR": "hour",
+            "MINUTE": "minute",
+            "SECOND": "second"
+        },
+        "heroku": {
+            "RESTART_DESC": "Restarts the bot",
+            "RESTART_MSG": "Restarting...",
+            "SHUTDOWN_DESC": "Shutdown Bot",
+            "SHUTDOWN_MSG": "Shutting down... ❌",
+            "DYNO_DESC": "Check heroku dyno usage",
+            "DYNO_TOTAL": "Total Quota",
+            "DYNO_USED": "Quota used",
+            "PERCENTAGE": "Percentage",
+            "DYNO_LEFT": "Remaining",
+            "SETVAR_DESC": "Set heroku config var",
+            "SET_SUCCESS": "Successfully set _{} ➜ {}",
+            "KEY_VAL_MISSING": "Either Key or Value is missing",
+            "INVALID": "Invalid key:value format",
+            "GETVAR_DESC": "Get heroku config var",
+            "DELVAR_DESC": "Delete heroku config var",
+            "DEL_SUCCESS": "{} successfully deleted",
+            "ALLVAR_DESC":"Gives all your heroku config vars",
+            "ALL_VARS":"All your config vars",
+            "NOT_FOUND": "No results found for this key"
+        },
+        "filters": {
+            "FILTER_DESC": "It adds a filter. If someone writes your filter, it send the answer. If you just write .filter, it show's your filter list.",
+            "NO_FILTER": "No filters found in this chat",
+            "FILTERS": "🔎 Your filters in this chat:",
+            "NEED_REPLY": "❌ Please type in reply!*\n*Example:",
+            "FILTERED": "✅ Successfully set* _{}_ *to filter!",
+            "STOP_DESC": "Stops the filter you added previously.",
+            "NEED_FILTER": "❌ Please type a filter!*\n*Example:",
+            "ALREADY_NO_FILTER": "❌ There is already no filter like this!",
+            "DELETED": "✅ The filter was successfully deleted!"
+        },
+        "greetings": {
+            "WELCOME_DESC": "It sets the welcome message. If you leave it blank it shows the welcome message.",
+            "NOT_SET_WELCOME": "You don't set the welcome message yet.!*\n**To set:** _.welcome your welcome message",
+            "WELCOME_ALREADY_SETTED": "✅ Welcome message already set!*\n*Message:* ",
+            "NEED_WELCOME_TEXT": "You must write a message to set up the welcome message.*\n*Example:* _.welcome WELCOME!",
+            "WELCOME_DELETED": "✅ Welcome message has been deleted successfully!",
+            "WELCOME_SETTED": "Welcome message enabled successfully✅!",
+            "GOODBYE_DESC": "Sets the goodbye message. If you leave blank, it show's the goodbye message.",
+            "NOT_SET_GOODBYE": "You didn't set a goodbye message!*\n*To set:* _.goodbye Your Goodbye Message",
+            "GOODBYE_ALREADY_SETTED": "✅ Goodbye message has been set!*\n*Message:* ",
+            "NEED_GOODBYE_TEXT": "You must write a message to set up the goodbye message.*\n*Example:* _.goodbye Goodbye!",
+            "GOODBYE_DELETED": "✅ Goodbye message has been deleted successfully!",
+            "GOODBYE_SETTED": "✅ Goodbye message has been setted successfully!"
+        },
+        "memes": {
+            "MEMES_DESC": "Photo memes you replied to.",
+            "NEED_REPLY": "Reply to a photo!",
+            "DOWNLOADING": "Making meme..."
+        },
+        "ocr": {
+            "OCR_DESC": "Reads the text on the photo you have replied.",
+            "NEED_REPLY": "Reply to a photo!",
+            "DOWNLOADING": "Media is downloading & reading...",
+            "ERROR": "I couldn't read this :/_\n*Error:*_{}",
+            "RESULT": "Language:* _{}_\n*Here is what I read:* _{}"
+        },
+        "profile": {
+            "KICKME_DESC": "Leaves from group.",
+            "KICKME": "Leaving from the group...",
+            "PP_DESC": "Sets profile photo.",
+            "NEED_PHOTO": "Reply to a photo",
+            "PPING": "Setting profile photo...",
+            "BLOCK_DESC": "Blocks user.",
+            "UNBLOCK_DESC": "Unblocks user.",
+            "BLOCKED": "Blocked!",
+            "UNBLOCKED": "Unblocked!",
+            "NEED_USER": "Give me a user!",
+            "JID_DESC": "Gives user's JID."
+        },
+        "scrapers": {
+            "TRANSLATE_DESC": "It translates replied msg with Google Translate",
+            "TRANSLATE_USAGE": ".trt en ml (From English to Malayalam)",
+            "NEED_REPLY": "Please reply to any message!",
+            "LANG": "Language",
+            "FROM": "Translated Language",
+            "RESULT": "Translate",
+            "TRANSLATE_ERROR": "❌ An error occured while translating!",
+            "TTS_DESC": "Converts text to speech using google tts.",
+            "TTS_ERROR": "Error, Speech example of your sentence couldn't be made!",
+            "SONG_DESC": "Downloads songs from youtube.",
+            "NEED_TEXT_SONG": "Please write a song!*\n*Example:* _.song Arabic Kuthu",
+            "NO_RESULT": "Not found",
+            "DOWNLOADING_SONG": "Searching",
+            "UPLOADING_SONG": "Downloading and uploading",
+            "VIDEO_DESC": "Downloads video from YouTube.",
+            "NEED_VIDEO": "Need a youtube link!*\n*Example:* _.video https://youtu.be/..",
+            "DOWNLOADING_VIDEO": "Downloading",
+            "UPLOADING_VIDEO": "Uploading",
+            "YT_DESC": "Searches on YouTube.",
+            "NEED_WORDS": "Need some query",
+            "NOT_FOUND": "Not found",
+            "SEARCHING": "Searching",
+            "WIKI_DESC": "Searches query on Wikipedia.",
+            "IMG_DESC": "Searches for images on Google.",
+            "IMG": "Searching image"
+        },
+        "sticker": {
+            "STICKER_DESC": "Creates stickers. Reply to media.",
+            "NEED_REPLY": "Reply to a photo or short video"
+        },
+        "system_stats": {
+            "ALIVE_DESC": "Checks if the bot is working or not",
+            "SYSD_DESC": "Shows the system properties."
+        },
+        "tagall": {
+            "TAGALL_DESC": "Mentions everyone in the group.",
+            "ADMIN": "I'm not an admin"
+        },
+        "updater": {
+            "UPDATER_DESC": "Checks for bot updates.",
+            "UPDATE": "Already up to date",
+            "UPDATE_START_DESC": "Updates bot.",
+            "UPDATING": "Build started",
+            "INVALID_HEROKU": "Heroku app name or API key invalid!",
+            "UPDATED": "Build finished",
+            "AFTER_UPDATE": "Restarting"
+        },
+        "ping": {
+            "PING_DESC": "Measures your ping.",
+            "URL": "Shorten the long link."
+        },
+        "instagram": {
+            "NEED_WORD": "Please enter username of any instagram account.",
+            "USAGE": ".insta <userName>",
+            "DESC": "Fetches user informations from instagram",
+            "LOADING": "Fetching user data.. please wait.",
+            "USERNAME": "Username",
+            "NAME": "Name",
+            "BIO": "Biography",
+            "FOLLOWERS": "Followers",
+            "FOLLOWS": "Follows",
+            "ACCOUNT": "Account privacy",
+            "PUBLIC": "Public",
+            "HIDDEN": "Hidden",
+            "NOT_FOUND": "User not found: "
+        }
+       
+    }
+}
