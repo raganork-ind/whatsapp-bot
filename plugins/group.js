@@ -65,7 +65,7 @@ Module({pattern: 'unmute', fromMe: true, desc: Lang.UNMUTE_DESC}, (async (messag
     await message.client.groupSettingUpdate(message.jid, 'not_announcement')
 await message.sendMessage(Lang.UNMUTED)
 }))
-Module({pattern: 'jid', fromMe: true, desc: 'Gives chat jid'}, (async (message, match) => {
+Module({pattern: 'jid', fromMe: true, desc: Lang.JID_DESC}, (async (message, match) => {
 var jid = message.reply_message.jid || message.jid
 await message.sendReply(jid)
 }))
