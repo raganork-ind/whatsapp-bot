@@ -1,7 +1,6 @@
 const {find} = require('raganork-bot')
 const {Module} = require('../main');
 const s = require('../config');
-const MessageType = require('../lib/MessageType');
 const wk = s.MODE == 'public' ? false : true
 Module({pattern: 'true ?(.*)', desc: 'Searches for number in truecaller!',fromMe: wk}, async (msg, query) => {
 if (!query[1] && !msg.reply_message) return await msg.reply("_Give me any number or reply to any user!_");
