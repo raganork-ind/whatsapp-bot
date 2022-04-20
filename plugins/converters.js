@@ -5,6 +5,7 @@ const {saveMessage} = require('./misc/saveMessage');
 const Config = require('../config');
 const {MODE} = require('../config');
 const {getString} = require('./misc/lang');
+const {bass} = require('./misc/Bass');
 const Lang = getString('converters');
 let w = MODE=='public'?false:true
 Module({pattern: 'sticker$', fromMe: w,desc: Lang.STICKER_DESC}, (async (message, match) => {    
@@ -39,6 +40,11 @@ if (message.reply_message === false) return await message.sendReply(Lang.MP3_NEE
             .on('end', async () => {
                 await message.client.sendMessage(message.jid, { audio: fs.readFileSync('./temp/tomp3.mp3'),mimetype: 'audio/mp4',ptt: false }, { quoted: message.data })
             });   
+}));
+Module({pattern: 'bass ?(.*)', fromMe: Lang.BASS_DESC}, (async (message, match) => {    
+if (message.reply_message === false) return await message.sendReply(Lang.BASS_NEED_REPLY)
+var savedFile = await saveMessage(message.reply_message);
+await message.client.sendMessage(message.jid, { audio: await bass(savedFile,match[1]),mimetype: 'audio/mp4',ptt: false }, { quoted: message.data })
 }));
 Module({pattern: 'photo$', fromMe: Lang.PHOTO_DESC}, (async (message, match) => {    
 if (message.reply_message === false) return await message.sendMessage(Lang.PHOTO_NEED_REPLY)
