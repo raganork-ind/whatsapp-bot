@@ -5,6 +5,8 @@
         "STICKER_NEED_REPLY":"Reply to a photo or a short video",
         "MP3_DESC":"Converts replied media to mp3 format",
         "MP3_NEED_REPLY:":"Reply to an audio or video",
+        "BASS_DESC:":"Bass boosts audio. .bass 20",
+        "BASS_NEED_REPLY:":"Reply to an audio",
         "PHOTO_DESC":"Converts non animated stickers to photo",
         "PHOTO_NEED_REPLY":"Reply to a non animated sticker"
         },
