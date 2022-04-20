@@ -48,7 +48,7 @@ if (message.reply_message === false) return await message.sendMessage(Lang.PHOTO
             .fromFormat('webp_pipe')
             .save('output.png')
             .on('end', async () => {
-                await message.sendReply(fs.readFileSync('output.png'),'sticker');
+                await message.sendReply(fs.readFileSync('output.png'),'image');
             });
 }
 }));
