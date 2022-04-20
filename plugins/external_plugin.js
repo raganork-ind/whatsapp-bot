@@ -31,11 +31,11 @@ Module({pattern: 'install ?(.*)', fromMe: true, desc: "Installs plugins. Extra c
             require('./' + plugin_name);
         } catch (e) {
             fs.unlinkSync('/skl/Raganork/plugins/' + plugin_name + '.js')
-            return await message.client.sendMessage(message.jid,{text: "Plugin has errors ❌\n" + e});
+            return await message.client.sendMessage(message.jid,{text: "Given plugin has errors ❌\n" + e});
     }
 
         await Db.installPlugin(url, plugin_name);
-        await message.client.sendMessage(message.jid,{text: "Plugin installed successfully ✅"});
+        await message.sendMessage("Successfully installed "+plugin_name+" ✅");
     }
 }));
 
