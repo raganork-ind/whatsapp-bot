@@ -12,7 +12,7 @@ let w = "public" != MODE;
 const readMore = String.fromCharCode(8206).repeat(4001);
 Module({
     pattern: "list ?(.*)",
-    fromMe: sourav,
+    fromMe: w,
     dontAddCommandList: !0
 }, async (n, a) => {
     var e = "";
