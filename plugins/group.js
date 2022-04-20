@@ -68,12 +68,12 @@ Module({pattern: 'jid', fromMe: true, desc: Lang.JID_DESC}, (async (message, mat
 var jid = message.reply_message.jid || message.jid
 await message.sendReply(jid)
 }))
-Module({pattern: 'invite', fromMe: true, desc: 'Gives group invite link'}, (async (message, match) => {
+Module({pattern: 'invite', fromMe: true, desc: Lang.INVITE_DESC}, (async (message, match) => {
 if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
 var admin = await isAdmin(message);
 if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
 var code = await message.client.groupInviteCode(message.jid)
-await message.client.sendMessage(message.jid, { text: "Group invite link: "+code })
+await message.client.sendMessage(message.jid, { text: Lang.INVITE+' '+code })
 }))
 Module({pattern: 'revoke', fromMe: true, desc: Lang.REVOKE_DESC}, (async (message, match) => {
 if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
