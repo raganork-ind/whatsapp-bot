@@ -26,7 +26,7 @@ if (message.tembutton === 'mdcmd') await message.client.sendMessage(message.jid,
  
 }))
 Module({pattern: 'alive', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
-await parseAlive(ALIVE)
+await parseAlive(message,ALIVE)
  }))
 Module({pattern: 'logm', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
 await message.client.sendMessage(message.jid, { text: JSON.stringify(message.client.chats) },{ quoted: message.data })
