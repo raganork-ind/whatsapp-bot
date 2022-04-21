@@ -20,9 +20,8 @@ const buttonMessage = {
 await message.client.sendMessage(message.jid, buttonMessage)
 }))
 Module({on: 'button', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
-await message.client.sendMessage(message.jid, { text: JSON.stringify(message) },{ quoted: message.data })	
-if (message.tembutton === 'mdcmd') await message.client.sendMessage(message.jid, { text: 'Commands will appear here!' },{ quoted: message.data })
-	if (message.tembutton === 'mdmenu') await message.client.sendMessage(message.jid, { text: 'Menu will appear here!' },{ quoted: message.data })
+if (message.tembutton === 'mdcmd') await message.sendReply('Type .list for commands!');
+	if (message.tembutton === 'mdmenu') await message.sendReply('Menu will appear here!')
  
 }))
 Module({pattern: 'alive', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
