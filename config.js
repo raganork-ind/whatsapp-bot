@@ -8,6 +8,7 @@ DATABASE_URL = process.env.DATABASE_URL === undefined ? './bot.db' : process.env
 DEBUG = process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBUG);
 module.exports = {
     VERSION: 'beta',
+    ALIVE: process.env.ALIVE === undefined ? "{image/https://i.imgur.com/KCnoMM2.jpg} Hey there, I'm alive \n Uptime: {uptime}" : process.env.ALIVE,
     USERNAME: process.env.USERNAME === undefined ? '' : process.env.USERNAME,
     PASSWORD: process.env.PASSWORD === undefined ? '' : process.env.PASSWORD,
     HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,
