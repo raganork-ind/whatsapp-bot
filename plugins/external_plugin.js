@@ -39,7 +39,7 @@ Module({pattern: 'install ?(.*)', fromMe: true, desc: "Installs plugins. Extra c
     }
 }));
 
-Module({pattern: 'plugin', fromMe: true, desc: "Shows installed plugins" }, (async (message, match) => {
+Module({pattern: 'plugin ?(.*)', fromMe: true, desc: "Shows installed plugins" }, (async (message, match) => {
     if (match[1] !== '') {
            var plugin = await Db.PluginDB.findAll({ where: {name: match[1]} });
            return await message.sendReply(plugin.dataValues.name + ": "+plugin.dataValues.url);
