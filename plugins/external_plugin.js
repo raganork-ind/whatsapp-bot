@@ -40,7 +40,11 @@ Module({pattern: 'install ?(.*)', fromMe: true, desc: "Installs plugins. Extra c
 }));
 
 Module({pattern: 'plugin', fromMe: true, desc: "Shows installed plugins" }, (async (message, match) => {
-    var mesaj = "Plugins you've installed externally";
+    if (match[1] !== '') {
+           var plugin = await Db.PluginDB.findAll({ where: {name: match[1]} });
+           return await message.sendReply(plugin.dataValues.name + ": "+plugin.dataValues.url);
+    }
+    var mesaj = "Exterbal plugins you've installed externally";
     var plugins = await Db.PluginDB.findAll();
     if (plugins.length < 1) {
         return await message.client.sendMessage(message.jid,{text: "You haven't installed any external plugins ❌"});
@@ -50,7 +54,7 @@ Module({pattern: 'plugin', fromMe: true, desc: "Shows installed plugins" }, (asy
                 mesaj += '*' + plugin.dataValues.name + '* : ' + plugin.dataValues.url + '\n\n';
             }
         );
-        return await message.client.sendMessage(message.jid,{text: mesaj});
+        return await message.sendReply(mesaj);
    }
 }));
 
