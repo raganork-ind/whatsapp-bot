@@ -32,7 +32,7 @@ Module({ pattern: 'tts ?(.*)', fromMe: w, desc:Lang.TTS_DESC}, async (message, m
     await message.client.sendMessage(message.jid,{audio: buffer,mimetype: 'audio/mp4',ptt: false},{quoted: message.data});
 });
 Module({pattern: 'video ?(.*)', fromMe: w, desc: Lang.VIDEO_DESC}, (async (message, match) => { 
-        var s1 = !match[1] ? message.reply_message.message : match[1]
+        var s1 = !match[1].includes('youtu') ? message.reply_message.message : match[1]
         if (!s1) return await message.sendReply(Lang.NEED_VIDEO);
         if (!s1.includes('youtu')) return await message.sendReply(Lang.NEED_VIDEO);
         const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
