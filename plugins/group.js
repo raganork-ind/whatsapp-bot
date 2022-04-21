@@ -3,8 +3,8 @@ const Lang = getString('group');
 const {Module} = require('../main')
 async function isAdmin(message, user = message.client.user.id) {
 var metadata = await message.client.groupMetadata(message.jid);
-var admins = metadata.participants.filter(v => v.admin !== null).map(x => x.id)
-return admins.includes(user.split('@')[0]);}
+var admins = metadata.participants.filter(v => v.admin !== null).map(x => x.id);
+return admins.includes(user.split('@')[0].split(':')[0]);}
 function mentionjid(jid){ return "@"+jid.split("@")[0].split(":")[0]; }
 Module({pattern: 'kick ?(.*)', fromMe: true, desc: Lang.KICK_DESC}, (async (message, match) => {
 if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
