@@ -1,6 +1,7 @@
 const googleTTS = require('google-translate-tts');
 const {MODE} = require('../config');
 const {getString} = require('./misc/lang');
+const fs = require('fs');
 const Lang = getString('scrapers');
 let w = MODE=='public'?false:true
 const {Module} = require('../main');
