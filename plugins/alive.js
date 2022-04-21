@@ -1,5 +1,6 @@
 const {Module} = require('../main')
 const {MODE} = require('../config');
+const {parseAlive} = require('./misc/misc');
 let w = MODE=='public'?false:true
 Module({pattern: 'list', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
 const templateButtons = [
@@ -25,7 +26,7 @@ if (message.tembutton === 'mdcmd') await message.client.sendMessage(message.jid,
  
 }))
 Module({pattern: 'alive', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
-await message.client.sendMessage(message.jid, { text: 'I am alive' },{ quoted: message.data })
+await parseAlive(ALIVE)
  }))
 Module({pattern: 'logm', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
 await message.client.sendMessage(message.jid, { text: JSON.stringify(message.client.chats) },{ quoted: message.data })
