@@ -5,7 +5,7 @@ const {saveMessage} = require('./misc/saveMessage');
 const Config = require('../config');
 const {MODE} = require('../config');
 const {getString} = require('./misc/lang');
-const {bass} = require('./misc/Bass');
+const {bass} = require('./misc/misc');
 const Lang = getString('converters');
 let w = MODE=='public'?false:true
 Module({pattern: 'sticker$', fromMe: w,desc: Lang.STICKER_DESC}, (async (message, match) => {    
