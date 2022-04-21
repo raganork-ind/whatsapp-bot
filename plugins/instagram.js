@@ -46,7 +46,7 @@ Module({ pattern: 'ig ?(.*)', fromMe: sourav, desc:'Gets account info from insta
 Module({ pattern: 'story ?(.*)', fromMe: sourav, desc:'Downloads full/single story from instagram',usage:'.story username or link'}, (async (msg, query) => {
 if (query[1] === '') return await msg.sendReply(need_acc_s);
 var user = query[1];
-var res = await getStory(user,v)
+var res = await getStory(user)
 if (res === "false") return await msg.sendReply("_Story not found!_")
 if (res.error) return await msg.sendReply("Status: 403 (forbidden)")
 var url = ''
