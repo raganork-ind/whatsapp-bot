@@ -1,5 +1,5 @@
 const {Module} = require('../main')
-const {MODE} = require('../config');
+const {MODE,ALIVE} = require('../config');
 const {parseAlive} = require('./misc/misc');
 let w = MODE=='public'?false:true
 Module({pattern: 'list', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
