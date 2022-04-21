@@ -1,26 +1,37 @@
 const {getString} = require('./misc/lang');
 const Lang = getString('group');
+const {isAdmin,isNumeric,mentionjid} = require('./misc/misc');
 const {Module} = require('../main')
-async function isAdmin(message, user = message.client.user.id) {
-var metadata = await message.client.groupMetadata(message.jid);
-var admins = metadata.participants.filter(v => v.admin !== null).map(x => x.id);
-return admins.includes(user.split('@')[0].split(':')[0]);}
-function mentionjid(jid){ return "@"+jid.split("@")[0].split(":")[0]; }
 Module({pattern: 'kick ?(.*)', fromMe: true, desc: Lang.KICK_DESC}, (async (message, match) => {
 if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
+var {participants} = await message.client.groupMetadata(message.jid)
+if (match[1]) {
+if(isNumeric(match[1])) {
 var admin = await isAdmin(message);
 if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
+await message.sendMessage(`_Removing all numbers starting with ${match[1]}_`)
+await new Promise((r) => setTimeout(r,3000))
+let users = participants.filter((member) => member.id.startsWith(match[1]))
+for (let member of users) {
+await new Promise((r) => setTimeout(r, 1000))
+await message.client.groupParticipantsUpdate(message.jid, [member.id], "remove")
+}
+return;
+}
+}
 const user = message.mention[0] || message.reply_message.jid
 if (!user) return await message.sendReply(Lang.NEED_USER)
+var admin = await isAdmin(message);
+if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
 await message.client.sendMessage(message.jid, { text: mentionjid(user) + Lang.KICKED, mentions: [user] })
-await message.client.groupParticipantsUpdate(message.jid, [user], "remove" /*replace this parameter with "remove", "demote" or "promote" */)
+await message.client.groupParticipantsUpdate(message.jid, [user], "remove")
 }))
 Module({pattern: 'add ?(.*)', fromMe: true, desc: Lang.ADD_DESC}, (async (message, match) => {
 if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
-var admin = await isAdmin(message);
-if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
 var init = match[1]
 if (!init) return await message.sendReply(Lang.NEED_USER)
+var admin = await isAdmin(message);
+if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
 var initt = init.split(" ").join("")
 var user = initt.replace(/\+/g,'').replace(' ','').replace(' ','').replace(' ','').replace(' ','').replace(/\(/g,'').replace(/\)/g,'').replace(/-/g,'')
 var jids = [];
@@ -33,21 +44,25 @@ await message.client.groupParticipantsUpdate(message.jid, jids, "add")
 await message.client.sendMessage(message.jid, { text: msg+' '+Lang.ADDED, mentions: jids })
 }))
 Module({pattern: 'promote', fromMe: true, desc: Lang.PROMOTE_DESC}, (async (message, match) => {
+const user = message.mention[0] || message.reply_message.jid
+if (!user) return await message.sendReply(Lang.NEED_USER)
 if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
 var admin = await isAdmin(message);
 if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
-await message.client.sendMessage(message.jid, { text: mentionjid(message.reply_message.jid) +' '+Lang.PROMOTED, mentions: [message.reply_message.jid] })
-await message.client.groupParticipantsUpdate(message.jid, [message.reply_message.jid], "promote")
+await message.client.sendMessage(message.jid, { text: mentionjid(user) +Lang.PROMOTED, mentions: [user] })
+await message.client.groupParticipantsUpdate(message.jid, [user], "promote")
 }))
 Module({pattern: 'leave', fromMe: true, desc: Lang.LEAVE_DESC}, (async (message, match) => {
 await message.client.sendMessage(message.jid, { text: Lang.LEAVING})
 return await message.client.groupLeave(message.jid);
 }))
 Module({pattern: 'demote', fromMe: true, desc: Lang.DEMOTE_DESC}, (async (message, match) => {
-    if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
-    var admin = await isAdmin(message);
-    if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
-    await message.client.sendMessage(message.jid, { text: mentionjid(message.reply_message.jid) +' '+Lang.DEMOTED, mentions: [message.reply_message.jid] })
+if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
+const user = message.mention[0] || message.reply_message.jid
+if (!user) return await message.sendReply(Lang.NEED_USER)
+var admin = await isAdmin(message);
+if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
+await message.client.sendMessage(message.jid, { text: mentionjid(user) +Lang.DEMOTED, mentions: [user] })
 await message.client.groupParticipantsUpdate(message.jid, [message.reply_message.jid], "demote")
 }))
 Module({pattern: 'mute', fromMe: true, desc: Lang.MUTE_DESC}, (async (message, match) => {
@@ -93,6 +108,3 @@ jids.push(user.id.replace('c.us', 's.whatsapp.net'));});
 var msg = message.reply_message.message || mn
 await message.client.sendMessage(message.jid, { text: msg, mentions: jids})
 }))
-module.exports = {
-    isAdmin: isAdmin
-};
