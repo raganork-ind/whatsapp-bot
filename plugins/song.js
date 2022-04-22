@@ -8,6 +8,7 @@ const {skbuffer,getVideo,addInfo} = require('raganork-bot');
 let sourav = MODE == 'public' ? false : true
 Module({pattern: 'song ?(.*)', fromMe: sourav, desc: "Select and download songs from yt (list)"}, (async (message, match) => { 
 if (!match[1]) return message.sendReply("*Need words*")
+        var myid = message.client.user.id
         let sr = await yts(match[1]);
         sr = sr.all;
         if(sr.length < 1) return await message.sendReply("*No results found!*");
@@ -15,16 +16,17 @@ if (!match[1]) return message.sendReply("*Need words*")
     {
     title: "Matching songs.",
     rows: [
-        {title: sr[0].title, description: '', rowId:"song;"+sr[0].videoId+';'+message.client.user.jid},
-        {title: sr[1].title, description: '', rowId:"song;"+sr[1].videoId+';'+message.client.user.jid},
-        {title: sr[2].title, description: '', rowId:"song;"+sr[2].videoId+';'+message.client.user.jid},
-        {title: sr[3].title, description: '', rowId:"song;"+sr[3].videoId+';'+message.client.user.jid},
-        {title: sr[4].title, description: '', rowId:"song;"+sr[4].videoId+';'+message.client.user.jid},
-        {title: sr[5].title, description: '', rowId:"song;"+sr[5].videoId+';'+message.client.user.jid},
-        {title: sr[6].title, description: '', rowId:"song;"+sr[6].videoId+';'+message.client.user.jid},
-        {title: sr[7].title, description: '', rowId:"song;"+sr[7].videoId+';'+message.client.user.jid},
-        {title: sr[8].title, description: '', rowId:"song;"+sr[8].videoId+';'+message.client.user.jid},
-        {title: sr[9].title, description: '', rowId:"song;"+sr[9].videoId+';'+message.client.user.jid},
+         
+        {title: sr[0].title, description: '', rowId:"song;"+sr[0].videoId+';'+myid},
+        {title: sr[1].title, description: '', rowId:"song;"+sr[1].videoId+';'+myid},
+        {title: sr[2].title, description: '', rowId:"song;"+sr[2].videoId+';'+myid},
+        {title: sr[3].title, description: '', rowId:"song;"+sr[3].videoId+';'+myid},
+        {title: sr[4].title, description: '', rowId:"song;"+sr[4].videoId+';'+myid},
+        {title: sr[5].title, description: '', rowId:"song;"+sr[5].videoId+';'+myid},
+        {title: sr[6].title, description: '', rowId:"song;"+sr[6].videoId+';'+myid},
+        {title: sr[7].title, description: '', rowId:"song;"+sr[7].videoId+';'+myid},
+        {title: sr[8].title, description: '', rowId:"song;"+sr[8].videoId+';'+myid},
+        {title: sr[9].title, description: '', rowId:"song;"+sr[9].videoId+';'+myid},
         ]
     } ]
        const listMessage = {
@@ -37,7 +39,7 @@ if (!match[1]) return message.sendReply("*Need words*")
     await message.client.sendMessage(message.jid, listMessage)
 }));
 Module({on: 'button', fromMe: sourav}, (async (message, match) => { 
-if (message.list && message.list.startsWith("song") && message.list.includes(message.client.user.jid)) {
+if (message.list && message.list.startsWith("song") && message.list.includes(message.client.user.id)) {
     try { var stream = ytdl(message.list.split(";")[1], {quality: 'highestaudio',}); } catch { return await message.sendReply("*Download failed. Restart bot*") }
     var {details} = await getVideo(message.list.split(";")[1]);
     var thumb = await skbuffer(details.thumbnail.url);
