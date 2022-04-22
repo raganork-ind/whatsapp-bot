@@ -32,7 +32,7 @@ Module({pattern: 'sticker$', fromMe: w,desc: Lang.STICKER_DESC}, (async (message
             });
         return;
     }));
-Module({pattern: 'mp3$', fromMe: Lang.MP3_DESC}, (async (message, match) => {    
+Module({pattern: 'mp3$',fromMe: w, desc: Lang.MP3_DESC}, (async (message, match) => {    
 if (message.reply_message === false) return await message.sendReply(Lang.MP3_NEED_REPLY)
         var savedFile = await saveMessage(message.reply_message);
      ffmpeg(savedFile)
