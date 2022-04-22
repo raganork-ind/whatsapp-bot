@@ -38,7 +38,7 @@ if (!match[1]) return message.sendReply("*Need words*")
 }));
 Module({on: 'button', fromMe: sourav}, (async (message, match) => { 
 if (message.list && message.list.startsWith("song") && message.list.includes(message.client.user.jid)) {
-    try { let stream = ytdl(message.list.split(";")[1], {quality: 'highestaudio',}); } catch { return await message.sendReply("*Download failed. Restart bot*") }
+    try { var stream = ytdl(message.list.split(";")[1], {quality: 'highestaudio',}); } catch { return await message.sendReply("*Download failed. Restart bot*") }
     var {details} = await getVideo(message.list.split(";")[1]);
     var thumb = await skbuffer(details.thumbnail.url);
     ffmpeg(stream)
