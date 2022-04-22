@@ -41,13 +41,14 @@ if (!match[1]) return message.sendReply("*Need words*")
 Module({on: 'button', fromMe: sourav}, (async (message, match) => { 
 if (message.list && message.list.startsWith("song") && message.list.includes(message.client.user.id.split("@")[0].split(":")[0])) {
     await message.sendMessage("_Downloading_")
-    try { var stream = ytdl(message.list.split(";")[1], {quality: 'highestaudio',}); } catch { return await message.sendReply("*Download failed. Restart bot*") }
+    var stream = ytdl(message.list.split(";")[1], {quality: 'highestaudio',});
     var {details} = await getVideo(message.list.split(";")[1]);
     var thumb = await skbuffer(details.thumbnail.url);
     ffmpeg(stream)
         .audioBitrate(320)
         .save('./temp/song.mp3')
         .on('end', async () => {
+            await message.sendMessage("_Uploading_");
             try {var audio = await addInfo('./temp/song.mp3',details.title,AUDIO_DATA.split(";")[1],"Raganork Engine",thumb)} catch {return await message.client.sendMessage(message.jid,{audio: fs.readFileSync("./temp/song.mp3"),mimetype: 'audio/mp3'}, {quoted: message.data});}
             return await message.client.sendMessage(message.jid,{audio: audio,mimetype: 'audio/mp3'}, {quoted: message.data});
         });
