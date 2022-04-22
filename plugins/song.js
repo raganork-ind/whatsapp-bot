@@ -48,9 +48,8 @@ if (message.list && message.list.startsWith("song") && message.list.includes(mes
         .audioBitrate(320)
         .save('./temp/song.mp3')
         .on('end', async () => {
-            await message.sendMessage("_Uploading_");
             try {var audio = await addInfo('./temp/song.mp3',details.title,AUDIO_DATA.split(";")[1],"Raganork Engine",thumb)} catch {return await message.client.sendMessage(message.jid,{audio: fs.readFileSync("./temp/song.mp3"),mimetype: 'audio/mp3'}, {quoted: message.data});}
-            return await message.client.sendMessage(message.jid,{audio: audio,mimetype: 'audio/mp3'}, {quoted: message.data});
+            return await message.client.sendMessage(message.jid,{audio: audio,mimetype: 'audio/mpeg'}, {quoted: message.data});
         });
 }
 }));
