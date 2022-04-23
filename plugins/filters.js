@@ -39,6 +39,7 @@ Module({pattern: 'stop ?(.*)', fromMe: true, desc: "Deletes a filter", dontAddCo
     }
 }));
 Module({on: 'text', fromMe: false}, (async (message, match) => {
+    if (message.fromMe) return;
     var filtreler = await FilterDb.getFilter(message.jid);
     if (!filtreler) return; 
     filtreler.map(
