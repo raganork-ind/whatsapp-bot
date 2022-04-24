@@ -9,6 +9,9 @@ DEBUG = process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBU
 module.exports = {
     VERSION: 'beta',
     ALIVE: process.env.ALIVE === undefined ? "{image/https://i.imgur.com/KCnoMM2.jpg} Hey there, I'm alive \n Uptime: {uptime}" : process.env.ALIVE,
+    BLOCK_CHAT: process.env.BLOCK_CHAT === undefined ? "" : process.env.BLOCK_CHAT,
+    READ_MESSAGES: process.env.READ_MESSAGES === undefined ? false : convertToBool(process.env.READ_MESSAGES),
+    READ_COMMAND: process.env.READ_COMMAND === undefined ? true : convertToBool(process.env.READ_COMMAND),
     USERNAME: process.env.USERNAME === undefined ? '' : process.env.USERNAME,
     PASSWORD: process.env.PASSWORD === undefined ? '' : process.env.PASSWORD,
     HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,

@@ -1,6 +1,6 @@
 {
   "name": "raganork-md",
-  "version": "0.0.2-beta",
+  "version": "0.0.3-beta",
   "description": "Raganork whatsapp bot- Multi device public version.",
   "main": "./Raganork/index.js",
   "scripts": {
