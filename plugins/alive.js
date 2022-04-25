@@ -2,19 +2,17 @@ const {Module} = require('../main')
 const {MODE,ALIVE} = require('../config');
 const {parseAlive} = require('./misc/misc');
 let w = MODE=='public'?false:true
-Module({pattern: 'list', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
+Module({pattern: 'menu', fromMe: w, desc: 'Is bot alive?'}, (async (message, match) => {
 const templateButtons = [
-  {index: 1, urlButton: {displayText: 'Official website', url: 'https://bit.ly/Raganork'}},
-  {index: 2, urlButton: {displayText: 'Raganork Github', url: 'https://github.com/souravkl11/raganork-md'}},
-  {index: 3, quickReplyButton: {displayText: 'MENU', id: 'mdmenu'}},
-  {index: 4, quickReplyButton: {displayText: 'COMMANDS', id: 'mdcmd'}}
+  {index: 1, urlButton: {displayText: 'Github', url: 'https://github.com/souravkl11/raganork-md'}},
+  {index: 2, quickReplyButton: {displayText: 'MENU', id: 'mdmenu'}},
+  {index: 3, quickReplyButton: {displayText: 'COMMANDS', id: 'mdcmd'}}
 ]
 
 const buttonMessage = {
-    text: "Hey guys, this bot is under testing stage and will be available very soon for you!",
-    footer: 'All rights reserved - souravkl11/raganork',
-    templateButtons: templateButtons,
-    image: {url: 'https://i.imgur.com/xerZo68.jpeg'}
+    text: `Hello ${message.data.pushName}, type .list for commands`,
+    footer: 'Hey',
+    templateButtons: templateButtons
 }
 
 await message.client.sendMessage(message.jid, buttonMessage)
