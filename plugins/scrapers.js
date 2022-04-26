@@ -5,7 +5,7 @@ const fs = require('fs');
 const Lang = getString('scrapers');
 let w = MODE=='public'?false:true
 const {Module} = require('../main');
-const {getVideo, skbuffer} = require('raganork-bot');
+const {getVideo,ytdlServer, skbuffer} = require('raganork-bot');
 const ytdl = require('ytdl-core');
 const LanguageDetect = require('languagedetect');
 const lngDetector = new LanguageDetect();
