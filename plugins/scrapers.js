@@ -38,7 +38,9 @@ Module({pattern: 'video ?(.*)', fromMe: w, desc: Lang.VIDEO_DESC}, (async (messa
     const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
     var qq = getID.exec(s1)
     await message.sendMessage(Lang.DOWNLOADING_VIDEO);
- try { var dl = await getVideo(qq[1]) } catch {return await message.sendMessage("*Download failed. Restart bot*"); }
+ try { var dl = await getVideo(qq[1]) } catch {
+    var {url,thumbnail,title} = await ytdlServer("https://youtu.be/"+qq[1]);
+    return await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});}
 var cap = dl.details.title || ""
 var th = dl.details.thumbnail.url || null
 try { var yt = ytdl(qq[1], {filter: format => format.container === 'mp4' && ['720p', '480p', '360p', '240p', '144p'].map(() => true)}); } catch {
