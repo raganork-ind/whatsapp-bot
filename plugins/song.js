@@ -31,7 +31,7 @@ if (!match[1]) return message.sendReply("*Need words*")
     } ]
        const listMessage = {
   text: "And 9 more results...",
-  footer: "Hey "+message.data.pushName+", selcected song will be downloaded in high quality which depends upon its size",
+  footer: "Hey "+message.data.pushName,
   title: sr[0].title,
   buttonText: "Select song",
   sections
