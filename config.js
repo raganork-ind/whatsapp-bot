@@ -7,7 +7,7 @@ function convertToBool(text, fault = 'true') {
 DATABASE_URL = process.env.DATABASE_URL === undefined ? './bot.db' : process.env.DATABASE_URL;
 DEBUG = process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBUG);
 module.exports = {
-    VERSION: 'beta',
+    VERSION: 'V0.0.5',
     ALIVE: process.env.ALIVE === undefined ? "{image/https://i.imgur.com/KCnoMM2.jpg} Hey there, I'm alive \n Uptime: {uptime}" : process.env.ALIVE,
     BLOCK_CHAT: process.env.BLOCK_CHAT === undefined ? "" : process.env.BLOCK_CHAT,
     READ_MESSAGES: process.env.READ_MESSAGES === undefined ? false : convertToBool(process.env.READ_MESSAGES),
