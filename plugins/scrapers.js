@@ -32,17 +32,23 @@ Module({ pattern: 'tts ?(.*)', fromMe: w, desc:Lang.TTS_DESC}, async (message, m
     await message.client.sendMessage(message.jid,{audio: buffer,mimetype: 'audio/mp4',ptt: false},{quoted: message.data});
 });
 Module({pattern: 'video ?(.*)', fromMe: w, desc: Lang.VIDEO_DESC}, (async (message, match) => { 
-        var text = !match[1].includes('youtu') ? message.reply_message.message : match[1]
-        if (!text) return await message.sendReply(Lang.NEED_VIDEO);
-        if (!text.includes('youtu')) return await message.sendReply(Lang.NEED_VIDEO);
-        const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
-        var query = getID.exec(text)
-        if (!query[1]) return await message.sendReply(Lang.NEED_VIDEO)
-        var link = "https://youtu.be/"+query[1]
-        var {url,thumbnail,title} = await ytdlServer(link);
-        await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});
-        
-}));
+    var s1 = !match[1].includes('youtu') ? message.reply_message.message : match[1]
+    if (!s1) return await message.sendReply(Lang.NEED_VIDEO);
+    if (!s1.includes('youtu')) return await message.sendReply(Lang.NEED_VIDEO);
+    const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
+    var qq = getID.exec(s1)
+    await message.sendMessage(Lang.DOWNLOADING_VIDEO);
+ try { var dl = await getVideo(qq[1]) } catch {return await message.sendMessage("*Download failed. Restart bot*"); }
+var cap = dl.details.title || ""
+var th = dl.details.thumbnail.url || null
+try { var yt = ytdl(qq[1], {filter: format => format.container === 'mp4' && ['720p', '480p', '360p', '240p', '144p'].map(() => true)}); } catch {
+    var {url,thumbnail,title} = await ytdlServer("https://youtu.be/"+qq[1]);
+    return await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});}
+    yt.pipe(fs.createWriteStream('./temp/' + qq[1] + '.mp4'));
+    yt.on('end', async () => {
+        await message.sendMessage(Lang.UPLOADING_VIDEO);
+        await message.client.sendMessage(message.jid,{video: fs.readFileSync('./temp/' + qq[1] + '.mp4'),mimetype: "video/mp4" , caption:cap, thumbnail: await skbuffer(th)});
+    });}));
 Module({pattern: 'detectlang$', fromMe: w, desc: Lang.DLANG_DESC}, (async (message, match) => {
 
     if (!message.reply_message) return await message.sendMessage(Lang.NEED_REPLY)
