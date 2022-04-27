@@ -1,7 +1,7 @@
 const googleTTS = require('google-translate-tts');
 const {MODE} = require('../config');
 const {getString} = require('./misc/lang');
-const {sendYtQualityList} = require('./misc/misc');
+const {sendYtQualityList,processYtv} = require('./misc/misc');
 const fs = require('fs');
 const Lang = getString('scrapers');
 let w = MODE=='public'?false:true
@@ -35,6 +35,9 @@ Module({ pattern: 'tts ?(.*)', fromMe: w, desc:Lang.TTS_DESC}, async (message, m
 Module({pattern: 'ytv ?(.*)', fromMe: w, desc: Lang.YTV_DESC}, (async (message, match) => { 
 await sendYtQualityList(message,match);
 }));
+Module({on: 'button', fromMe: w}, (async (message, match) => { 
+    await processYtv(message);
+    }));
 Module({pattern: 'video ?(.*)', fromMe: w, desc: Lang.VIDEO_DESC}, (async (message, match) => { 
     var s1 = !match[1].includes('youtu') ? message.reply_message.message : match[1]
     if (!s1) return await message.sendReply(Lang.NEED_VIDEO);
