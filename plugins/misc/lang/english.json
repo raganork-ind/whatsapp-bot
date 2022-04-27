@@ -49,7 +49,14 @@
             "INVITE_DESC": "Provides the group's invitation link.",
             "INVITE": "Invite link:",
             "JID_DESC": "Gives jid of chat/user.",
-            "GROUP_COMMAND": "This command only works in group chats"
+            "GROUP_COMMAND": "This command only works in group chats",
+            "WARN_DESC": "Warns user. Kicks user if limit is over",
+            "WARNING": "Warning",
+            "USER": "```User:``` ",
+            "REMAINING": "```Remaining:``` ",
+            "REASON": "```Reason:``` ",
+            "WARN_RESET": "Removed all warns of ",
+            "WARN_OVER": "Maximum warnings exceeded"
         },
         "afk": {
             "AFK_DESC": "It makes you AFK - Away From Keyboard.",
