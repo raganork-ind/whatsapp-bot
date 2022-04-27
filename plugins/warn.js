@@ -7,7 +7,7 @@ let {getString} = require('./misc/lang');
 let Lang = getString('group');
 let {setWarn,resetWarn,mentionjid} = require('./misc/misc');
 Module({pattern: 'warn ?(.*)', fromMe: true, desc:Lang.WARN_DESC}, (async (m, mat) => { 
-if (m.data.isBaileys) return;
+if (m.message.includes(Lang.REMAINING)) return;
 var user = m.mention[0] || m.reply_message.jid
 if (!user) return await m.sendReply(Lang.NEED_USER)
 if (!m.jid.endsWith('@g.us')) return await m.sendReply(Lang.GROUP_COMMAND)
