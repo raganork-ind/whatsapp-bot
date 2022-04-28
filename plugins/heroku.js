@@ -86,7 +86,7 @@ Module({pattern: 'setvar ?(.*)', fromMe: true, desc: Lang.SETVAR_DESC}, (async(m
 
     if (match[1] === '') return await message.sendReply(Lang.KEY_VAL_MISSING)
 
-    if ((varKey = match[1].split(':')[0]) && (varValue = match[1].split(':')[1])) {
+    if ((varKey = match[1].split(':')[0]) && (varValue = match[1].replace(match[1].split(':')[0] + ":"))) {
         await heroku.patch(baseURI + '/config-vars', {
             body: {
                 [varKey]: varValue
@@ -95,7 +95,7 @@ Module({pattern: 'setvar ?(.*)', fromMe: true, desc: Lang.SETVAR_DESC}, (async(m
           await message.sendReply(Lang.SET_SUCCESS.format(varKey,varValue))  
  });
     } else {
-        await message.sendReply(Lang.INVALID)   }
+        await message.sendReply(Lang.INVALID)}
 }));
 
 
@@ -141,7 +141,7 @@ Module(
         for (let key in keys) {
           msg += `${key} : ${keys[key]}\n\n`
         }
-        return await await message.sendReply(msg='```')
+        return await await message.sendReply(msg += '```')
       })
       .catch(async (error) => {
         await message.sendMessage(error.message)
