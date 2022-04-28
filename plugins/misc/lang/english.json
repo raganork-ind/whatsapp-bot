@@ -12,9 +12,9 @@
         },
         "external_plugin": {
             "INSTALL_DESC": "Installs external plugins.",
-            "NEED_URL": "Need a URL! Example:",
-            "INVALID_URL": "Please enter a valid url!",
-            "INVALID_PLUGIN": "Plugin has errors!*_\n*_Error:",
+            "NEED_URL": "Need a URL! Example .install https://gist.git....",
+            "INVALID_URL": "Invalid url!",
+            "INVALID_PLUGIN": "Plugin has errors!*_\n",
             "INSTALLED": "Successfully installed {} ✅",
             "PLUGIN_DESC": "Shows the plugins that you have installed.",
             "INSTALLED_PLUGINS": "Installed plugins:\n",
@@ -22,7 +22,7 @@
             "REMOVE_DESC": "Removes plugin.",
             "NEED_PLUGIN": "Please give a plugin name! Example: .remove news*",
             "PLUGIN_NOT_FOUND": "Maybe you have installed such a plugin, or maybe not. But it sure isn't right now.",
-            "DELETED": "✅ Module successfully deleted!"
+            "DELETED": "✅ Plugin {} successfully deleted. Restart to make changes"
         },
         "group": {
             "KICK_DESC": "Kicks participants from group.",
@@ -55,8 +55,8 @@
             "USER": "```User:``` ",
             "REMAINING": "```Remaining:``` ",
             "REASON": "```Reason:``` ",
-            "WARN_RESET": "Removed all warns of ",
-            "WARN_OVER": "Maximum warnings exceeded"
+            "WARN_RESET": "Successfully reset warns ({}) of {}",
+            "WARN_OVER": "Maximum warnings ({}) of {} exceeded"
         },
         "afk": {
             "AFK_DESC": "It makes you AFK - Away From Keyboard.",

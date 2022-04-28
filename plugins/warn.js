@@ -28,7 +28,7 @@ Lang.REMAINING+ warn + '\n'
 if (warn !== 0) {
     return await m.client.sendMessage(m.jid, { text: msg ,mentions:[user]},{ quoted: m.data })
 } else {
-    await m.sendMessage(Lang.WARN_OVER)
+    await m.sendMessage(Lang.WARN_OVER.format(WARN,mentionjid(user).replace("@","")))
     await m.client.sendMessage(m.jid,{text: mentionjid(user)+Lang.KICKED, mentions: [user] })
     await m.client.groupParticipantsUpdate(m.jid, [user], "remove")
  }
@@ -37,6 +37,6 @@ Module({pattern: 'reset warn', fromMe: true, desc:'Resets the warn count of the 
 var user = m.mention[0] || m.reply_message.jid
 if (!user) return await m.sendReply(Lang.NEED_USER)
 if (!m.jid.endsWith('@g.us')) return await m.sendReply(Lang.GROUP_COMMAND)
-await resetWarn(m.jid,user)
-return await m.client.sendMessage(m.jid,{text:Lang.WARN_OVER+ mentionjid(user), mentions: [user] })
+try { await resetWarn(m.jid,user) } catch { return await m.sendReply("error")}
+return await m.client.sendMessage(m.jid,{text:Lang.WARN_RESET.format(WARN,mentionjid(user)), mentions: [user] })
 }));
