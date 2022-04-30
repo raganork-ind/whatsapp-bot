@@ -27,6 +27,7 @@
         "group": {
             "KICK_DESC": "Kicks participants from group.",
             "NOT_ADMIN": "I'm not an admin",
+            "ISADMIN": "Participant is an admin",
             "KICKED": "Kicked!",
             "NEED_USER": "Need a participant",
             "ADD_DESC": "Adds members to the group.",

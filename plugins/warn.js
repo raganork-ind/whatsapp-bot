@@ -4,6 +4,7 @@ You may not use this file except compliance with license! */
 let {Module} = require('../main');
 let {WARN} = require('../config');
 let {getString} = require('./misc/lang');
+let {isAdmin} = require('./misc/misc');
 let Lang = getString('group');
 let {setWarn,resetWarn,mentionjid} = require('./misc/misc');
 Module({pattern: 'warn ?(.*)', fromMe: true, desc:Lang.WARN_DESC}, (async (m, mat) => { 
@@ -28,6 +29,8 @@ Lang.REMAINING+ warn + '\n'
 if (warn !== 0) {
     return await m.client.sendMessage(m.jid, { text: msg ,mentions:[user]},{ quoted: m.data })
 } else {
+    var admin = await isAdmin(m,m.sender);
+    if (admin) return await m.sendReply(Lang.ISADMIN);
     await m.sendMessage(Lang.WARN_OVER.format(WARN,mentionjid(user).replace("@","")))
     await m.client.sendMessage(m.jid,{text: mentionjid(user)+Lang.KICKED, mentions: [user] })
     await m.client.groupParticipantsUpdate(m.jid, [user], "remove")
@@ -40,3 +43,28 @@ if (!m.jid.endsWith('@g.us')) return await m.sendReply(Lang.GROUP_COMMAND)
 try { await resetWarn(m.jid,user) } catch { return await m.sendReply("error")}
 return await m.client.sendMessage(m.jid,{text:Lang.WARN_RESET.format(WARN,mentionjid(user)), mentions: [user] })
 }));
+Module({on: 'text', fromMe: false}, (async (m, mat) => { 
+    if (!config.ANTILINK_WARN.split(",").includes(m.jid)) return;
+    var matches = m.message.match(/\bhttps?:\/\/\S+/gi);
+    if (matches && matches[0].includes(".")) {
+    var user = m.sender
+    var admin = await isAdmin(m,m.sender);
+    if (admin) return;
+    if (!user) return await m.sendReply(Lang.NEED_USER)
+    if (!m.jid.endsWith('@g.us')) return await m.sendReply(Lang.GROUP_COMMAND)
+    var warn = await setWarn(m.jid,user,parseInt(WARN))
+    var reason = matches.join(", ");
+    var msg = "Antilink "+Lang.WARNING + '\n' +
+    Lang.USER+mentionjid(user)+ '\n' +
+    Lang.REASON+ reason+ '\n' +
+    Lang.REMAINING+ warn + '\n' 
+    if (warn !== 0) {
+        return await m.client.sendMessage(m.jid, { text: msg ,mentions:[user]},{ quoted: m.data })
+    } else {
+        var admin = await isAdmin(m,m.sender);
+        await m.sendMessage(Lang.WARN_OVER.format(WARN,mentionjid(user).replace("@","")))
+        await m.client.sendMessage(m.jid,{text: mentionjid(user)+Lang.KICKED, mentions: [user] })
+        await m.client.groupParticipantsUpdate(m.jid, [user], "remove")
+     }
+    }
+    }));
