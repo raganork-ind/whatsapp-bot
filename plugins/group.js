@@ -88,7 +88,7 @@ if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_
 var admin = await isAdmin(message);
 if (!admin) return await message.sendReply(Lang.NOT_ADMIN)
 var code = await message.client.groupInviteCode(message.jid)
-await message.client.sendMessage(message.jid, { text: Lang.INVITE+' '+code })
+await message.client.sendMessage(message.jid, { text: "https://chat.whatsapp.com/"+code })
 }))
 Module({pattern: 'revoke', fromMe: true, desc: Lang.REVOKE_DESC}, (async (message, match) => {
 if (!message.jid.endsWith('@g.us')) return await message.sendMessage(Lang.GROUP_COMMAND)
