@@ -2,7 +2,7 @@
  Warn: souravkl11/raganork md 
 You may not use this file except compliance with license! */
 let {Module} = require('../main');
-let {WARN} = require('../config');
+let {WARN,ANTILINK_WARN} = require('../config');
 let {getString} = require('./misc/lang');
 let {isAdmin} = require('./misc/misc');
 let Lang = getString('group');
@@ -44,7 +44,7 @@ try { await resetWarn(m.jid,user) } catch { return await m.sendReply("error")}
 return await m.client.sendMessage(m.jid,{text:Lang.WARN_RESET.format(WARN,mentionjid(user)), mentions: [user] })
 }));
 Module({on: 'text', fromMe: false}, (async (m, mat) => { 
-    if (!config.ANTILINK_WARN.split(",").includes(m.jid)) return;
+    if (!ANTILINK_WARN.split(",").includes(m.jid)) return;
     var matches = m.message.match(/\bhttps?:\/\/\S+/gi);
     if (matches && matches[0].includes(".")) {
     var user = m.sender
