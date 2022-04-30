@@ -34,7 +34,7 @@ Module({pattern: 'yts ?(.*)', fromMe: sourav, desc: "Select and download songs f
             sr = sr.all;
             if(sr.length < 1) return await message.sendReply("*No results found!*");
             var videos = [];
-            for ( var index=0; index<sr.length; index++ ) {tempData.push({title: sr[index].title, description: '', rowId:"yts;"+sr[index].videoId+';'+myid});}
+            for ( var index=0; index<sr.length; index++ ) {videos.push({title: sr[index].title, description: '', rowId:"yts;"+sr[index].videoId+';'+myid});}
       const sections = [{
         title: "Search results from YouTube.",
         rows: videos 
