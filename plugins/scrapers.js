@@ -5,11 +5,24 @@ const {sendYtQualityList,processYtv} = require('./misc/misc');
 const fs = require('fs');
 const Lang = getString('scrapers');
 let w = MODE=='public'?false:true
+const translate = require('@vitalets/google-translate-api');
 const {Module} = require('../main');
 const {getVideo,ytdlServer, skbuffer} = require('raganork-bot');
 const ytdl = require('ytdl-core');
 const LanguageDetect = require('languagedetect');
 const lngDetector = new LanguageDetect();
+Module({ pattern: 'trt ?(.*)', fromMe: w, usage: Lang.TRANSLATE_USAGE,desc:Lang.TRANSLATE_DESC}, async (message, match) => {
+if (!message.reply_message) return await message.sendReply(Lang.NEED_REPLY)
+var from = match[1].split(" ")[0] || ''
+var to = match[1].split(" ")[1] || match[1]
+translate(message.reply_message.message, {from: from,to: to}).then(res => {
+    if ("text" in res)
+    await message.sendReply(res.text)
+    console.log(res.from.language.iso);
+}).catch(err => {
+    await message.sendReply(err);
+});
+});
 Module({ pattern: 'tts ?(.*)', fromMe: w, desc:Lang.TTS_DESC}, async (message, match) => {
     var query = match[1] || message.reply_message.text
     if(!query) return await message.sendReply(Lang.TTS_NEED_REPLY);
@@ -44,8 +57,7 @@ Module({pattern: 'video ?(.*)', fromMe: w, desc: Lang.VIDEO_DESC}, (async (messa
     if (!s1.includes('youtu')) return await message.sendReply(Lang.NEED_VIDEO);
     const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
     var qq = getID.exec(s1)
-    await message.sendMessage(Lang.DOWNLOADING_VIDEO);
- try { var dl = await getVideo(qq[1]) } catch {
+    try { var dl = await getVideo(qq[1]) } catch {
     var {url,thumbnail,title} = await ytdlServer("https://youtu.be/"+qq[1]);
     return await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});}
 var cap = dl.details.title || ""
@@ -55,7 +67,6 @@ try { var yt = ytdl(qq[1], {filter: format => format.container === 'mp4' && ['72
     return await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});}
     yt.pipe(fs.createWriteStream('./temp/' + qq[1] + '.mp4'));
     yt.on('end', async () => {
-        await message.sendMessage(Lang.UPLOADING_VIDEO);
         await message.client.sendMessage(message.jid,{video: fs.readFileSync('./temp/' + qq[1] + '.mp4'),mimetype: "video/mp4" , caption:cap, thumbnail: await skbuffer(th)});
     });}));
 Module({pattern: 'detectlang$', fromMe: w, desc: Lang.DLANG_DESC}, (async (message, match) => {
