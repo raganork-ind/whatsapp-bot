@@ -16,12 +16,9 @@ if (!message.reply_message) return await message.sendReply(Lang.NEED_REPLY)
 var from = match[1].split(" ")[0] || ''
 var to = match[1].split(" ")[1] || match[1]
 translate(message.reply_message.message, {from: from,to: to}).then(async (res) => {
-    if ("text" in res)
-    await message.sendReply(res.text)
-    console.log(res.from.language.iso);
-}).catch(err => {
-    await message.sendReply(err);
-});
+    if ("text" in res) {
+    await message.sendReply(res.text); }
+})
 });
 Module({ pattern: 'tts ?(.*)', fromMe: w, desc:Lang.TTS_DESC}, async (message, match) => {
     var query = match[1] || message.reply_message.text
