@@ -15,7 +15,7 @@ Module({ pattern: 'trt ?(.*)', fromMe: w, usage: Lang.TRANSLATE_USAGE,desc:Lang.
 if (!message.reply_message) return await message.sendReply(Lang.NEED_REPLY)
 var from = match[1].split(" ")[0] || ''
 var to = match[1].split(" ")[1] || match[1]
-translate(message.reply_message.message, {from: from,to: to}).then(res => {
+translate(message.reply_message.message, {from: from,to: to}).then(async (res) => {
     if ("text" in res)
     await message.sendReply(res.text)
     console.log(res.from.language.iso);
