@@ -18,6 +18,7 @@ var fail = "*_Download failed! Check your link and try again_*";
 var need_acc_s = "_Need an instagram username or link!_";
 let sourav = setting.MODE == 'public' ? false : true
 Module({ pattern: 'insta ?(.*)', fromMe: sourav, desc:'Downloads post/reel/igtv from instagram',usage:'insta link or reply to a link'}, (async (msg, query) => {
+if (query[0] === 'install') return;
 var q = !msg.reply_message.message ? query[1] : msg.reply_message.message
 if (!q)  return await msg.client.sendMessage(msg.jid, { text: "_*Couldn't read link. Use .insta link*_" },{ quoted: msg.data })
 if (q && !q.includes('instagram.com')) return await msg.client.sendMessage(msg.jid, { text: need },{ quoted: msg.data })
@@ -33,7 +34,7 @@ var type = link[i].includes('mp4') ? 'video' : 'image'
 var mime = link[i].includes('mp4') ? 'video/mp4' : 'image/jpeg'
 var stream = get.buffer();
 stream.then(async (video) => {
-await msg.client.sendMessage(msg.jid, { [type]: video },{ quoted: msg.data })
+await msg.sendReply(video,type)
 })};}
 }));
 Module({ pattern: 'ig ?(.*)', fromMe: sourav, desc:'Gets account info from instagram',usage:'ig username'}, (async (msg, query) => {
