@@ -4,6 +4,7 @@ const yts = require( 'yt-search' )
 const ytdl = require('ytdl-core');
 const ffmpeg = require('fluent-ffmpeg');
 const {getString} = require('./misc/lang');
+const {getJson} = require('./misc/misc');
 const Lang = getString('scrapers');
 const fs = require('fs');
 const {skbuffer,ytdlServer,getVideo,addInfo} = require('raganork-bot');
@@ -49,14 +50,14 @@ Module({pattern: 'yts ?(.*)', fromMe: sourav, desc: "Select and download songs f
     }));    
 Module({on: 'button', fromMe: sourav}, (async (message, match) => { 
 if (message.list && message.list.startsWith("ytv") && message.list.includes(message.client.user.id.split("@")[0].split(":")[0])) {
-    var {title,thumbnail,size} = await ytdlServer(""+message.list.split(";")[1]);
     const buttons = [
-        {buttonId: 'ytsv', buttonText: {displayText: '🎞 VIDEO'}, type: 1},
-        {buttonId: 'ytsa', buttonText: {displayText: '🎵 AUDIO'}, type: 1}
+        {buttonId: 'ytsv;'+message.client.user.id.split("@")[0].split(":")[0]+";"+message.list.split(";")[1], buttonText: {displayText: '🎞 VIDEO'}, type: 1},
+        {buttonId: 'ytsa;'+message.client.user.id.split("@")[0].split(":")[0]+";"+message.list.split(";")[1], buttonText: {displayText: '🎵 AUDIO'}, type: 1}
      ]
-      const buttonMessage = {
+     var {info,thumbnail} = await getJson("https://raganork-api.vercel.app/api/youtube/details?video_id="+message.list.split(";")[1]); 
+     const buttonMessage = {
           image: {url: thumbnail},
-          caption: title,
+          caption: info,
           footerText: 'Hey '+message.data.pushName,
           buttons: buttons,
           headerType: 4
