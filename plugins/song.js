@@ -13,7 +13,7 @@ const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:
 Module({pattern: 'song ?(.*)', fromMe: sourav, desc: Lang.SONG_DESC}, (async (message, match) => { 
     if (!match[1]) return message.sendReply(Lang.NEED_TEXT_SONG)
         var link = match[1].match(/\bhttps?:\/\/\S+/gi)
-        if (link[0] && getID.test(link[0])) {
+        if (link !== null && getID.test(link[0])) {
             var query = getID.exec(link[0]);
             try { var stream = ytdl(query[1], {quality: 'highestaudio',}); } catch {
                 var {url} = await ytdlServer("https://youtu.be/"+query[1],"128kbps","audio"); 
@@ -28,7 +28,8 @@ Module({pattern: 'song ?(.*)', fromMe: sourav, desc: Lang.SONG_DESC}, (async (me
                     try {var audio = await addInfo('./temp/song.mp3',details.title,AUDIO_DATA.split(";")[1],"Raganork Engine",thumb)} catch {return await message.client.sendMessage(message.jid,{audio: fs.readFileSync("./temp/song.mp3"),mimetype: 'audio/mp3'}, {quoted: message.data});}
                     return await message.client.sendMessage(message.jid,{audio: audio,mimetype: 'audio/mpeg'}, {quoted: message.data});
                 });   
-        }
+        return;
+            }
         var myid = message.client.user.id.split("@")[0].split(":")[0]
         let sr = await yts(match[1]);
         sr = sr.all;
@@ -58,7 +59,7 @@ Module({pattern: 'yts ?(.*)', fromMe: sourav, desc: "Select and download songs f
         rows: videos 
         }]
            const listMessage = {
-      text: "And "+sr.length-1+" more results...",
+      text: "And "+(sr.length-1)+" more results...",
       footer: "Hey "+message.data.pushName,
       title: sr[0].title,
       buttonText: "Select a video",
