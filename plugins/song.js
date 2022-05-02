@@ -64,7 +64,7 @@ if (message.list && message.list.startsWith("ytsl") && message.list.includes(mes
       }
       await message.client.sendMessage(message.jid,buttonMessage)
 }
-if (message.button && message.button.startsWith("ytsv") && message.list.includes(message.client.user.id.split("@")[0].split(":")[0])) {
+if (message.button && message.button.startsWith("ytsv") && message.button.includes(message.client.user.id.split("@")[0].split(":")[0])) {
     try { var dl = await getVideo(message.button.split(";")[2]) } catch {
         var {url,thumbnail,title} = await ytdlServer("https://youtu.be/"+message.button.split(";")[2]);
         return await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});}
@@ -78,7 +78,7 @@ if (message.button && message.button.startsWith("ytsv") && message.list.includes
             await message.client.sendMessage(message.jid,{video: fs.readFileSync('./temp/' + message.button.split(";")[2] + '.mp4'),mimetype: "video/mp4" , caption:cap, thumbnail: await skbuffer(th)});
         });
       }
-if (message.button && message.button.startsWith("ytsa") && message.list.includes(message.client.user.id.split("@")[0].split(":")[0])) {
+if (message.button && message.button.startsWith("ytsa") && message.button.includes(message.client.user.id.split("@")[0].split(":")[0])) {
     try { var stream = ytdl(message.button.split(";")[2], {quality: 'highestaudio',}); } catch {
         var {url} = await ytdlServer("https://youtu.be/"+message.button.split(";")[2],"128kbps","audio"); 
         return await message.client.sendMessage(message.jid,{audio: {url: url},mimetype: 'audio/mpeg'}, {quoted: message.data});
