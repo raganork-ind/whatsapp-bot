@@ -9,8 +9,26 @@ const Lang = getString('scrapers');
 const fs = require('fs');
 const {skbuffer,ytdlServer,getVideo,addInfo} = require('raganork-bot');
 let sourav = MODE == 'public' ? false : true
+const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
 Module({pattern: 'song ?(.*)', fromMe: sourav, desc: Lang.SONG_DESC}, (async (message, match) => { 
     if (!match[1]) return message.sendReply(Lang.NEED_TEXT_SONG)
+        var link = match[1].match(/\bhttps?:\/\/\S+/gi)
+        if (link[0] && getID.test(link[0])) {
+            var query = getID.exec(link[0]);
+            try { var stream = ytdl(query[1], {quality: 'highestaudio',}); } catch {
+                var {url} = await ytdlServer("https://youtu.be/"+query[1],"128kbps","audio"); 
+                return await message.client.sendMessage(message.jid,{audio: {url: url},mimetype: 'audio/mpeg'}, {quoted: message.data});
+            }
+            var {details} = await getVideo(query[1]);
+            var thumb = await skbuffer(details.thumbnail.url);
+            ffmpeg(stream)
+                .audioBitrate(128)
+                .save('./temp/song.mp3')
+                .on('end', async () => {
+                    try {var audio = await addInfo('./temp/song.mp3',details.title,AUDIO_DATA.split(";")[1],"Raganork Engine",thumb)} catch {return await message.client.sendMessage(message.jid,{audio: fs.readFileSync("./temp/song.mp3"),mimetype: 'audio/mp3'}, {quoted: message.data});}
+                    return await message.client.sendMessage(message.jid,{audio: audio,mimetype: 'audio/mpeg'}, {quoted: message.data});
+                });   
+        }
         var myid = message.client.user.id.split("@")[0].split(":")[0]
         let sr = await yts(match[1]);
         sr = sr.all;
