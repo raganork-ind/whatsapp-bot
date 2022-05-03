@@ -4,7 +4,7 @@ const yts = require( 'yt-search' )
 const ytdl = require('ytdl-core');
 const ffmpeg = require('fluent-ffmpeg');
 const {getString} = require('./misc/lang');
-const {getJson} = require('./misc/misc');
+const {getJson,getThumb} = require('./misc/misc');
 const Lang = getString('scrapers');
 const fs = require('fs');
 const {skbuffer,ytdlServer,getVideo,addInfo} = require('raganork-bot');
@@ -75,7 +75,7 @@ if (message.list && message.list.startsWith("ytsl") && message.list.includes(mes
      ]
      var {info,thumbnail} = await getJson("https://raganork-api.vercel.app/api/youtube/details?video_id="+message.list.split(";")[1]); 
      const buttonMessage = {
-          image: {url: thumbnail},
+          image: await getThumb(message.list.split(";")[1]),
           caption: info,
           footerText: 'Hey '+message.data.pushName,
           buttons: buttons,
