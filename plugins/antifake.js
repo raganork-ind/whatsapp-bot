@@ -1,4 +1,4 @@
-const {isAdmin,isFake,delAntifake,setAntifake} = require('./misc/misc');
+const {isAdmin,isFake,delAntifake,getAntifake,setAntifake} = require('./misc/misc');
 const {Module} = require('../main')
 const {ALLOWED} = require('../config')
 Module({pattern: "antifake",fromMe: true}, async(message, match) => {
@@ -19,13 +19,16 @@ const templateButtons = [
     await message.client.sendMessage(message.jid, templateMessage)
 })
 Module({on: "button",fromMe: true}, async(message, match) => {
-if (message.button&&message.button.startsWith("fake_on")&&message.button.includes(message.client.user.id.split(":")[0])) {
+if (message.tempb&&message.tempb.startsWith("fake_on")&&message.tempb.includes(message.client.user.id.split(":")[0])) {
 await setAntifake(message.jid);
 return await message.sendMessage("Antifake enabled ✅")
 }
-if (message.button&&message.button.startsWith("fake_off")&&message.button.includes(message.client.user.id.split(":")[0])) {
+if (message.tempb&&message.tempb.startsWith("fake_off")&&message.tempb.includes(message.client.user.id.split(":")[0])) {
 await delAntifake(message.jid);
 return await message.sendMessage("Antifake disabled ✅")
+}
+if (message.tempb&&message.tempb.startsWith("fake_get")&&message.tempb.includes(message.client.user.id.split(":")[0])) {
+return await message.sendMessage("Allowed prefixes: "+ALLOWED)
 }
 })
 Module({on: "group_update",fromMe: false}, async(message, match) => {
