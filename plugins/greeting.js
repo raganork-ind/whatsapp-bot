@@ -1,5 +1,5 @@
 const {Module} = require('../main');
-const sql = require('./sql/greetings');
+const sql = require('./sql/greeting');
 const Language = require('./misc/lang');
 const Lang = Language.getString('greetings');
 
