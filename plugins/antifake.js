@@ -1,4 +1,5 @@
 const {isAdmin,isFake,delAntifake,getAntifake,setAntifake} = require('./misc/misc');
+const greeting = require('./sql/greeting');
 const {Module} = require('../main')
 const {ALLOWED} = require('../config')
 Module({pattern: "antifake",fromMe: true}, async(message, match) => {
@@ -46,4 +47,25 @@ Module({on: "group_update",fromMe: false}, async(message, match) => {
     await message.client.sendMessage(message.jid,{text: "Fake numbers not allowed @"+message.participant[0].split("@")[0],mentions: [message.participant[0]]});
     await message.client.groupParticipantsUpdate(message.jid, [message.participant[0]], "remove")
     }}
+    var welcome = await greeting.getMessage(message.jid);
+    if (welcome !== false && message.update === 27) {
+    var mediaUrl = welcome.message.match(/\bhttps?:\/\/\S+/gi);
+    var {subject,owner,participants,desc} = await message.client.groupMetadata(message.jid)
+    welcome.message = welcome.message.replace(/{mention}/g,"@"+message.participant[0].split("@")[0]).replace(/{line}/g,"\n").replace(/{pp}/g,"").replace(/{count}/g,participants.length).replace(/{group-name}/g,subject).replace(/{group-desc}/g,desc).replace(mediaUrl[0],"")
+    if (mediaUrl !== null && mediaUrl[0].endsWith("jpeg") || mediaUrl[0].endsWith("jpg") || mediaUrl[0].endsWith("png")) {
+    return await message.client.sendMessage(message.jid,{image: {url: mediaUrl[0]}, caption: welcome.message,mentions: [message.participant]})
+    }
+    if (mediaUrl !== null && mediaUrl[0].endsWith("mp4") || mediaUrl[0].endsWith("gif")) {
+    return await message.client.sendMessage(message.jid,{video: {url: mediaUrl[0]}, caption: welcome.message,mentions: [message.participant]})
+    }
+    if (welcome.message.includes("{pp}")) {
+    try { var im = await message.client.profilePictureUrl(message.participant, 'image') } catch { var im = await message.client.profilePictureUrl(message.jid, 'image') }
+    return await message.client.sendMessage(message.jid,{image: {url: im}, caption: welcome.message,mentions: [message.participant]})
+    }
+    if (welcome.message.includes("{gicon}")) {
+    var im = await message.client.profilePictureUrl(message.jid, 'image')
+    return await message.client.sendMessage(message.jid,{image: {url: im}, caption: welcome.message,mentions: [message.participant]})
+    }
+    else return await message.client.sendMessage(message.jid,{text: welcome.message,mentions:message.participant})
+    }
     })
