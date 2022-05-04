@@ -4,6 +4,7 @@ const {ALLOWED} = require('../config')
 Module({pattern: "antifake",fromMe: true}, async(message, match) => {
 var {subject,owner} = await message.client.groupMetadata(message.jid)
 var myid = message.client.user.id.split(":")[0] 
+owner = owner || myid+"@s.whatsapp.net"
 const templateButtons = [
         {index: 1, urlButton: {displayText: 'ADMIN', url: 'https://wa.me/'+owner.split("@")[0]}},
         {index: 2, quickReplyButton: {displayText: 'ENABLE ✅', id: 'fake_on'+myid}},
@@ -19,15 +20,15 @@ const templateButtons = [
     await message.client.sendMessage(message.jid, templateMessage)
 })
 Module({on: "button",fromMe: true}, async(message, match) => {
-if (message.tempb&&message.tempb.startsWith("fake_on")&&message.tempb.includes(message.client.user.id.split(":")[0])) {
+if (message.tembutton&&message.tembutton.startsWith("fake_on")&&message.tembutton.includes(message.client.user.id.split(":")[0])) {
 await setAntifake(message.jid);
 return await message.sendMessage("Antifake enabled ✅")
 }
-if (message.tempb&&message.tempb.startsWith("fake_off")&&message.tempb.includes(message.client.user.id.split(":")[0])) {
+if (message.tembutton&&message.tembutton.startsWith("fake_off")&&message.tembutton.includes(message.client.user.id.split(":")[0])) {
 await delAntifake(message.jid);
 return await message.sendMessage("Antifake disabled ✅")
 }
-if (message.tempb&&message.tempb.startsWith("fake_get")&&message.tempb.includes(message.client.user.id.split(":")[0])) {
+if (message.tembutton&&message.tembutton.startsWith("fake_get")&&message.tembutton.includes(message.client.user.id.split(":")[0])) {
 return await message.sendMessage("Allowed prefixes: "+ALLOWED)
 }
 })
