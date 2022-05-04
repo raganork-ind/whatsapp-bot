@@ -14,6 +14,7 @@ module.exports = {
     READ_COMMAND: process.env.READ_COMMAND === undefined ? true : convertToBool(process.env.READ_COMMAND),
     USERNAME: process.env.USERNAME === undefined ? '' : process.env.USERNAME,
     PASSWORD: process.env.PASSWORD === undefined ? '' : process.env.PASSWORD,
+    ALLOWED: process.env.ALLOWED === undefined ? '91,94,92' : process.env.ALLOWED,
     HANDLERS: process.env.HANDLERS === undefined ? '^[.,]' : process.env.HANDLERS,
     STICKER_DATA: process.env.STICKER_DATA === undefined ? 'ꪶ͢٭𝑺𝜣𝑼𝑹𝛢𝑽𝑲𝑳¹¹ꫂ' : process.env.STICKER_DATA,
     AUDIO_DATA: process.env.AUDIO_DATA === undefined ? 'ꪶ͢٭𝑺𝜣𝑼𝑹𝛢𝑽𝑲𝑳¹¹ꫂ;Raganork MD bot;https://www.linkpicture.com/q/rgnk.jpg' : process.env.AUDIO_DATA,
