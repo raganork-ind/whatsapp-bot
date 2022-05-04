@@ -34,9 +34,15 @@ return await message.sendMessage("Allowed prefixes: "+ALLOWED)
 })
 Module({on: "group_update",fromMe: false}, async(message, match) => {
     var db = await getAntifake();
-    if (db.includes(message.jid) && message.update === 27) {
+    const jids = []
+    db.map(data => {
+        jids.push(data.jid)
+    });
+    if (message.update === 27 && jids.includes(message.jid)) {
     var allowed = ALLOWED.split(",");
     if (isFake(message.participant[0],allowed)) {
+    var admin = await isAdmin(message);
+    if (!admin) return;
     await message.client.sendMessage(message.jid,{text: "Fake numbers not allowed @"+message.participant[0].split("@")[0],mentions: [message.participant[0]]});
     await message.client.groupParticipantsUpdate(message.jid, [message.participant[0]], "remove")
     }}
