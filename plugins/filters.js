@@ -51,3 +51,17 @@ Module({on: 'text', fromMe: false}, (async (message, match) => {
         }
     );
 }));
+Module({on: 'button', fromMe: false}, (async (message, match) => {
+    if (message.fromMe) return;
+    if (!message.button) return;
+    var filtreler = await FilterDb.getFilter(message.jid);
+    if (!filtreler) return; 
+    filtreler.map(
+        async (filter) => {
+            pattern = new RegExp(filter.dataValues.regex ? filter.dataValues.pattern : ('\\b(' + filter.dataValues.pattern + ')\\b'), 'gm');
+            if (pattern.test(message.data.message.buttonsResponseMessage.selectedDisplayText)) {
+                await message.client.sendMessage(message.jid,{text: filter.dataValues.text}, {quoted: message.data});
+            }
+        }
+    );
+}));
