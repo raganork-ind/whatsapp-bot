@@ -29,9 +29,7 @@ Lang.REMAINING+ warn + '\n'
 if (warn !== 0) {
     return await m.client.sendMessage(m.jid, { text: msg ,mentions:[user]},{ quoted: m.data })
 } else {
-    var admin = await isAdmin(m,m.sender);
-    if (admin) return await m.sendReply(Lang.ISADMIN);
-    await m.sendMessage(Lang.WARN_OVER.format(WARN,mentionjid(user).replace("@","")))
+        await m.sendMessage(Lang.WARN_OVER.format(WARN,mentionjid(user).replace("@","")))
     await m.client.sendMessage(m.jid,{text: mentionjid(user)+Lang.KICKED, mentions: [user] })
     await m.client.groupParticipantsUpdate(m.jid, [user], "remove")
  }
