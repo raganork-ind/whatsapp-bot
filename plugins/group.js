@@ -108,3 +108,15 @@ jids.push(user.id.replace('c.us', 's.whatsapp.net'));});
 var msg = message.reply_message.message || mn
 await message.client.sendMessage(message.jid, { text: msg, mentions: jids})
 }))
+Module({pattern: 'block ?(.*)', fromMe: true}, (async (message, match) => {
+var isGroup = message.jid.endsWith('@g.us') 
+var user = message.jid
+if (isGroup) user = message.mention[0] || message.reply_message.jid
+await message.client.updateBlockStatus(user,"block");
+}));
+Module({pattern: 'unblock ?(.*)', fromMe: true}, (async (message, match) => {
+var isGroup = message.jid.endsWith('@g.us') 
+if (!isGroup) return;
+var user = message.mention[0] || message.reply_message.jid
+await message.client.updateBlockStatus(user,"unblock");
+}));
