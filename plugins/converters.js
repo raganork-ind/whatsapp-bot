@@ -46,7 +46,7 @@ if (message.reply_message === false) return await message.sendReply(Lang.BASS_NE
 var savedFile = await saveMessage(message.reply_message);
 await message.client.sendMessage(message.jid, { audio: await bass(savedFile,match[1]),mimetype: 'audio/mp4',ptt: false }, { quoted: message.data })
 }));
-Module({pattern: 'photo$', fromMe: Lang.PHOTO_DESC}, (async (message, match) => {    
+Module({pattern: 'photo$', fromMe:w,desc: Lang.PHOTO_DESC}, (async (message, match) => {    
 if (message.reply_message === false) return await message.sendMessage(Lang.PHOTO_NEED_REPLY)
      if (message.reply_message.sticker && message.reply_message.animated === false ) {
      var savedFile = await saveMessage(message.reply_message);
