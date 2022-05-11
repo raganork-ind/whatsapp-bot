@@ -156,5 +156,7 @@ if (toggle === 'on') await message.sendMessage("*Chatbot activated ✅*")
 if (toggle === 'off') await message.sendMessage("*Chatbot deactivated ✔*")
 }));
 Module({on: 'text', fromMe: false}, (async (message, match) => {
-await chatBot(message,Config.CHATBOT)
+if (Config.CHATBOT === 'on'){
+await chatBot(message,Config.BOT_NAME)
+}
 }));
