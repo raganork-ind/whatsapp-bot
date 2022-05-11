@@ -2,6 +2,7 @@ const googleTTS = require('google-translate-tts');
 const {MODE} = require('../config');
 const {getString} = require('./misc/lang');
 const {sendYtQualityList,processYtv} = require('./misc/misc');
+const gis = require('async-g-i-s');
 const fs = require('fs');
 const Lang = getString('scrapers');
 let w = MODE=='public'?false:true
@@ -48,6 +49,20 @@ await sendYtQualityList(message,match);
 Module({on: 'button', fromMe: w}, (async (message, match) => { 
     await processYtv(message);
     }));
+Module({pattern: 'img ?(.*)', fromMe: w,desc: Lang.IMG_DESC}, (async (message, match) => { 
+    if (!match[1]) return await sendReply(Lang.NEED_WORD);
+    var count = parseInt(match[1].split(",")[1]) || 5 
+    var query = match[1].split(",")[0] || match[1];
+      try {
+        const results = await gis(query);
+        await message.sendReply(Lang.IMG.format(results.splice(0,count).length,query))
+        for (let url of results.splice(0,count)) {
+            await message.sendMessage({url:url.url},'image');
+            }  
+    } catch (e) {
+        await message.sendReply(e);
+      }    
+}));
 Module({pattern: 'video ?(.*)', fromMe: w, desc: Lang.VIDEO_DESC}, (async (message, match) => { 
     var s1 = !match[1].includes('youtu') ? message.reply_message.message : match[1]
     if (!s1) return await message.sendReply(Lang.NEED_VIDEO);

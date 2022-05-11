@@ -171,7 +171,7 @@
             "SEARCHING": "Searching",
             "WIKI_DESC": "Searches query on Wikipedia.",
             "IMG_DESC": "Searches for images on Google.",
-            "IMG": "Searching image",
+            "IMG": "Uploading {} results for {}",
             "MATCHING_SONGS": "Matching songs from YouTube",
             "YTS_DESC": "Select videos in youtube",
             "YTS_RESULTS": "Search results from YouTube",
