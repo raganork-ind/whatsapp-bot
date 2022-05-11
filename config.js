@@ -13,6 +13,7 @@ module.exports = {
     READ_MESSAGES: convertToBool(process.env.READ_MESSAGES) || false,
     READ_COMMAND: convertToBool(process.env.READ_COMMAND) || true,
     USERNAME: process.env.USERNAME || '',
+    SESSION: process.env.SESSION || '',
     PASSWORD: process.env.PASSWORD || '',
     ALLOWED: process.env.ALLOWED || '91,94,212',
     CHATBOT: process.env.CHATBOT || 'off',
