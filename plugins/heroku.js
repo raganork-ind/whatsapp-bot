@@ -5,6 +5,7 @@ you may not use this file except in compliance with the License.
 */
 
 const {Module} = require('../main');
+const {chatBot} = require('./misc/misc');
 const Config = require('../config');
 const Heroku = require('heroku-client');
 const got = require('got');
@@ -148,3 +149,12 @@ Module(
       })
   }
 );
+Module({pattern: 'chatbot ?(.*)', fromMe: true, desc: "Activates chatbot", usage: '.chatbot on / off'}, (async (message, match) => {
+var toggle = match[1] == 'off'? 'off' : 'on'
+await heroku.patch(baseURI + '/config-vars', { body: { ['CHATBOT']: toggle} });
+if (toggle === 'on') await message.sendMessage("*Chatbot activated ✅*")
+if (toggle === 'off') await message.sendMessage("*Chatbot deactivated ✔*")
+}));
+Module({on: 'text', fromMe: false}, (async (message, match) => {
+await chatBot(message,Config.CHATBOT)
+}));

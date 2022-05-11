@@ -44,7 +44,9 @@ if (message.reply_message === false) return await message.sendReply(Lang.MP3_NEE
 Module({pattern: 'bass ?(.*)', fromMe: Lang.BASS_DESC}, (async (message, match) => {    
 if (message.reply_message === false) return await message.sendReply(Lang.BASS_NEED_REPLY)
 var savedFile = await saveMessage(message.reply_message);
-await message.client.sendMessage(message.jid, { audio: await bass(savedFile,match[1]),mimetype: 'audio/mp4',ptt: false }, { quoted: message.data })
+bass(savedFile,match[1],async function(audio) {
+    await message.client.sendMessage(message.jid, { audio: audio,mimetype: 'audio/mp4',ptt: false }, { quoted: message.data })
+});    
 }));
 Module({pattern: 'photo$', fromMe:w,desc: Lang.PHOTO_DESC}, (async (message, match) => {    
 if (message.reply_message === false) return await message.sendMessage(Lang.PHOTO_NEED_REPLY)
