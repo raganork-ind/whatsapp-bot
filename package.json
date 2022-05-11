@@ -24,7 +24,7 @@
   "homepage": "https://github.com/souravkl11/raganork-md#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "@adiwajshing/baileys": "^4.1.0",
+    "@adiwajshing/baileys": "git+https://github.com/adiwajshing/Baileys.git",
     "@adiwajshing/keyed-db":"0.2.4",
     "string-crypto": "2.0.2",
     "mongodb": "^4.3.1",
