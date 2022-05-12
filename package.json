@@ -29,7 +29,7 @@
     "string-crypto": "2.0.2",
     "mongodb": "^4.3.1",
     "async-g-i-s": "1.0.0",
-    "raganork-bot": "2.0.0",
+    "raganork-bot": "2.0.1",
     "sequelize": "^6.13.0",
     "sqlite3": "^5.0.0",
     "supervisor": "^0.12.0"

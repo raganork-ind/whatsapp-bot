@@ -73,9 +73,11 @@
             "SECOND": "second"
         },
         "media": {
-            "TRIM_DESC": "Trims audio with given seconds",
-            "TRIM_USE": ".trim 60;120",
-            "TRIM_NEED": "*Reply to an audio with:*.\n *.trim 10;30*",
+            "TRIM_DESC": "Trims audio or video with given seconds",
+            "TRIM_USE": ".trim 60,120",
+            "TRIM_NEED": "*Wrong format!:*.\n *.trim 10,30*",
+            "TRIM_VIDEO_NEED": "*Wrong format!* \n*.trim 5,10*\n*.trim 1:05,1:20*",
+            "TRIM_NEED_REPLY": "*Reply to an audio or video*",
             "AVMIX_DESC": "*Mixes audio & video*",
             "AVMIX_NEED_FILES": "*Reply to audio and video to merge!*",
             "AVMIX_AUDIO_ADDED": "*Added audio to merge*",
