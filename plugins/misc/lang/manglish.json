@@ -59,6 +59,15 @@
             "WARN_RESET": "Mm, warns reset akki {} of {}",
             "WARN_OVER": "Ninakk njan ({}) warnings thannu.. Ini direct kick {}"
         },
+        "media": {
+            "TRIM_DESC": "Audio cut cheyyum",
+            "TRIM_USE": ".trim 60;120",
+            "TRIM_NEED": "*Ingane oru audiok reply ayi ayak:*.\n *.trim 10;30*",
+            "AVMIX_DESC": "Video um audio um merge cheyyum",
+            "AVMIX_NEED_FILES": "*Audio/video reply cheyy!*",
+            "AVMIX_AUDIO_ADDED": "*Audio save cheyth!*",
+            "AVMIX_VIDEO_ADDED": "*Video save cheyth!*"
+        },
         "afk": {
             "AFK_DESC": "It makes you AFK - Away From Keyboard.",
             "IM_AFK": "I'm AFK now!",
