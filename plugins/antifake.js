@@ -52,14 +52,14 @@ Module({on: "group_update",fromMe: false}, async(message, match) => {
     var mediaUrl = welcome.message.match(/\bhttps?:\/\/\S+/gi);
     var {subject,owner,participants,desc} = await message.client.groupMetadata(message.jid)
     var msg = welcome.message.replace(/{mention}/g,"@"+message.participant[0].split("@")[0]).replace(/{line}/g,"\n").replace(/{pp}/g,"").replace(/{count}/g,participants.length).replace(/{group-name}/g,subject).replace(/{group-desc}/g,desc).replace(mediaUrl[0],"")
-    if (mediaUrl && mediaUrl[0].endsWith("jpeg") || mediaUrl[0].endsWith("jpg") || mediaUrl[0].endsWith("png")) {
+    if (mediaUrl.length !== 0 && mediaUrl[0].endsWith("jpeg") || mediaUrl[0].endsWith("jpg") || mediaUrl[0].endsWith("png")) {
     return await message.client.sendMessage(message.jid,{image: {url: mediaUrl[0]}, caption: msg,mentions: message.participant})
     }
-    if (mediaUrl && mediaUrl[0].endsWith("mp4") || mediaUrl[0].endsWith("gif")) {
+    if (mediaUrl.length !== 0 && mediaUrl[0].endsWith("mp4") || mediaUrl[0].endsWith("gif")) {
     return await message.client.sendMessage(message.jid,{video: {url: mediaUrl[0]}, caption: msg,mentions: message.participant})
     }
     if (welcome.message.includes("{pp}")) {
-    try { var im = await message.client.profilePictureUrl(message.participant, 'image') } catch { var im = await message.client.profilePictureUrl(message.jid, 'image') }
+    try { var im = await message.client.profilePictureUrl(message.participant[0], 'image') } catch { var im = await message.client.profilePictureUrl(message.jid, 'image') }
     return await message.client.sendMessage(message.jid,{image: {url: im}, caption: msg,mentions: message.participant})
     }
     if (welcome.message.includes("{gicon}")) {
