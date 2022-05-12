@@ -26,11 +26,11 @@ if (!fs.existsSync("./temp/avmix")) {fs.mkdirSync("./temp/avmix")}
       if ((!message.reply_message && files.length < 2) ||(message.reply_message && !message.reply_message.audio && !message.reply_message.video)) return await message.sendMessage(Lang.AVMIX_NEED_FILES);
       if (message.reply_message.audio) {
             var savedFile = await saveMessage(message.reply_message);
-            await fs.writeFileSync(fs.readFileSync(savedFile),'./temp/avmix/audio.mp3');
+            await fs.writeFileSync('./temp/avmix/audio.mp3',fs.readFileSync(savedFile));
             return await message.sendReply(Lang.AVMIX_AUDIO_ADDED) }
       if (message.reply_message.video) {
             var savedFile = await saveMessage(message.reply_message);
-            await fs.writeFileSync(fs.readFileSync(savedFile),'./temp/avmix/video.mp4');
+            await fs.writeFileSync('./temp/avmix/video.mp4',fs.readFileSync(savedFile));
             return await message.sendReply(Lang.AVMIX_AUDIO_ADDED) }
             AVmix('./temp/avmix/video.mp4','./temp/avmix/audio.mp3','./temp/avmix/mixed.mp4',async function(video) {
                 await message.sendMessage(video,'video');
