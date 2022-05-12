@@ -72,11 +72,20 @@
             "MINUTE": "minute",
             "SECOND": "second"
         },
+        "media": {
+            "TRIM_DESC": "Trims audio with given seconds",
+            "TRIM_USE": ".trim 60;120",
+            "TRIM_NEED": "*Reply to an audio with:*.\n *.trim 10;30*",
+            "AVMIX_DESC": "*Mixes audio & video*",
+            "AVMIX_NEED_FILES": "*Reply to audio and video to merge!*",
+            "AVMIX_AUDIO_ADDED": "*Added audio to merge*",
+            "AVMIX_VIDEO_ADDED": "*Added video to merge*"
+        },
         "heroku": {
             "RESTART_DESC": "Restarts the bot",
-            "RESTART_MSG": "Restarting...",
+            "RESTART_MSG": "*Restarting..*",
             "SHUTDOWN_DESC": "Shutdown Bot",
-            "SHUTDOWN_MSG": "Shutting down... ❌",
+            "SHUTDOWN_MSG": "*Shutting down.. ❌*",
             "DYNO_DESC": "Check heroku dyno usage",
             "DYNO_TOTAL": "Total Quota",
             "DYNO_USED": "Quota used",

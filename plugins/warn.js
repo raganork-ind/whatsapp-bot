@@ -1,6 +1,8 @@
-/* (c) coded by souravkl11 for
- Warn: souravkl11/raganork md 
-You may not use this file except compliance with license! */
+/* Copyright (C) 2022 Sourav KL11.
+Licensed under the  GPL-3.0 License;
+you may not use this file except in compliance with the License.
+Raganork MD - Sourav KL11
+*/
 let {Module} = require('../main');
 let {WARN,ANTILINK_WARN} = require('../config');
 let {getString} = require('./misc/lang');

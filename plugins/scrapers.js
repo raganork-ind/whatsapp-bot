@@ -1,3 +1,8 @@
+/* Copyright (C) 2022 Sourav KL11.
+Licensed under the  GPL-3.0 License;
+you may not use this file except in compliance with the License.
+Raganork MD - Sourav KL11
+*/
 const googleTTS = require('google-translate-tts');
 const {MODE} = require('../config');
 const {getString} = require('./misc/lang');
@@ -7,6 +12,7 @@ const fs = require('fs');
 const Lang = getString('scrapers');
 let w = MODE=='public'?false:true
 const translate = require('@vitalets/google-translate-api');
+
 const {Module} = require('../main');
 const {getVideo,ytdlServer, skbuffer} = require('raganork-bot');
 const ytdl = require('ytdl-core');

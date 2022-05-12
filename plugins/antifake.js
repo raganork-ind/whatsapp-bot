@@ -1,3 +1,8 @@
+/* Copyright (C) 2022 Sourav KL11.
+Licensed under the  GPL-3.0 License;
+you may not use this file except in compliance with the License.
+Raganork MD - Sourav KL11
+*/
 const {isAdmin,isFake,delAntifake,getAntifake,setAntifake} = require('./misc/misc');
 const greeting = require('./sql/greeting');
 const {Module} = require('../main')

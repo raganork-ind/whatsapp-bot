@@ -1,6 +1,7 @@
-/* Code Credits: souravkl11, raganork-api
-Please give credit to the creator :)
-(c) souravkl11 2022 All rights reserved
+/* Copyright (C) 2022 Sourav KL11.
+Licensed under the  GPL-3.0 License;
+you may not use this file except in compliance with the License.
+Raganork MD - Sourav KL11
 */
 const {Module} = require('../main');
 const { Mimetype } = require('@adiwajshing/baileys');
