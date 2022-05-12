@@ -4,90 +4,182 @@ you may not use this file except in compliance with the License.
 Raganork MD - Sourav KL11
 */
 const googleTTS = require('google-translate-tts');
-const {MODE} = require('../config');
-const {getString} = require('./misc/lang');
-const {sendYtQualityList,processYtv} = require('./misc/misc');
+const {
+    MODE
+} = require('../config');
+const {
+    getString
+} = require('./misc/lang');
+const {
+    sendYtQualityList,
+    processYtv
+} = require('./misc/misc');
 const gis = require('async-g-i-s');
 const fs = require('fs');
 const Lang = getString('scrapers');
-let w = MODE=='public'?false:true
+let w = MODE == 'public' ? false : true
 const translate = require('@vitalets/google-translate-api');
 
-const {Module} = require('../main');
-const {getVideo,ytdlServer, skbuffer} = require('raganork-bot');
+const {
+    Module
+} = require('../main');
+const {
+    getVideo,
+    ytdlServer,
+    skbuffer
+} = require('raganork-bot');
 const ytdl = require('ytdl-core');
 const LanguageDetect = require('languagedetect');
 const lngDetector = new LanguageDetect();
-Module({ pattern: 'trt ?(.*)', fromMe: w, usage: Lang.TRANSLATE_USAGE,desc:Lang.TRANSLATE_DESC}, async (message, match) => {
-if (!message.reply_message) return await message.sendReply(Lang.NEED_REPLY)
-var from = match[1].split(" ")[0] || ''
-var to = match[1].split(" ")[1] || match[1]
-translate(message.reply_message.message, {from: from,to: to}).then(async (res) => {
-    if ("text" in res) {
-    await message.sendReply(res.text); }
-})
+Module({
+    pattern: 'trt ?(.*)',
+    fromMe: w,
+    usage: Lang.TRANSLATE_USAGE,
+    desc: Lang.TRANSLATE_DESC
+}, async (message, match) => {
+    if (!message.reply_message) return await message.sendReply(Lang.NEED_REPLY)
+    var from = match[1].split(" ")[0] || ''
+    var to = match[1].split(" ")[1] || match[1]
+    translate(message.reply_message.message, {
+        from: from,
+        to: to
+    }).then(async (res) => {
+        if ("text" in res) {
+            await message.sendReply(res.text);
+        }
+    })
 });
-Module({ pattern: 'tts ?(.*)', fromMe: w, desc:Lang.TTS_DESC}, async (message, match) => {
+Module({
+    pattern: 'tts ?(.*)',
+    fromMe: w,
+    desc: Lang.TTS_DESC
+}, async (message, match) => {
     var query = match[1] || message.reply_message.text
-    if(!query) return await message.sendReply(Lang.TTS_NEED_REPLY);
-    let 
+    if (!query) return await message.sendReply(Lang.TTS_NEED_REPLY);
+    let
         LANG = 'en',
         ttsMessage = query,
         SPEED = 1.0
-    if(langMatch = query.match("\\{([a-z]{2})\\}")) {
+    if (langMatch = query.match("\\{([a-z]{2})\\}")) {
         LANG = langMatch[1]
         ttsMessage = ttsMessage.replace(langMatch[0], "")
-    } 
-    if(speedMatch = query.match("\\{([0].[0-9]+)\\}")) {
+    }
+    if (speedMatch = query.match("\\{([0].[0-9]+)\\}")) {
         SPEED = parseFloat(speedMatch[1])
         ttsMessage = ttsMessage.replace(speedMatch[0], "")
     }
-   try { var buffer = await googleTTS.synthesize({
-        text: ttsMessage,
-        voice: LANG
+    try {
+        var buffer = await googleTTS.synthesize({
+            text: ttsMessage,
+            voice: LANG
+        });
+    } catch {
+        return await message.sendReply(Lang.TTS_ERROR)
+    }
+    await message.client.sendMessage(message.jid, {
+        audio: buffer,
+        mimetype: 'audio/mp4',
+        ptt: false
+    }, {
+        quoted: message.data
     });
-} catch {return await message.sendReply(Lang.TTS_ERROR)}
-    await message.client.sendMessage(message.jid,{audio: buffer,mimetype: 'audio/mp4',ptt: false},{quoted: message.data});
 });
-Module({pattern: 'ytv ?(.*)', fromMe: w, desc: Lang.YTV_DESC}, (async (message, match) => { 
-await sendYtQualityList(message,match);
+Module({
+    pattern: 'ytv ?(.*)',
+    fromMe: w,
+    desc: Lang.YTV_DESC
+}, (async (message, match) => {
+    await sendYtQualityList(message, match);
 }));
-Module({on: 'button', fromMe: w}, (async (message, match) => { 
+Module({
+    on: 'button',
+    fromMe: w
+}, (async (message, match) => {
     await processYtv(message);
-    }));
-Module({pattern: 'img ?(.*)', fromMe: w,desc: Lang.IMG_DESC}, (async (message, match) => { 
+}));
+Module({
+    pattern: 'img ?(.*)',
+    fromMe: w,
+    desc: Lang.IMG_DESC
+}, (async (message, match) => {
     if (!match[1]) return await message.sendReply(Lang.NEED_WORD);
-    var count = parseInt(match[1].split(",")[1]) || 5 
+    var count = parseInt(match[1].split(",")[1]) || 5
     var query = match[1].split(",")[0] || match[1];
-      try {
+    try {
         const results = await gis(query);
-        await message.sendReply(Lang.IMG.format(results.splice(0,count).length,query))
+        await message.sendReply(Lang.IMG.format(results.splice(0, count).length, query))
         for (var i = 0; i < (results.length < count ? results.length : count); i++) {
-        await message.sendMessage({url:results[i].url},'image');
-            }  
+            await message.sendMessage({
+                url: results[i].url
+            }, 'image');
+        }
     } catch (e) {
         await message.sendReply(e);
-      }    
+    }
 }));
-Module({pattern: 'video ?(.*)', fromMe: w, desc: Lang.VIDEO_DESC}, (async (message, match) => { 
+Module({
+    pattern: 'video ?(.*)',
+    fromMe: w,
+    desc: Lang.VIDEO_DESC
+}, (async (message, match) => {
     var s1 = !match[1].includes('youtu') ? message.reply_message.message : match[1]
     if (!s1) return await message.sendReply(Lang.NEED_VIDEO);
     if (!s1.includes('youtu')) return await message.sendReply(Lang.NEED_VIDEO);
     const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
     var qq = getID.exec(s1)
-    try { var dl = await getVideo(qq[1]) } catch {
-    var {url,thumbnail,title} = await ytdlServer("https://youtu.be/"+qq[1]);
-    return await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});}
-var cap = dl.details.title || ""
-var th = dl.details.thumbnail.url || null
-try { var yt = ytdl(qq[1], {filter: format => format.container === 'mp4' && ['720p', '480p', '360p', '240p', '144p'].map(() => true)}); } catch {
-    var {url,thumbnail,title} = await ytdlServer("https://youtu.be/"+qq[1]);
-    return await message.client.sendMessage(message.jid,{video: {url: url},mimetype: "video/mp4" , caption:title, thumbnail: await skbuffer(thumbnail)});}
+    try {
+        var dl = await getVideo(qq[1])
+    } catch {
+        var {
+            url,
+            thumbnail,
+            title
+        } = await ytdlServer("https://youtu.be/" + qq[1]);
+        return await message.client.sendMessage(message.jid, {
+            video: {
+                url: url
+            },
+            mimetype: "video/mp4",
+            caption: title,
+            thumbnail: await skbuffer(thumbnail)
+        });
+    }
+    var cap = dl.details.title || ""
+    var th = dl.details.thumbnail.url || null
+    try {
+        var yt = ytdl(qq[1], {
+            filter: format => format.container === 'mp4' && ['720p', '480p', '360p', '240p', '144p'].map(() => true)
+        });
+    } catch {
+        var {
+            url,
+            thumbnail,
+            title
+        } = await ytdlServer("https://youtu.be/" + qq[1]);
+        return await message.client.sendMessage(message.jid, {
+            video: {
+                url: url
+            },
+            mimetype: "video/mp4",
+            caption: title,
+            thumbnail: await skbuffer(thumbnail)
+        });
+    }
     yt.pipe(fs.createWriteStream('./temp/' + qq[1] + '.mp4'));
     yt.on('end', async () => {
-        await message.client.sendMessage(message.jid,{video: fs.readFileSync('./temp/' + qq[1] + '.mp4'),mimetype: "video/mp4" , caption:cap, thumbnail: await skbuffer(th)});
-    });}));
-Module({pattern: 'detectlang$', fromMe: w, desc: Lang.DLANG_DESC}, (async (message, match) => {
+        await message.client.sendMessage(message.jid, {
+            video: fs.readFileSync('./temp/' + qq[1] + '.mp4'),
+            mimetype: "video/mp4",
+            caption: cap,
+            thumbnail: await skbuffer(th)
+        });
+    });
+}));
+Module({
+    pattern: 'detectlang$',
+    fromMe: w,
+    desc: Lang.DLANG_DESC
+}, (async (message, match) => {
 
     if (!message.reply_message) return await message.sendMessage(Lang.NEED_REPLY)
     const msg = message.reply_message.text

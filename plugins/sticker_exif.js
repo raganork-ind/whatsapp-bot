@@ -3,41 +3,81 @@ Licensed under the  GPL-3.0 License;
 you may not use this file except in compliance with the License.
 Raganork MD - Sourav KL11
 */
-let {saveMessage} = require('./misc/saveMessage');
-let {Module} = require('../main');
-let {TAKE_KEY,STICKER_DATA,MODE,HEROKU,AUDIO_DATA} = require('../config');
-let {addInfo,skbuffer,sticker,stickercrop,webp2mp4} = require('raganork-bot');
+let {
+    saveMessage
+} = require('./misc/saveMessage');
+let {
+    Module
+} = require('../main');
+let {
+    TAKE_KEY,
+    STICKER_DATA,
+    MODE,
+    HEROKU,
+    AUDIO_DATA
+} = require('../config');
+let {
+    addInfo,
+    skbuffer,
+    sticker,
+    stickercrop,
+    webp2mp4
+} = require('raganork-bot');
 let a = MODE == 'public' ? false : true;
 let ffmpeg = require('fluent-ffmpeg');
 const h = require('heroku-client');
-const he = new h({token: HEROKU.API_KEY});
+const he = new h({
+    token: HEROKU.API_KEY
+});
 let ur = '/apps/' + HEROKU.APP_NAME;
-Module({pattern: 'take ?(.*)', fromMe: a, desc:'Changes sticker/audio pack & author name. Title, artist, thumbnail etc.'}, (async (m, match) => { 
-if (!m.reply_message.data.quotedMessage) return await m.sendMessage('_Reply to an audio or a sticker_')
-var audiomsg = m.reply_message.audio;
-var stickermsg = m.reply_message.sticker;
-var q = await saveMessage(m.reply_message);
-if (stickermsg) {
-let inf = match[1] ? match[1] : STICKER_DATA        
-var s = inf.split('|');
-var au = s[1] ? s[1] : STICKER_DATA.split('|')[1]
-var p =  s[0] ? s[0] : STICKER_DATA.split('|')[0]
-if (!TAKE_KEY) return await m.client.sendMessage(m.jid,{text:'_No API key given! Get your key from https://api.imgbb.com/ and add setvar TAKE_KEY:key_'})
-var res = await sticker(q,au,p,TAKE_KEY)
-await m.client.sendMessage(m.jid, {sticker: await skbuffer(res)},{quoted:m.data});
-} 
-if (!stickermsg && audiomsg) {
-ffmpeg(q)
-.save('info.mp3')
-.on('end', async () => {
-let inf = match[1] ? match[1] : AUDIO_DATA        
-var spl = inf.split(';')
-let im = spl[2].startsWith('http') ? spl[2] : ''
-let tit = spl[0] ? spl[0] : AUDIO_DATA.split(';')[0]
-let auth = spl[1] ? spl[1] : AUDIO_DATA.split(';')[1]
-var res = await addInfo('info.mp3',tit,auth,'Raganork Engine', await skbuffer(im))
-await m.client.sendMessage(m.jid, { audio: res},{quoted:m.data,ptt: false});});}
-if (!audiomsg && !stickermsg) return await m.client.sendMessage(m.jid, {text:'_Reply to an audio or a sticker_'},{quoted: m.data})}));
+Module({
+    pattern: 'take ?(.*)',
+    fromMe: a,
+    desc: 'Changes sticker/audio pack & author name. Title, artist, thumbnail etc.'
+}, (async (m, match) => {
+    if (!m.reply_message.data.quotedMessage) return await m.sendMessage('_Reply to an audio or a sticker_')
+    var audiomsg = m.reply_message.audio;
+    var stickermsg = m.reply_message.sticker;
+    var q = await saveMessage(m.reply_message);
+    if (stickermsg) {
+        let inf = match[1] ? match[1] : STICKER_DATA
+        var s = inf.split('|');
+        var au = s[1] ? s[1] : STICKER_DATA.split('|')[1]
+        var p = s[0] ? s[0] : STICKER_DATA.split('|')[0]
+        if (!TAKE_KEY) return await m.client.sendMessage(m.jid, {
+            text: '_No API key given! Get your key from https://api.imgbb.com/ and add setvar TAKE_KEY:key_'
+        })
+        var res = await sticker(q, au, p, TAKE_KEY)
+        await m.client.sendMessage(m.jid, {
+            sticker: await skbuffer(res)
+        }, {
+            quoted: m.data
+        });
+    }
+    if (!stickermsg && audiomsg) {
+        ffmpeg(q)
+            .save('info.mp3')
+            .on('end', async () => {
+                let inf = match[1] ? match[1] : AUDIO_DATA
+                var spl = inf.split(';')
+                let im = spl[2].startsWith('http') ? spl[2] : ''
+                let tit = spl[0] ? spl[0] : AUDIO_DATA.split(';')[0]
+                let auth = spl[1] ? spl[1] : AUDIO_DATA.split(';')[1]
+                var res = await addInfo('info.mp3', tit, auth, 'Raganork Engine', await skbuffer(im))
+                await m.client.sendMessage(m.jid, {
+                    audio: res
+                }, {
+                    quoted: m.data,
+                    ptt: false
+                });
+            });
+    }
+    if (!audiomsg && !stickermsg) return await m.client.sendMessage(m.jid, {
+        text: '_Reply to an audio or a sticker_'
+    }, {
+        quoted: m.data
+    })
+}));
 /*addCommand({pattern: 'wm ?(.*)', fromMe: a, desc:'Sets sticker pack & author name with given ones.'}, (async (m, t) => { 
 var q = await m.client.downloadAndSaveMediaMessage({key: {remoteJid: m.reply_message.jid,id: m.reply_message.id},message: m.reply_message.data.quotedMessage});
 var au,p;
@@ -65,11 +105,20 @@ if (!qu[1]) {return await m.client.sendMessage(m.jid,'_Need some data like: *.au
 await m.client.sendMessage(m.jid, '_Added new audio info!_',MessageType.text,{quoted:m.data});
 await he.patch(ur + '/config-vars', { body: {['AUDIO_DATA']: qu[1]}});}));
 */
-Module({pattern: 'mp4 ?(.*)', fromMe: a, desc:'Converts animated sticker to video'}, (async (m, t) => { 
-if (m.reply_message.sticker) {
-var q = await saveMessage(m.reply_message);
-try { var result =  await webp2mp4(q) } catch { return await m.sendReply("*Failed*")}
-    await m.sendReply({url: result},'video');
-} else return await m.sendReply('_Reply to an animated sticker!_');
+Module({
+    pattern: 'mp4 ?(.*)',
+    fromMe: a,
+    desc: 'Converts animated sticker to video'
+}, (async (m, t) => {
+    if (m.reply_message.sticker) {
+        var q = await saveMessage(m.reply_message);
+        try {
+            var result = await webp2mp4(q)
+        } catch {
+            return await m.sendReply("*Failed*")
+        }
+        await m.sendReply({
+            url: result
+        }, 'video');
+    } else return await m.sendReply('_Reply to an animated sticker!_');
 }));
-    
