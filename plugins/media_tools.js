@@ -137,7 +137,7 @@ const {
       if (!message.reply_message || !message.reply_message.video) return await message.sendReply("*Reply to a video*");
       var savedFile = await saveMessage(message.reply_message);
       await message.sendReply("*Rendering..*");
-      ffmpeg(location)
+      ffmpeg(savedFile)
           .fps(13)
           .videoBitrate(500)
           .save('./temp/agif.mp4')
