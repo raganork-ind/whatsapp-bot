@@ -10,6 +10,7 @@ module.exports = {
     VERSION: 'V1.0.0',
     ALIVE: process.env.ALIVE || "{image/https://i.imgur.com/KCnoMM2.jpg} Hey {sender}, I'm alive \n Uptime: {uptime}",
     BLOCK_CHAT: process.env.BLOCK_CHAT || '',
+    ALWAYS_ONLINE: convertToBool(ALWAYS_ONLINE) || true,
     READ_MESSAGES: convertToBool(process.env.READ_MESSAGES) || false,
     READ_COMMAND: convertToBool(process.env.READ_COMMAND) || true,
     USERNAME: process.env.USERNAME || '',
