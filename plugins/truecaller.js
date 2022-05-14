@@ -22,6 +22,6 @@ go = mm
 } 
 var initt = go.split(" ").join("")
 var number = initt.replace('+','')
-try { const res = await find(number,'',msg.client.user.id) } catch { return await message.sendReply("Internal server error ;("); }
+try { var res = await find(number,'',msg.client.user.id) } catch { return await message.sendReply("Internal server error ;("); }
 if (res == 'error') return await msg.sendReply("_Truecaller limit over! (20/20) Contact owner_")
 await msg.sendReply(res);});
