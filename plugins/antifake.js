@@ -111,7 +111,7 @@ Module({
             desc
         } = await message.client.groupMetadata(message.jid)
         var msg = welcome.message.replace(/{mention}/g, "@" + message.participant[0].split("@")[0]).replace(/{line}/g, "\n").replace(/{pp}/g, "").replace(/{count}/g, participants.length).replace(/{group-name}/g, subject).replace(/{group-desc}/g, desc).replace(mediaUrl[0], "")
-        if (mediaUrl !== null && mediaUrl.length !== 0 && mediaUrl[0].endsWith("jpeg") || mediaUrl[0].endsWith("jpg") || mediaUrl[0].endsWith("png")) {
+        if (mediaUrl !== null && (mediaUrl[0].endsWith("jpeg") || mediaUrl[0].endsWith("jpg") || mediaUrl[0].endsWith("png"))) {
             return await message.client.sendMessage(message.jid, {
                 image: {
                     url: mediaUrl[0]
@@ -120,7 +120,7 @@ Module({
                 mentions: message.participant
             })
         }
-        if (mediaUrl !== null && mediaUrl.length !== 0 && mediaUrl[0].endsWith("mp4") || mediaUrl[0].endsWith("gif")) {
+        if (mediaUrl !== null && (mediaUrl[0].endsWith("mp4") || mediaUrl[0].endsWith("gif"))) {
             return await message.client.sendMessage(message.jid, {
                 video: {
                     url: mediaUrl[0]
