@@ -121,7 +121,7 @@ Module({
     pattern: 'video ?(.*)',
     fromMe: w,
     desc: Lang.VIDEO_DESC
-}, (async (message, match) => {
+}, async (message, match) => {
     var s1 = !match[1].includes('youtu') ? message.reply_message.message : match[1]
     if (!s1) return await message.sendReply(Lang.NEED_VIDEO);
     if (!s1.includes('youtu')) return await message.sendReply(Lang.NEED_VIDEO);
@@ -174,12 +174,12 @@ Module({
             thumbnail: await skbuffer(th)
         });
     });
-}));
+});
 Module({
     pattern: 'detectlang$',
     fromMe: w,
     desc: Lang.DLANG_DESC
-}, (async (message, match) => {
+}, async (message, match) => {
 
     if (!message.reply_message) return await message.sendMessage(Lang.NEED_REPLY)
     const msg = message.reply_message.text
@@ -203,4 +203,35 @@ Module({
     const res_6 = '#4 *' + Lang.DLANG_LANG + '* ' + '_' + cls7 + '_\n*' + Lang.DLANG_SIMI + '* ' + '_' + cls8 + '_'
     const rep_7 = res_1 + res_2 + res_3 + res_4 + res_5 + res_6
     await message.sendReply(rep_7);
-}));
+});
+Module({
+    pattern: 'movie (.*)',
+    fromMe: w,
+    desc: "Movie search"
+}, async (message, match) => {
+    if (match[1] === '') return await message.sendReply('```Give me a movie name 👀.```');
+	var {data} = await axios(`http://www.omdbapi.com/?apikey=742b2d09&t=${match[1]}&plot=full`);
+	var json = JSON.parse(data);
+	if (json.Response != 'True') return await message.sendReply(json.Error);
+	let msg = '```';
+	msg += 'Title      : ' + json.Title + '\n\n';
+	msg += 'Year       : ' + json.Year + '\n\n';
+	msg += 'Rated      : ' + json.Rated + '\n\n';
+	msg += 'Released   : ' + json.Released + '\n\n';
+	msg += 'Runtime    : ' + json.Runtime + '\n\n';
+	msg += 'Genre      : ' + json.Genre + '\n\n';
+	msg += 'Director   : ' + json.Director + '\n\n';
+	msg += 'Writer     : ' + json.Writer + '\n\n';
+	msg += 'Actors     : ' + json.Actors + '\n\n';
+	msg += 'Plot       : ' + json.Plot + '\n\n';
+	msg += 'Language   : ' + json.Language + '\n\n';
+	msg += 'Country    : ' + json.Country + '\n\n';
+	msg += 'Awards     : ' + json.Awards + '\n\n';
+	msg += 'BoxOffice  : ' + json.BoxOffice + '\n\n';
+	msg += 'Production : ' + json.Production + '\n\n';
+	msg += 'imdbRating : ' + json.imdbRating + '\n\n';
+	msg += 'imdbVotes  : ' + json.imdbVotes + '```';
+    var posterApi = (await axios(`https://api.themoviedb.org/3/search/movie?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=${json.Title}`)).data
+    var poster = posterApi.total_results !== 0 ? "https://image.tmdb.org/t/p/w500/"+posterApi.results[0].poster_path : json.Poster
+    return await message.client.sendMessage(message.jid,{image: {url: poster}, caption:msg},{quoted: message.data})
+});
