@@ -23,7 +23,8 @@ const {
       getString
   } = require('./misc/lang');
   const {
-      bass
+      bass,
+      circle
   } = require('./misc/misc');
   const Lang = getString('media');
   const fromMe = MODE == 'public' ? false : true
@@ -128,6 +129,13 @@ const {
           .on('end', async () => {
               return await message.sendMessage(fs.readFileSync('./temp/slowmo.mp4'), 'video')
           });
+  });
+ Module({
+      pattern: "circle",
+      fromMe: fromMe,
+      desc: "Sticker/photo to circle crop"
+  }, async (message, match) => {
+      await circle(message);
   });
   Module({
       pattern: "gif",
