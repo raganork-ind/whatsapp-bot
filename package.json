@@ -1,5 +1,5 @@
 {
-  "name": "raganork-md",
+  "name": "raganork",
   "version": "1.0.0",
   "description": "Raganork whatsapp bot- Multi device version.",
   "main": "./Raganork/index.js",
@@ -19,9 +19,9 @@
   "developer": "@souravkl11",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/souravkl11/raganork-md/issues"
+    "url": "https://github.com/souravkl11/raganork/issues"
   },
-  "homepage": "https://github.com/souravkl11/raganork-md#readme",
+  "homepage": "https://github.com/souravkl11/raganork#readme",
   "dependencies": {
     "axios": "^0.21.1",
     "@adiwajshing/baileys": "4.1.0",
