@@ -8,7 +8,8 @@ const {
     isFake,
     delAntifake,
     getAntifake,
-    setAntifake
+    setAntifake,
+    parseWelcome
 } = require('./misc/misc');
 const greeting = require('./sql/greeting');
 const {
@@ -68,15 +69,15 @@ Module({
     on: "button",
     fromMe: true
 }, async (message, match) => {
-    if (message.tembutton && message.tembutton.startsWith("fake_on") && message.tembutton.includes(message.client.user.id.split(":")[0])) {
+    if (message.button && message.button.startsWith("fake_on") && message.button.includes(message.client.user.id.split(":")[0])) {
         await setAntifake(message.jid);
         return await message.sendMessage("Antifake enabled ✅")
     }
-    if (message.tembutton && message.tembutton.startsWith("fake_off") && message.tembutton.includes(message.client.user.id.split(":")[0])) {
+    if (message.button && message.button.startsWith("fake_off") && message.button.includes(message.client.user.id.split(":")[0])) {
         await delAntifake(message.jid);
         return await message.sendMessage("Antifake disabled ✅")
     }
-    if (message.tembutton && message.tembutton.startsWith("fake_get") && message.tembutton.includes(message.client.user.id.split(":")[0])) {
+    if (message.button && message.button.startsWith("fake_get") && message.button.includes(message.client.user.id.split(":")[0])) {
         return await message.sendMessage("Allowed prefixes: " + ALLOWED)
     }
 })
@@ -101,60 +102,5 @@ Module({
             await message.client.groupParticipantsUpdate(message.jid, [message.participant[0]], "remove")
         }
     }
-    var welcome = await greeting.getMessage(message.jid);
-    if (welcome !== false && message.update === 27) {
-        var mediaUrl = welcome.message.match(/\bhttps?:\/\/\S+/gi);
-        var {
-            subject,
-            owner,
-            participants,
-            desc
-        } = await message.client.groupMetadata(message.jid)
-        var msg = welcome.message.replace(/{mention}/g, "@" + message.participant[0].split("@")[0]).replace(/{line}/g, "\n").replace(/{pp}/g, "").replace(/{count}/g, participants.length).replace(/{group-name}/g, subject).replace(/{group-desc}/g, desc).replace(mediaUrl[0], "")
-        if (mediaUrl !== null && (mediaUrl[0].endsWith("jpeg") || mediaUrl[0].endsWith("jpg") || mediaUrl[0].endsWith("png"))) {
-            return await message.client.sendMessage(message.jid, {
-                image: {
-                    url: mediaUrl[0]
-                },
-                caption: msg,
-                mentions: message.participant
-            })
-        }
-        if (mediaUrl !== null && (mediaUrl[0].endsWith("mp4") || mediaUrl[0].endsWith("gif"))) {
-            return await message.client.sendMessage(message.jid, {
-                video: {
-                    url: mediaUrl[0]
-                },
-                caption: msg,
-                mentions: message.participant
-            })
-        }
-        if (welcome.message.includes("{pp}")) {
-            try {
-                var im = await message.client.profilePictureUrl(message.participant[0],'image')
-            } catch {
-                var im = await message.client.profilePictureUrl(message.jid, 'image')
-            }
-            return await message.client.sendMessage(message.jid, {
-                image: {
-                    url: im
-                },
-                caption: msg,
-                mentions: message.participant
-            })
-        }
-        if (welcome.message.includes("{gicon}")) {
-            var im = await message.client.profilePictureUrl(message.jid, 'image')
-            return await message.client.sendMessage(message.jid, {
-                image: {
-                    url: im
-                },
-                caption: msg,
-                mentions: message.participant
-            })
-        } else return await message.client.sendMessage(message.jid, {
-            text: msg,
-            mentions: message.participant
-        })
-    }
+    await parseWelcome(message,greeting)
 })
