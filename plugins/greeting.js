@@ -31,7 +31,7 @@ Module({
         await message.sendMessage(Lang.WELCOME_DELETED);
         return await sql.deleteMessage(message.jid, 'welcome');
     }
-    await sql.setMessage(message.jid, 'welcome', match[1].replace(/#/g, '\n'));
+    await sql.setMessage(message.jid, 'welcome', match[1].replace(/&/g, '\n'));
     return await message.sendReply(Lang.WELCOME_SETTED)
 }));
 Module({
