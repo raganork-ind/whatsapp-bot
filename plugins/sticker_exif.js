@@ -65,7 +65,8 @@ Module({
                 let auth = spl[1] ? spl[1] : AUDIO_DATA.split(';')[1]
                 var res = await addInfo('info.mp3', tit, auth, 'Raganork Engine', await skbuffer(im))
                 await m.client.sendMessage(m.jid, {
-                    audio: res
+                    audio: res,
+                    mimetype: 'audio/mp4',
                 }, {
                     quoted: m.data,
                     ptt: false
