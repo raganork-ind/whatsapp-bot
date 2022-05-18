@@ -1,4 +1,4 @@
-const {Module} = require('../events');
+const {Module} = require('../main');
 const {MODE,RBG_KEY} = require('../config');
 const w = MODE == 'public' ? false : true
 const fs = require('fs');
