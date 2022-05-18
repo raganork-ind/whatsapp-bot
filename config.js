@@ -8,7 +8,7 @@ DATABASE_URL = process.env.DATABASE_URL === undefined ? './bot.db' : process.env
 DEBUG = process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBUG);
 module.exports = {
     VERSION: 'V1.0.0',
-    ALIVE: process.env.ALIVE || "{image/https://i.imgur.com/KCnoMM2.jpg} Hey {sender}, I'm alive \n Uptime: {uptime}",
+    ALIVE: process.env.ALIVE || "https://i.imgur.com/KCnoMM2.jpg Hey {sender}, I'm alive \n Uptime: {uptime}",
     BLOCK_CHAT: process.env.BLOCK_CHAT || '',
     ALWAYS_ONLINE: convertToBool(process.env.ALWAYS_ONLINE) || true,
     READ_MESSAGES: convertToBool(process.env.READ_MESSAGES) || false,
@@ -16,6 +16,7 @@ module.exports = {
     USERNAME: process.env.USERNAME || '',
     SESSION: process.env.SESSION || '',
     PASSWORD: process.env.PASSWORD || '',
+    RBG_KEY: process.env.RBG_KEY || '',
     ALLOWED: process.env.ALLOWED || '91,94,212',
     CHATBOT: process.env.CHATBOT || 'off',
     HANDLERS: process.env.HANDLERS || '.,',
