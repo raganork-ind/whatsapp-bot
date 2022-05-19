@@ -108,7 +108,7 @@ var menu = `╭═══〘 ${BOT_INFO.split(";")[0]} 〙═══⊷❍
 ┃✩│ gif
 ┃✩╰─────────────────
 ╰══════════════════⊷❍`
-return await m.sendImageTemplate(await skbuffer(BOT_INFO.split(";")[3]),menu,"All rights reserved "+BOT_INFO.split(";")[0],buttons);
+return await message.sendImageTemplate(await skbuffer(BOT_INFO.split(";")[3]),menu,"All rights reserved "+BOT_INFO.split(";")[0],buttons);
 }))
 Module({
   pattern: 'alive',
