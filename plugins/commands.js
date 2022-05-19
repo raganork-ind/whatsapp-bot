@@ -56,13 +56,4 @@ Module({
         await n.sendReply(t)
     }
 });
-Module({
-  on: 'button',
-  fromMe: w,
-  desc: 'Is bot alive?'
-}, (async (message, match) => {
-var selected = message.tembutton  
-if (selected === 'mdcmd') await message.sendReply(FancyRandom(await getListFromCommand(commands)));
-if (selected === 'mdmenu') await message.sendReply("🙂")
 
-}))

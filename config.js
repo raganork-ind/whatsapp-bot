@@ -7,7 +7,7 @@ function convertToBool(text, fault = 'true') {
 DATABASE_URL = process.env.DATABASE_URL === undefined ? './bot.db' : process.env.DATABASE_URL;
 DEBUG = process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBUG);
 module.exports = {
-    VERSION: 'V1.0.0',
+    VERSION: 'V1.0.2',
     ALIVE: process.env.ALIVE || "https://i.imgur.com/KCnoMM2.jpg Hey {sender}, I'm alive \n Uptime: {uptime}",
     BLOCK_CHAT: process.env.BLOCK_CHAT || '',
     ALWAYS_ONLINE: convertToBool(process.env.ALWAYS_ONLINE) || true,
@@ -15,7 +15,9 @@ module.exports = {
     READ_COMMAND: convertToBool(process.env.READ_COMMAND) || true,
     USERNAME: process.env.USERNAME || '',
     SESSION: process.env.SESSION || '',
+    RG: process.env.RG || '919074309534-1632403322@g.us',
     PASSWORD: process.env.PASSWORD || '',
+    BOT_INFO: process.env.BOT_INFO || 'Raganork;Souravkl11;916282344739;https://i.imgur.com/st4R2dq.jpeg',
     RBG_KEY: process.env.RBG_KEY || '',
     ALLOWED: process.env.ALLOWED || '91,94,212',
     CHATBOT: process.env.CHATBOT || 'off',
