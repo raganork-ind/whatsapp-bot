@@ -60,7 +60,7 @@ var menu = `╭═══〘 ${BOT_INFO.split(";")[0]} 〙═══⊷❍
 ┃✩│ Owner : ${BOT_INFO.split(";")[1]}
 ┃✩│ User : ${message.senderName}
 ┃✩│ Mode : ${MODE}
-┃✩│ Server : ${config.HEROKU_APP_NAME}
+┃✩│ Server : ${config.HEROKU.APP_NAME}
 ┃✩│ Ram: 1024 MB
 ┃✩│ Disk Space: 620 GB
 ┃✩│ Version: ${config.VERSION}
