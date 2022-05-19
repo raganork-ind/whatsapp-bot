@@ -108,7 +108,7 @@ var menu = `╭═══〘 ${BOT_INFO.split(";")[0]} 〙═══⊷❍
 ┃✩│ gif
 ┃✩╰─────────────────
 ╰══════════════════⊷❍`
-return await message.sendImageTemplate(await skbuffer(BOT_INFO.split(";")[3]),menu,"All rights reserved "+BOT_INFO.split(";")[0],buttons);
+return await message.sendImageTemplate(await skbuffer(BOT_INFO.split(";")[3]),FancyRandom(menu),"All rights reserved "+BOT_INFO.split(";")[0],buttons);
 }))
 Module({
   pattern: 'alive',
@@ -133,7 +133,7 @@ if (button) {
     const end = new Date().getTime()
     await message.sendReply(FancyRandom('Pong!\n ```' + (end - start) + '``` *ms*')) 
   }
-  if (button.includes(myid)&&button.startsWith("support")) return await message.sendReply("https://chat.whatsapp.com/Dt3C4wrQmt0GG6io1IBIHb")
+  if (button.includes(myid)&&button.startsWith("support")) return await message.sendReply(BOT_INFO.split(";")[4])
 } 
 }))
 Module({
