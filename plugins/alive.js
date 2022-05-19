@@ -27,7 +27,7 @@ Module({
   fromMe: w,
   desc: 'Is bot alive?'
 }, (async (message, match) => {
-  var myid = message.client.id.split(":")[0]
+  var myid = message.client.user.id.split(":")[0]
   var buttons = [{
     urlButton: {
         displayText: 'Github',
@@ -121,7 +121,7 @@ Module({
   on: 'button',
   fromMe: w,
  }, (async (message, match) => {
-var myid = message.client.id.split(":")[0]
+var myid = message.client.user.id.split(":")[0]
 var {button} = message
 if (button) {
   if (button.includes(myid)&&button.startsWith("commands")) return await message.sendReply(FancyRandom(await getListFromCommand(commands)))
