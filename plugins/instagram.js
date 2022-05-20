@@ -36,7 +36,7 @@ Module({
     if (query[0] === 'install') return;
     var q = !msg.reply_message.message ? query[1] : msg.reply_message.message
     if (!q) return await msg.client.sendMessage(msg.jid, {
-        text: "_*Couldn't read link. Use .insta link*_"
+        text: "*Need instagram link*"
     }, {
         quoted: msg.data
     })
@@ -104,7 +104,7 @@ Module({
 }, (async (msg, query) => {
     if (query[1] === '') return await msg.sendReply(need_acc_s);
     var user = query[1];
-    var res = await getStory(user)
+    try { var res = await getStory(user) } catch {return await msg.sendReply("*Server error*")}
     if (res === "false") return await msg.sendReply("_Story not found!_")
     if (res.error) return await msg.sendReply("Status: 403 (forbidden)")
     var url = ''
