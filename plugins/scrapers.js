@@ -187,14 +187,14 @@ Module({
     news.push({title: res.result[i].title,rowId:res.result[i].url});
     }
     const headlines = [{title: "കൂടുതല്‍ അറിയുവാന്‍ വാര്‍ത്തകള്‍ ക്ലിക്ക് ചെയ്യൂ",rows: news}]
-    const newsList = {
-        text: "ഒപ്പം കൂടുതൽ വാർത്തകളും...",
+    const listMessage = {
         footer: "📰 Latest news from www.manoramanews.com",
         title: res.result[0].title,
         buttonText: "മറ്റു വാര്‍ത്തകള്‍ 🔍",
+        text: "ഒപ്പം കൂടുതൽ വാർത്തകളും...",
         headlines
       }
-return await message.client.sendMessage(message.jid,newsList)
+return await message.client.sendMessage(message.jid,listMessage)
 });
 Module({
     pattern: 'mediafire ?(.*)',
