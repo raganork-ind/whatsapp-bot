@@ -177,11 +177,56 @@ Module({
     });
 });
 Module({
-    pattern: 'detectlang$',
+    pattern: 'news$',// Credit: LyFE's API
     fromMe: w,
-    desc: Lang.DLANG_DESC
+    desc: "Malayalam news"
 }, async (message, match) => {
-
+    var news = [];
+    var res = (await axios("https://levanter.up.railway.app/news")).data
+	for ( var i in res.result) {
+    news.push({title: res.result[i].title,rowId:res.result[i].url});
+    }
+    const headlines = [{title: "കൂടുതല്‍ അറിയുവാന്‍ വാര്‍ത്തകള്‍ ക്ലിക്ക് ചെയ്യൂ",rows: news}]
+    const newsList = {
+        text: "ഒപ്പം കൂടുതൽ വാർത്തകളും...",
+        footer: "📰 Latest news from www.manoramanews.com",
+        title: res.result[0].title,
+        buttonText: "മറ്റു വാര്‍ത്തകള്‍ 🔍",
+        headlines
+      }
+return await message.client.sendMessage(message.jid,newsList)
+});
+Module({
+    pattern: 'mediafire ?(.*)',
+    fromMe: w,
+    desc: "Mediafire Download Link"
+}, async (message, match) => {
+    if (!match[1]) return await message.sendReply("*Need url*");
+    var {link,title,size} = (await axios("https://raganork-api.vercel.app/api/mediafire?url="+match[1])).data
+    var mediaFire = [{
+        urlButton: {
+            displayText: 'Download',
+            url: link
+        }
+    }]
+   var header = "_File:_ "+title+"\n _Size:_ "+size+"\n _Click this button to download_"
+return await message.sendImageTemplate(await skbuffer("https://play-lh.googleusercontent.com/Br7DFOmd9GCUmXdyTnPVqNj_klusX0OEx6MrElu8Avl2KJ7wbsS7dBdci293o7vF4fk"),header,"Mediafire Downloader",mediaFire)
+});
+Module({
+    on: 'button',
+    fromMe: w,
+}, async (message, match) => {
+    if (message.list && message.list.includes("manoramanews")) {
+    var news = (await axios("https://levanter.up.railway.app/news?url="+message.list)).data.result
+    return await message.sendReply("*"+news+"*")
+    }
+});
+    Module({
+        pattern: 'detectlang$',
+        fromMe: w,
+        desc: Lang.DLANG_DESC
+    }, async (message, match) => {
+    
     if (!message.reply_message) return await message.sendMessage(Lang.NEED_REPLY)
     const msg = message.reply_message.text
     var ldet = lngDetector.detect(msg)
