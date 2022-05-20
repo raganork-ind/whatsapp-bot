@@ -109,7 +109,7 @@ Module({
     desc: Lang.SETVAR_DESC
 }, (async (message, match) => {
 
-    if (match[1] === '') return await message.sendReply(Lang.KEY_VAL_MISSING)
+    if (match[1] === '' || !match[1].includes(":")) return await message.sendReply(Lang.KEY_VAL_MISSING)
 
     if ((varKey = match[1].split(':')[0]) && (varValue = match[1].replace(match[1].split(':')[0] + ":", ""))) {
         await heroku.patch(baseURI + '/config-vars', {
