@@ -191,7 +191,6 @@ Module({
         footer: "📰 Latest news from www.manoramanews.com",
         title: res.result[0].title,
         buttonText: "മറ്റു വാര്‍ത്തകള്‍ 🔍",
-        text: "ഒപ്പം കൂടുതൽ വാർത്തകളും...",
         headlines
       }
  await message.client.sendMessage(message.jid,listMessage)
