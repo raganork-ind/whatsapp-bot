@@ -15,9 +15,9 @@ Module({
 }, (async (message, match) => {
     match = match[1].match(/[\'\"\“](.*?)[\'\"\“]/gsm);
     if (message.reply_message.text) {
-        await FilterDb.setFilter(message.jid, match[0].replace(/['"“]+/g, ''), message.reply_message.text, match[0][0] === "'" ? true : false);
+        await FilterDb.setFilter(message.jid, encodeURIComponent(match[0].replace(/['"“]+/g, '')), message.reply_message.text, match[0][0] === "'" ? true : false);
         await message.client.sendMessage(message.jid, {
-            text: "_Set_" + match[0].replace(/['"]+/g, '') + " _to filter ✅_"
+            text: "_Set_ " + match[0].replace(/['"]+/g, '') + " _to filter ✅_"
         });
         return;
     }
@@ -31,7 +31,7 @@ Module({
             var mesaj = "_Your filters in this chat:_" + '\n';
             filtreler.map((filter) => mesaj += '```' + filter.dataValues.pattern + '```\n');
             await message.client.sendMessage(message.jid, {
-                text: mesaj
+                text: decodeURIComponent(mesaj)
             });
         }
     } else {
@@ -104,7 +104,7 @@ Module({
     filtreler.map(
         async (filter) => {
             pattern = new RegExp(filter.dataValues.regex ? filter.dataValues.pattern : ('\\b(' + filter.dataValues.pattern + ')\\b'), 'gm');
-            if (pattern.test(Text)) {
+            if (pattern.test(encodeURIComponent(Text))) {
                 await message.client.sendMessage(message.jid, {
                     text: filter.dataValues.text
                 }, {
