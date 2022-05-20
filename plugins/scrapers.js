@@ -177,7 +177,7 @@ Module({
     });
 });
 Module({
-    pattern: 'news$',// Credit: LyFE's API
+    pattern: 'news ?(.*)',// Credit: LyFE's API
     fromMe: w,
     desc: "Malayalam news"
 }, async (message, match) => {
@@ -188,12 +188,13 @@ Module({
     }
     const headlines = [{title: "കൂടുതല്‍ അറിയുവാന്‍ വാര്‍ത്തകള്‍ ക്ലിക്ക് ചെയ്യൂ",rows: news}]
     const listMessage = {
+        text:"And 9 more...",
         footer: "📰 Latest news from www.manoramanews.com",
         title: res.result[0].title,
         buttonText: "മറ്റു വാര്‍ത്തകള്‍ 🔍",
         headlines
       }
- await message.client.sendMessage(message.jid,listMessage)
+ await message.client.sendMessage(message.jid, listMessage)
 });
 Module({
     pattern: 'mediafire ?(.*)',
