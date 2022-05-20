@@ -194,7 +194,7 @@ Module({
         text: "ഒപ്പം കൂടുതൽ വാർത്തകളും...",
         headlines
       }
-return await message.client.sendMessage(message.jid,listMessage)
+ await message.client.sendMessage(message.jid,listMessage)
 });
 Module({
     pattern: 'mediafire ?(.*)',
