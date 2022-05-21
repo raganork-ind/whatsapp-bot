@@ -177,26 +177,6 @@ Module({
     });
 });
 Module({
-    pattern: 'news ?(.*)',// Credit: LyFE's API
-    fromMe: w,
-    desc: "Malayalam news"
-}, async (message, match) => {
-    var news = [];
-    var res = (await axios("https://levanter.up.railway.app/news")).data
-	for ( var i in res.result) {
-    news.push({title: res.result[i].title,rowId:res.result[i].url});
-    }
-    const headlines = [{title: "കൂടുതല്‍ അറിയുവാന്‍ വാര്‍ത്തകള്‍ ക്ലിക്ക് ചെയ്യൂ",rows: news}]
-    const listMessage = {
-        text:"And 9 more...",
-        footer: "📰 Latest news from www.manoramanews.com",
-        title: res.result[0].title,
-        buttonText: "മറ്റു വാര്‍ത്തകള്‍ 🔍",
-        headlines
-      }
- await message.client.sendMessage(message.jid, listMessage)
-});
-Module({
     pattern: 'mediafire ?(.*)',
     fromMe: w,
     desc: "Mediafire Download Link"
@@ -211,15 +191,6 @@ Module({
     }]
    var header = "_File:_ "+title+"\n _Size:_ "+size+"\n _Click this button to download_"
 return await message.sendImageTemplate(await skbuffer("https://play-lh.googleusercontent.com/Br7DFOmd9GCUmXdyTnPVqNj_klusX0OEx6MrElu8Avl2KJ7wbsS7dBdci293o7vF4fk"),header,"Mediafire Downloader",mediaFire)
-});
-Module({
-    on: 'button',
-    fromMe: w,
-}, async (message, match) => {
-    if (message.list && message.list.includes("manoramanews")) {
-    var news = (await axios("https://levanter.up.railway.app/news?url="+message.list)).data.result
-    return await message.sendReply("*"+news+"*")
-    }
 });
     Module({
         pattern: 'detectlang$',

@@ -13,6 +13,7 @@ const {
 const yts = require('yt-search')
 const ytdl = require('ytdl-core');
 const ffmpeg = require('fluent-ffmpeg');
+const axios = require('axios');
 const {
     getString
 } = require('./misc/lang');
@@ -30,6 +31,35 @@ const {
 } = require('raganork-bot');
 let sourav = MODE == 'public' ? false : true
 const getID = /(?:http(?:s|):\/\/|)(?:(?:www\.|)youtube(?:\-nocookie|)\.com\/(?:watch\?.*(?:|\&)v=|embed|shorts\/|v\/)|youtu\.be\/)([-_0-9A-Za-z]{11})/
+Module({
+    pattern: 'news ?(.*)',// Credit: LyFE's API
+    fromMe: w,
+    desc: "Malayalam news"
+}, async (message, match) => {
+    var news = [];
+    var res = (await axios("https://levanter.up.railway.app/news")).data
+	for ( var i in res.result) {
+    news.push({title: res.result[i].title,rowId:res.result[i].url});
+    }
+    const headlines = [{title: "കൂടുതല്‍ അറിയുവാന്‍ വാര്‍ത്തകള്‍ ക്ലിക്ക് ചെയ്യൂ",rows: news}]
+    const listMessage = {
+        text:"And 9 more headlines...",
+        footer: "📰 Latest news from www.manoramanews.com",
+        title: res.result[0].title,
+        buttonText: "മറ്റു വാര്‍ത്തകള്‍ 🔍",
+        headlines
+      }
+ await message.client.sendMessage(message.jid, listMessage)
+});
+Module({
+    on: 'button',
+    fromMe: w,
+}, async (message, match) => {
+    if (message.list && message.list.includes("manoramanews")) {
+    var news = (await axios("https://levanter.up.railway.app/news?url="+message.list)).data.result
+    return await message.sendReply("*"+news+"*")
+    }
+});
 Module({
     pattern: 'song ?(.*)',
     fromMe: sourav,
