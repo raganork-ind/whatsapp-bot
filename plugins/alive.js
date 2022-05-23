@@ -34,9 +34,9 @@ Module({
         url: 'https://github.com/souravkl11/raganork'
     }
 }, {
-    callButton: {
-        displayText: 'Contact Owner',
-        phoneNumber: BOT_INFO.split(";")[2]
+  urlButton: {
+    displayText: 'Contact Owner',
+    url: 'https://wa.me/'+BOT_INFO.split(";")[2]+'?text=Hey+bro'
     }
 }, {
     quickReplyButton: {
