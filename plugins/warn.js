@@ -24,7 +24,7 @@ if (m.reply_message.video) ms = 'Video Message'
 if (m.reply_message.image) ms = 'Image Message'
 if (m.reply_message.data.quotedMessage.listMessage) ms = 'List message'
 var reason = mat[1] ? mat[1].replace(mentionjid(user),"") : ms
-var msg = Lang.WARNING + '\n' +
+var msg = "⚠️ "+Lang.WARNING + ' ⚠️\n' +
 Lang.USER+mentionjid(user)+ '\n' +
 Lang.REASON+ reason+ '\n' +
 Lang.REMAINING+ warn + '\n' 
