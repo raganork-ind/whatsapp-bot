@@ -28,6 +28,7 @@ let {
 } = require('raganork-bot');
 let a = MODE == 'public' ? false : true;
 let ffmpeg = require('fluent-ffmpeg');
+let fs = require('fs');
 const h = require('heroku-client');
 const he = new h({
     token: HEROKU.API_KEY
