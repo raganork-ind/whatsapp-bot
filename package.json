@@ -27,6 +27,7 @@
     "@adiwajshing/keyed-db":"0.2.4",
     "string-crypto": "2.0.2",
     "mongodb": "^4.3.1",
+    "node-webpmux": "^3.1.0",
     "async-g-i-s": "1.0.0",
     "raganork-bot": "2.0.2",
     "sequelize": "^6.13.0",
