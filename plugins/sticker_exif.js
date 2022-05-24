@@ -23,7 +23,6 @@ let {
 let {
     addInfo,
     skbuffer,
-    sticker,
     stickercrop,
     webp2mp4
 } = require('raganork-bot');
