@@ -13,13 +13,16 @@ const {
 } = require('./misc/saveMessage');
 const Config = require('../config');
 const {
-    MODE
+    MODE,
+    STICKER_DATA
 } = require('../config');
 const {
     getString
 } = require('./misc/lang');
 const {
-    bass
+    bass,
+    sticker,
+    addExif
 } = require('./misc/misc');
 const Lang = getString('converters');
 let w = MODE == 'public' ? false : true
@@ -31,25 +34,19 @@ Module({
 
     if (message.reply_message === false) return await message.sendMessage(Lang.STICKER_NEED_REPLY)
     var savedFile = await saveMessage(message.reply_message);
+    var exif = {
+        author: STICKER_DATA.split(";")[1] || "",
+        packname: STICKER_DATA.split(";")[0] || "",
+        categories: STICKER_DATA.split(";")[2] || "😂",
+        android: "https://github.com/souravkl11/Raganork-md/",
+        ios: "https://github.com/souravkl11/Raganork-md/"
+    }
     if (message.reply_message.video === false && message.reply_message.image) {
-        ffmpeg(savedFile)
-            .outputOptions(["-y", "-vcodec libwebp"])
-            .videoFilters('scale=2000:2000:flags=lanczos:force_original_aspect_ratio=decrease,format=rgba,pad=2000:2000:(ow-iw)/2:(oh-ih)/2:color=#00000000,setsar=1')
-            .save('./temp/st.webp')
-            .on('end', async () => {
-                await message.sendReply(fs.readFileSync('./temp/st.webp'), 'sticker')
-            });
+        await message.sendReply(fs.readFileSync(await addExif(await sticker(savedFile),exif)), 'sticker')
         return;
     }
-
-    ffmpeg(savedFile)
-        .outputOptions(["-y", "-vcodec libwebp", "-lossless 1", "-qscale 1", "-preset default", "-loop 0", "-an", "-vsync 0", "-s 600x600"])
-        .videoFilters('scale=600:600:flags=lanczos:force_original_aspect_ratio=decrease,format=rgba,pad=600:600:(ow-iw)/2:(oh-ih)/2:color=#00000000,setsar=1')
-        .save('./temp/st.webp')
-        .on('end', async () => {
-            await message.sendReply(fs.readFileSync('./temp/st.webp'), 'sticker')
-        });
-    return;
+        await message.sendReply(fs.readFileSync(await addExif(await sticker(savedFile),exif)), 'sticker')
+        return;
 }));
 Module({
     pattern: 'mp3$',
@@ -92,7 +89,6 @@ Module({
     desc: Lang.PHOTO_DESC
 }, (async (message, match) => {
     if (message.reply_message === false) return await message.sendMessage(Lang.PHOTO_NEED_REPLY)
-    if (message.reply_message.sticker && message.reply_message.animated === false) {
         var savedFile = await saveMessage(message.reply_message);
         ffmpeg(savedFile)
             .fromFormat('webp_pipe')
@@ -100,5 +96,4 @@ Module({
             .on('end', async () => {
                 await message.sendReply(fs.readFileSync('output.png'), 'image');
             });
-    }
 }));
