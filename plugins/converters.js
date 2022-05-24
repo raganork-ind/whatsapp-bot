@@ -4,7 +4,7 @@ you may not use this file except in compliance with the License.
 Raganork MD - Sourav KL11
 */
 const {
-    Module
+    Module 
 } = require('../main');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
