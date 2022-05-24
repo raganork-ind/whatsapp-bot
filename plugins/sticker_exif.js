@@ -6,6 +6,10 @@ Raganork MD - Sourav KL11
 let {
     saveMessage
 } = require('./misc/saveMessage');
+const {
+    sticker,
+    addExif
+} = require('./misc/misc');
 let {
     Module
 } = require('../main');
@@ -40,19 +44,24 @@ Module({
     var stickermsg = m.reply_message.sticker;
     var q = await saveMessage(m.reply_message);
     if (stickermsg) {
-        let inf = match[1] ? match[1] : STICKER_DATA
-        var s = inf.split('|');
-        var au = s[1] ? s[1] : STICKER_DATA.split('|')[1]
-        var p = s[0] ? s[0] : STICKER_DATA.split('|')[0]
-        if (!TAKE_KEY) return await m.client.sendMessage(m.jid, {
-            text: '_No API key given! Get your key from https://api.imgbb.com/ and add setvar TAKE_KEY:key_'
-        })
-        var res = await sticker(q, au, p, TAKE_KEY)
-        await m.client.sendMessage(m.jid, {
-            sticker: await skbuffer(res)
-        }, {
-            quoted: m.data
-        });
+        if (match[1]!=="") {
+        var exif = {
+            author: match[1].includes(";")?match[1].split(";")[1]:"",
+            packname: match[1].includes(";")?match[1].split(";")[0]:match[1],
+            categories: STICKER_DATA.split(";")[2] || "😂",
+            android: "https://github.com/souravkl11/Raganork-md/",
+            ios: "https://github.com/souravkl11/Raganork-md/"
+        } }
+        else {
+            var exif = {
+                author: STICKER_DATA.split(";")[1] || "",
+                packname: STICKER_DATA.split(";")[0] || "",
+                categories: STICKER_DATA.split(";")[2] || "😂",
+                android: "https://github.com/souravkl11/Raganork-md/",
+                ios: "https://github.com/souravkl11/Raganork-md/"
+            }
+        }
+        return await m.sendReply(fs.readFileSync(await addExif(q,exif)),'sticker')
     }
     if (!stickermsg && audiomsg) {
         ffmpeg(q)
