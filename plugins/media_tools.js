@@ -24,7 +24,8 @@ const {
   } = require('./misc/lang');
   const {
       bass,
-      circle
+      circle,
+      findMusic 
   } = require('./misc/misc');
   const Lang = getString('media');
   const fromMe = MODE == 'public' ? false : true
