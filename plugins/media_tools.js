@@ -174,3 +174,34 @@ const {
               return await message.sendMessage(fs.readFileSync('./temp/interp.mp4'), 'video')
           });
   });
+Module({
+      pattern: "find ?(.*)",
+      fromMe: fromMe,
+      desc: "Finds music name. Like Shazam"
+  }, async (message, match) => {
+      if (!message.reply_message || !message.reply_message.audio) return await message.sendReply("*Reply to a music*");
+      if (message.reply_message.duration > 60) return await message.sendMessage('*Audio too large! Use .trim command and cut the audio to < 60*');
+      var savedFile = await saveMessage(message.reply_message);
+      var data = await findMusic(fs.readFileSync(savedFile));
+      if (!data) return await message.sendReply("*No matching results found!*");
+      const templateButtons = [
+    {index: 1, urlButton: {displayText: 'YouTube 🔗', url: 'https://youtu.be/'+data.external_metadata.youtube.vid}}
+ ]
+function getDuration(millis) {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = ((millis % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+const templateMessage = {
+    text:  `Title: ${data.title}
+Artists: ${data.artists.map(e => e.name + "\n")}
+*Released on:* ${data.release_date}
+*Duration:* ${getDuration(data.duration_ms)}
+*Genres:* ${data.genres.map(e => e.name + " ")}
+*Label:* ${data.label}`,
+    footer: 'Listen to full music on:',
+    templateButtons: templateButtons
+}
+await message.client.sendMessage(message.jid, templateMessage)
+  });
+
