@@ -198,6 +198,7 @@ const templateMessage = {
 *Artists:* ${data.artists?.map(e => e.name + " ")}
 *Released on:* ${data.release_date}
 *Duration:* ${getDuration(data.duration_ms)}
+*Album:* ${data.album?.name}
 *Genres:* ${data.genres?.map(e => e.name + " ")}
 *Label:* ${data.label}`,
     footer: 'Listen to full music on:',
