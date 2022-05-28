@@ -194,8 +194,8 @@ function getDuration(millis) {
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 const templateMessage = {
-    text:  `Title: ${data.title}
-Artists: ${data.artists?.map(e => e.name + "\n")}
+    text:  `*Title:* ${data.title}
+*Artists:* ${data.artists?.map(e => e.name + " ")}
 *Released on:* ${data.release_date}
 *Duration:* ${getDuration(data.duration_ms)}
 *Genres:* ${data.genres?.map(e => e.name + " ")}
