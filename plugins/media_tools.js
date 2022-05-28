@@ -186,7 +186,7 @@ Module({
       var data = await findMusic(fs.readFileSync(savedFile));
       if (!data) return await message.sendReply("*No matching results found!*");
       const templateButtons = [
-    {index: 1, urlButton: {displayText: 'YouTube 🔗', url: 'https://youtu.be/'+data.external_metadata.youtube.vid}}
+    {index: 1, urlButton: {displayText: 'YouTube 🔗', url: 'https://youtu.be/'+data.external_metadata?.youtube.vid}}
  ]
 function getDuration(millis) {
   var minutes = Math.floor(millis / 60000);
@@ -195,10 +195,10 @@ function getDuration(millis) {
 }
 const templateMessage = {
     text:  `Title: ${data.title}
-Artists: ${data.artists.map(e => e.name + "\n")}
+Artists: ${data.artists?.map(e => e.name + "\n")}
 *Released on:* ${data.release_date}
 *Duration:* ${getDuration(data.duration_ms)}
-*Genres:* ${data.genres.map(e => e.name + " ")}
+*Genres:* ${data.genres?.map(e => e.name + " ")}
 *Label:* ${data.label}`,
     footer: 'Listen to full music on:',
     templateButtons: templateButtons
