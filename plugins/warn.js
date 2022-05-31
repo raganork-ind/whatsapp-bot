@@ -6,6 +6,7 @@ Raganork MD - Sourav KL11
 let {Module} = require('../main');
 let {WARN,ANTILINK_WARN} = require('../config');
 let {getString} = require('./misc/lang');
+const {Fancy} = require('raganork-bot')
 let {isAdmin} = require('./misc/misc');
 let Lang = getString('group');
 let {setWarn,resetWarn,mentionjid} = require('./misc/misc');
@@ -24,12 +25,19 @@ if (m.reply_message.video) ms = 'Video Message'
 if (m.reply_message.image) ms = 'Image Message'
 if (m.reply_message.data.quotedMessage.listMessage) ms = 'List message'
 var reason = mat[1] ? mat[1].replace(mentionjid(user),"") : ms
-var msg = "⚠️ "+Lang.WARNING + ' ⚠️\n' +
-Lang.USER+mentionjid(user)+ '\n' +
-Lang.REASON+ reason+ '\n' +
-Lang.REMAINING+ warn + '\n' 
+var msg = `╭──〔 *⚠️ Warning ⚠️* 〕
+├ *Participant:* ${mentionjid(user)}
+├ *Reason:* ${reason}
+├ *Remaining:* ${warn}
+├ *Total limit:* ${WARN}
+├ *Group:* ${m.jid}
+├ *Warner:* ${mentionjid(m.sender)}
+├ *Time:* ${new Date().toLocaleTimeString()}
+╰──────────────`
+var txts = [Fancy(msg,29),Fancy(msg,30)]
+var rtxt = txts[Math.floor(Math.random()*txts.length)];
 if (warn !== 0) {
-    return await m.client.sendMessage(m.jid, { text: msg ,mentions:[user]},{ quoted: m.data })
+    return await m.client.sendMessage(m.jid, { text: rtxt ,mentions:[user]},{ quoted: m.data })
 } else {
         await m.sendMessage(Lang.WARN_OVER.format(WARN,mentionjid(user).replace("@","")))
     await m.client.sendMessage(m.jid,{text: mentionjid(user)+Lang.KICKED, mentions: [user] })
