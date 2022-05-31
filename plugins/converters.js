@@ -68,7 +68,8 @@ Module({
 }));
 Module({
     pattern: 'bass ?(.*)',
-    fromMe: Lang.BASS_DESC
+    fromMe: w,
+    desc: Lang.BASS_DESC
 }, (async (message, match) => {
     if (message.reply_message === false) return await message.sendReply(Lang.BASS_NEED_REPLY)
     var savedFile = await saveMessage(message.reply_message);
