@@ -183,11 +183,17 @@ Module({
       if (!message.reply_message || !message.reply_message.audio) return await message.sendReply("*Reply to a music*");
       if (message.reply_message.duration > 60) return await message.sendMessage('*Audio too large! Use .trim command and cut the audio to < 60*');
       var savedFile = await saveMessage(message.reply_message);
-      var data = await findMusic(fs.readFileSync(savedFile));
-      if (!data) return await message.sendReply("*No matching results found!*");
-      const templateButtons = [
-    {index: 1, urlButton: {displayText: 'YouTube 🔗', url: 'https://youtu.be/'+data.external_metadata?.youtube?.vid}}
- ]
+      try { var data = await findMusic(fs.readFileSync(savedFile)); } catch { return await message.sendReply("*No matching results found!*"); }
+      try { var itest = data.title } catch { return await message.sendReply("*No matching results found!*"); }
+      var templateButtons = [];
+  if ("youtube" in data.external_metadata){
+templateButtons.push(
+    {index: 1, urlButton: {displayText: 'YouTube ▶️', url: 'https://youtu.be/'+data.external_metadata?.youtube?.vid}}
+)}
+if ("spotify" in data.external_metadata){
+templateButtons.push(
+    {index: 2, urlButton: {displayText: 'Spotify ▶️', url: 'https://open.spotify.com/track/'+data.external_metadata?.spotify?.track?.id}}
+)}
 function getDuration(millis) {
   var minutes = Math.floor(millis / 60000);
   var seconds = ((millis % 60000) / 1000).toFixed(0);
@@ -201,7 +207,7 @@ const templateMessage = {
 *Album:* ${data.album?.name}
 *Genres:* ${data.genres?.map(e => e.name + " ")}
 *Label:* ${data.label}`,
-    footer: 'Listen to full music on:',
+    footer: '🎼 Listen to full music on:',
     templateButtons: templateButtons
 }
 await message.client.sendMessage(message.jid, templateMessage)
