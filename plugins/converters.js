@@ -44,7 +44,7 @@ Module({
     if (message.reply_message.image === true) {
         return await message.sendReply(fs.readFileSync(await addExif(await sticker(savedFile),exif)), 'sticker')
      } else {
-        return await message.sendReply(fs.readFileSync(await addExif(await sticker(savedFile),exif)), 'sticker')
+        return await message.sendReply(fs.readFileSync(await sticker(savedFile)), 'sticker')
     }
 }));
 Module({
