@@ -6,6 +6,9 @@ Raganork MD - Sourav KL11
 const {
     getString
 } = require('./misc/lang');
+const {
+      saveMessage
+  } = require('./misc/saveMessage');
 const Lang = getString('group');
 const {
     isAdmin,
@@ -205,4 +208,19 @@ Module({
     if (!isGroup) return;
     var user = message.mention[0] || message.reply_message.jid
     await message.client.updateBlockStatus(user, "unblock");
+}));
+Module({
+    pattern: 'pp ?(.*)',
+    fromMe: true,
+    desc: "Change/Get profile picture with replied message"
+}, (async (message, match) => {
+    if (message.reply_message && message.reply_message.image) {
+    var image = await saveFile(message.reply_message)
+    await message.client.updateProfilePicture(message.client.user.id.split(":")[0]+"@s.whatsapp.net",{url: image});
+    return await message.sendReply("*Updated profile pic ✅*")
+}
+if (message.reply_message && !message.reply_message.image) {
+   try { var image = await message.client.profilePictureUrl(message.reply_message.jid,'image') } catch {return await message.sendReply("Profile pic not found!")}
+   return await message.sendReply({url:image},"image")
+}
 }));
