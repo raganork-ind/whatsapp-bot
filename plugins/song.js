@@ -176,33 +176,29 @@ Module({
     fromMe: sourav
 }, (async (message, match) => {
     if (message.list && message.list.startsWith("ytsl") && message.list.includes(message.client.user.id.split("@")[0].split(":")[0])) {
-        const buttons = [{
-                buttonId: 'ytsv;' + message.client.user.id.split("@")[0].split(":")[0] + ";" + message.list.split(";")[1],
-                buttonText: {
-                    displayText: '🎞 VIDEO'
-                },
-                type: 1
-            },
-            {
-                buttonId: 'ytsa;' + message.client.user.id.split("@")[0].split(":")[0] + ";" + message.list.split(";")[1],
-                buttonText: {
-                    displayText: '🎵 AUDIO'
-                },
-                type: 1
-            }
-        ]
+    const buttons = [{
+                                urlButton: {
+                                    displayText: '𝑊𝐴𝑇𝐶𝐻 𝑂𝑁 𝑌𝑂𝑈𝑇𝑈𝐵𝐸',
+                                    url: 'https://youtu.be/'+ message.list.split(";")[1];
+                                }
+                            }, {
+                                quickReplyButton: {
+                                    displayText: '𝐴𝑈𝐷𝐼𝑂',
+                                    id: 'ytsa;' + message.client.user.id.split("@")[0].split(":")[0] + ";" + message.list.split(";")[1]
+                                }  
+                            }, {
+                                quickReplyButton: {
+                                    displayText: '𝑉𝐼𝐷𝐸𝑂',
+                                    id: 'ytsv;' + message.client.user.id.split("@")[0].split(":")[0] + ";" + message.list.split(";")[1]
+                                }
+                            }]   
+   
         var {
             info,
             thumbnail
         } = await getJson("https://raganork-api.vercel.app/api/youtube/details?video_id=" + message.list.split(";")[1]);
-        const buttonMessage = {
-            image: await getThumb(message.list.split(";")[1]),
-            caption: info,
-            footerText: 'Hey ' + message.data.pushName,
-            buttons: buttons,
-            headerType: 4
-        }
-        await message.client.sendMessage(message.jid, buttonMessage)
+        
+        await message.sendImageTemplate(await skbuffer(thumbnail),info,"ᴜsᴇʀ: "+message.senderName,buttons);
     }
     if (message.button && message.button.startsWith("ytsv") && message.button.includes(message.client.user.id.split("@")[0].split(":")[0])) {
         try {
