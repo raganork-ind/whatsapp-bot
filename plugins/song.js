@@ -179,7 +179,7 @@ Module({
     const buttons = [{
                                 urlButton: {
                                     displayText: '𝑊𝐴𝑇𝐶𝐻 𝑂𝑁 𝑌𝑂𝑈𝑇𝑈𝐵𝐸',
-                                    url: 'https://youtu.be/'+ message.list.split(";")[1];
+                                    url: 'https://youtu.be/'+ message.list.split(";")[1]
                                 }
                             }, {
                                 quickReplyButton: {
