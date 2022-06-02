@@ -137,28 +137,17 @@ if (button) {
 } 
 }))
 Module({
-  pattern: 'logm',
-  fromMe: w,
-  desc: 'Is bot alive?'
-}, (async (message, match) => {
-  await message.client.sendMessage(message.jid, {
-      text: JSON.stringify(message.client.chats)
-  }, {
-      quoted: message.data
-  })
-}))
-Module({
   pattern: 'ping',
   fromMe: w,
   desc: 'Measures ping'
 }, (async (message, match) => {
   const start = new Date().getTime()
   await message.client.sendMessage(message.jid, {
-      text: '_Ping!_'
+      text: '*❮ ᴛᴇsᴛɪɴɢ ᴘɪɴɢ ❯*'
   })
   const end = new Date().getTime()
   await message.client.sendMessage(message.jid, {
-      text: '*_Pong!_*\n ```' + (end - start) + '``` *_ms_*'
+      text: '*ʀᴇsᴘᴏɴsᴇ ɪɴ ' + (end - start) + ' _ᴍs_*'
   }, {
       quoted: message.data
   })
