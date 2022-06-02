@@ -64,15 +64,10 @@ Module({
         return await m.sendReply(fs.readFileSync(await addExif(q,exif)),'sticker')
     }
     if (!stickermsg && audiomsg) {
-        ffmpeg(q)
-            .save('info.mp3')
-            .on('end', async () => {
-                let inf = match[1] ? match[1] : AUDIO_DATA
+                let inf = match[1] !== '' ? match[1] : AUDIO_DATA
                 var spl = inf.split(';')
-                let im = spl[2].startsWith('http') ? spl[2] : ''
-                let tit = spl[0] ? spl[0] : AUDIO_DATA.split(';')[0]
-                let auth = spl[1] ? spl[1] : AUDIO_DATA.split(';')[1]
-                var res = await addInfo('info.mp3', tit, auth, 'Raganork Engine', await skbuffer(im))
+                var image = spl[2]?await skbuffer(spl[2]):''
+                var res = await addInfo(q,spl[0],spl[1], 'Raganork Engine', image)
                 await m.client.sendMessage(m.jid, {
                     audio: res,
                     mimetype: 'audio/mp4',
@@ -80,7 +75,6 @@ Module({
                     quoted: m.data,
                     ptt: false
                 });
-            });
     }
     if (!audiomsg && !stickermsg) return await m.client.sendMessage(m.jid, {
         text: '_Reply to an audio or a sticker_'
