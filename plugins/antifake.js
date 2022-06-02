@@ -96,10 +96,10 @@ Module({
             var admin = await isAdmin(message);
             if (!admin) return;
             await message.client.sendMessage(message.jid, {
-                text: "Fake numbers not allowed @" + message.participant[0].split("@")[0],
+                text: "*Country code not allowed* @" + message.participant[0].split("@")[0],
                 mentions: [message.participant[0]]
             });
-            await message.client.groupParticipantsUpdate(message.jid, [message.participant[0]], "remove")
+            return await message.client.groupParticipantsUpdate(message.jid, [message.participant[0]], "remove")
         }
     }
     await parseWelcome(message,greeting)
