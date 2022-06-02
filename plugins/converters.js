@@ -11,6 +11,9 @@ const ffmpeg = require('fluent-ffmpeg');
 const {
     saveMessage
 } = require('./misc/saveMessage');
+const {
+    skbuffer
+} = require('raganork-bot');
 const Config = require('../config');
 const {
     MODE,
@@ -96,4 +99,13 @@ Module({
             .on('end', async () => {
                 await message.sendReply(fs.readFileSync('output.png'), 'image');
             });
+
+}));
+Module({
+    pattern: 'attp ?(.*)',
+    fromMe: w,
+    desc: "Text to animated sticker"
+}, (async (message, match) => {
+    if (match[1] == '') return await message.sendMessage("*Need text*")
+     await message.sendReply(await skbuffer("https://api.xteam.xyz/attp?file&text="+encodeURI(match[1])), 'sticker');      
 }));
