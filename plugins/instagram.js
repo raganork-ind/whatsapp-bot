@@ -33,8 +33,8 @@ Module({
     desc: 'Downloads post/reel/igtv from instagram',
     usage: 'insta link or reply to a link'
 }, (async (msg, query) => {
-    if (query[0] === 'install') return;
-    var q = !msg.reply_message.message ? query[1] : msg.reply_message.message
+     var q = !msg.reply_message.message ? query[1] : msg.reply_message.message
+    if (q.startsWith('l')) return;
     if (!q) return await msg.client.sendMessage(msg.jid, {
         text: "*Need instagram link*"
     }, {
