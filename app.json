@@ -1,8 +1,12 @@
 {
-    "name": "Deploy to heroku",
-    "repository": "https://github.com/souravkl11/raganork-md.git",
-    "success_url": "https://bit.ly/Raganork",
-    "stack": "container",
+	"name": "Deploy",
+	"description": "Wa Bot.",
+	"keywords": [
+		"whatsapp",
+		"bot"
+	],
+	"repository": "https://github.com/raganork-ind/whatsapp-bot",
+	"stack": "container",
     "env": { 
         "HANDLERS": {
             "description": "Prefix of commands. Can be also false",
