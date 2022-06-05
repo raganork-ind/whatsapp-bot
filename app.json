@@ -71,7 +71,7 @@
         "ALIVE": {
             "description": "Alive message {image/link}, {sender} can also be used",
             "required": false,
-            "value":"{pp} *Active since {uptime}*\n#button\Button 1#\n#button\Button 2#\n#button\Button 3#\n#ubutton\Url Button#\n#url\http://wa.me/918921408552?text=*Bro+big+fan+aane*#\n#ubutton\Url Button 2#\n#url\http://wa.me/918921408552?text=*Bro+big+fan+aane*#"
+            "value":"{pp} Active since {uptime}\n User:{sender}"
         },
        "SESSION": {
             "description": "Your MD session",
