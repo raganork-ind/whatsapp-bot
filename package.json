@@ -1,7 +1,7 @@
 {
-  "name": "raganork",
-  "version": "1.0.2",
-  "description": "Raganork whatsapp bot- Multi device version.",
+  "name": "𝐓𝐨𝐱𝐢𝐜 𝐋𝐞𝐨✨",
+  "version": "1.2",
+  "description": "Toxic Leo whatsapp bot- Multi device version.",
   "main": "./Raganork/index.js",
   "scripts": {
     "start": "supervisor -s index.js"
@@ -15,8 +15,8 @@
     "bot",
     "multi-device"
   ],
-  "author": "Sourav",
-  "developer": "@souravkl11",
+  "author": "Akash",
+  "developer": "@Akash Leo",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/souravkl11/raganork/issues"
