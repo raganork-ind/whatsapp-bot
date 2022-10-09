@@ -1,11 +1,11 @@
 {
-	"name": "Deploy",
-	"description": "Wa Bot.",
+	"name": "Raganork",
+	"description": "Multi-functional WhatsApp bot project",
 	"keywords": [
 		"whatsapp",
 		"bot"
 	],
-	"repository": "https://github.com/raganork-ind/whatsapp-bot",
+	"repository": "https://github.com/souravkl11/upstream-repo",
 	"stack": "container",
     "env": { 
         "HANDLERS": {
