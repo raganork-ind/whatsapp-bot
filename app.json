@@ -5,7 +5,7 @@
 		"whatsapp",
 		"bot"
 	],
-	"repository": "https://github.com/souravkl11/upstream-repo",
+	"repository": "https://github.com/Kannankanz123/upstream-repo",
 	"stack": "container",
     "env": { 
         "HANDLERS": {
